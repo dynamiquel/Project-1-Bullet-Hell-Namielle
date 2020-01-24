@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -45,12 +46,26 @@ public class PlayerControler : Player
 
         if (Input.GetButton("Ability1"))
         {
-            throw new System.NotImplementedException();
+            try
+            {
+                ItemDatabase.Instance.Abilities[stats.PersistentPlayerData.ActiveAbilities[0]].Use();
+            }
+            catch (Exception e)
+            {
+                Debug.LogWarning("Ability not found");
+            }
         }
 
         if (Input.GetButton("Ability2"))
         {
-            throw new System.NotImplementedException();
+            try
+            {
+                ItemDatabase.Instance.Abilities[stats.PersistentPlayerData.ActiveAbilities[1]].Use();
+            }
+            catch (Exception e)
+            {
+                Debug.LogWarning("Ability not found");
+            }
         }
         if (Input.GetButton("CharJump"))
         {

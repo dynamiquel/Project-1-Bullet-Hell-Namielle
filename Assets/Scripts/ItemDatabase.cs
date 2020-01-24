@@ -30,7 +30,7 @@ public class ItemDatabase : MonoBehaviour
 
         foreach (var ability in _abilities)
         {
-            Abilities[ability.id] = ability;
+            Abilities[ability.Id] = ability;
         }
 
         _abilities = null;
