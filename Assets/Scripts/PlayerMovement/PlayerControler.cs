@@ -25,7 +25,7 @@ public class PlayerControler : Player
 
     void ControlManager()
     {
-         Vector2 positionOnScreen = Camera.main.WorldToViewportPoint (transform.position);
+         Vector2 positionOnScreen = Camera.main.WorldToViewportPoint(transform.position);
          Vector2 mouseOnScreen = (Vector2)Camera.main.ScreenToViewportPoint(Input.mousePosition);
          
          //Get the angle between the points
@@ -71,9 +71,9 @@ public class PlayerControler : Player
 
     void MovementManager()
     {
-        float Xvect = Input.GetAxisRaw("Horizontal");
-        float Yvect = Input.GetAxisRaw("Vertical");
-        controlledObject.GetComponent<CharacterMotor>().MovementMotor((new Vector2(Xvect,Yvect).normalized) * characterSpeed); ;
+        float xVect = Input.GetAxisRaw("Horizontal");
+        float yVect = Input.GetAxisRaw("Vertical");
+        controlledObject.GetComponent<CharacterMotor>().MovementMotor((new Vector2(xVect,yVect).normalized) * characterSpeed); ;
     }
 
     float GetAngle(Vector3 a, Vector3 b)
