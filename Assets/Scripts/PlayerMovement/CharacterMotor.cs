@@ -10,7 +10,7 @@ public class CharacterMotor : MonoBehaviour
 
     public void TakenOver()
     {
-        isControlled = true;
+        isControlled = !isControlled;
     }
 
     private void Awake()
@@ -23,8 +23,8 @@ public class CharacterMotor : MonoBehaviour
         rb.velocity = movementvect;
     }
 
-    public void CharactorRotator(Vector2 rotationVector)
+    public void CharactorRotator(Vector3 rotationVector)
     {
-        transform.Rotate(rotationVector);
+        transform.rotation = Quaternion.Euler(rotationVector);
     }
 }
