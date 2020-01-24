@@ -6,6 +6,9 @@ public class Ability : MonoBehaviour
 {
     public string id;
 
+    string name;
+    decimal coolDown;
+
     // Start is called before the first frame update
     void Start()
     {
