@@ -7,5 +7,10 @@ public class Player : MonoBehaviour
     public float characterSpeed;
     public GameObject controlledObject;
     public GameObject lastControlled;
-    //public PersistentPlayerData persistentPlayerData = new PersistentPlayerData();
+    public PlayerStats stats;
+
+    private void Start()
+    {
+        stats = new PlayerStats(SaveManager.Instance.Load());
+    }
 }

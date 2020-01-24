@@ -24,9 +24,10 @@ public class PersistentPlayerData
     public Dictionary<string, bool> PerkUnlocks;
     public string[] ActivePerks = new string[4];
 
-    void AddLevelReport(LevelReport levelReport)
+    public void AddLevelReport(LevelReport levelReport)
     {
         LevelDatas[levelReport.LevelId].UpdateLevelData(levelReport);
+        LevelsCompleted++;
     }
 
     public PersistentPlayerData(int kills = 0, int deaths = 0, int bulletsShot = 0, int levelsCompleted = 0, int score = 0, int abilitiesUsed = 0, int enemiesHijacked = 0, long playTime = 0, int perkPoints = 0, Dictionary<string, LevelData> levelDatas = null, Dictionary<string, bool> perkUnlocks = null, string[] activePerks = null)
