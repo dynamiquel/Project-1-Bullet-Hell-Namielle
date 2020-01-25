@@ -34,14 +34,19 @@ public class PlayerControler : Player
 
          controlledObject.GetComponent<CharacterMotor>().CharactorRotator(new Vector3(0f, 0f, angle));
 
-        if (Input.GetButton("Fire1"))
+        if (Input.GetButtonDown("Fire1"))
         {
-            throw new System.NotImplementedException();
+            controlledObject.transform.GetComponentInChildren<Weapon>().PrimaryFire();
         }
 
-        if (Input.GetButton("Fire2"))
+        if (Input.GetButtonDown("Fire2"))
         {
-            throw new System.NotImplementedException();
+            controlledObject.transform.GetComponentInChildren<Weapon>().SecondaryFire();
+        }
+
+        if (Input.GetButtonDown("Reload"))
+        {
+            controlledObject.transform.GetComponentInChildren<Weapon>().ReloadAll();
         }
 
         if (Input.GetButton("Ability1"))
@@ -88,7 +93,7 @@ public class PlayerControler : Player
     {
         float xVect = Input.GetAxisRaw("Horizontal");
         float yVect = Input.GetAxisRaw("Vertical");
-        controlledObject.GetComponent<CharacterMotor>().MovementMotor((new Vector2(xVect,yVect).normalized) * characterSpeed); ;
+        controlledObject.GetComponent<CharacterMotor>().MovementMotor((new Vector2(xVect,yVect).normalized) * characterSpeed);
     }
 
     float GetAngle(Vector3 a, Vector3 b)
