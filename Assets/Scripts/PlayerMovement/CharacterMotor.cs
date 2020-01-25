@@ -20,7 +20,7 @@ public class CharacterMotor : MonoBehaviour
 
     public void MovementMotor(Vector2 movementvect)
     {
-        rb.velocity = movementvect;
+        rb.transform.Translate(movementvect * Time.fixedDeltaTime);
     }
 
     public void CharactorRotator(Vector3 rotationVector)
