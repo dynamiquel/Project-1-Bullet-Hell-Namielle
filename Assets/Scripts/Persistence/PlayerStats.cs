@@ -1,4 +1,6 @@
-﻿[System.Serializable]
+﻿using System;
+
+[System.Serializable]
 public class PlayerStats
 {
     public PersistentPlayerData PersistentPlayerData;
@@ -10,6 +12,8 @@ public class PlayerStats
     public int AbilitiesUsed = 0;
     public int EnemiesHijacked = 0;
     public long PlayTime = 0;
+    public int Level { get => PersistentPlayerData.Exp / 100; } // temp calculation
+    int previousLevel;
 
     public PlayerStats(PersistentPlayerData persistentPlayerData)
     {
@@ -34,5 +38,11 @@ public class PlayerStats
         PersistentPlayerData.AbilitiesUsed += AbilitiesUsed;
         PersistentPlayerData.EnemiesHijacked = EnemiesHijacked;
         PersistentPlayerData.PlayTime += PlayTime;
+    }
+
+    // Alternate way to add exp to player.
+    public void AddExp(int exp)
+    {
+        PersistentPlayerData.Exp += exp;
     }
 }
