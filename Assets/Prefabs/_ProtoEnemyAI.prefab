@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 610384295089012399}
   - component: {fileID: 610384295089012398}
   - component: {fileID: 610384295089012397}
+  - component: {fileID: 8591894057790053256}
   m_Layer: 0
   m_Name: _ProtoEnemyAI
   m_TagString: Untagged
@@ -92,3 +93,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 357abc568e5712a42a01c8a48289fa78, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  motor: {fileID: 0}
+  fieldDetection: {fileID: 0}
+  newPos: {x: 0, y: 0}
+--- !u!114 &8591894057790053256
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 610384295089012396}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6868453d376713d41ae91bff69b9911f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  moveOffset: {x: 0, y: 0}

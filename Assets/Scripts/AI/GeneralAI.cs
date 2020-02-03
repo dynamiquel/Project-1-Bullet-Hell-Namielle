@@ -2,16 +2,23 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(Rigidbody2D))]
+[RequireComponent(typeof(Pivot))]
 public class GeneralAI : MonoBehaviour
 {
 
     // If Bradley is reading this: I will route to the CharacterMotor after I have finished each method :)
 
     // KNOWN BUGS: KEEPS GENERATING 0,0 (UNSURE OF FIX)
+    // DOESNT REVERT BACK TO IDOL (AIDETECTION CLASS)
+
 
     public CharacterMotor motor;
-    public Vector2 moveOffset;
+    public Pivot _pivot;
+    
     float speed = 1;
+
+    public AIDetection fieldDetection;
 
     Vector2 originalPosition;
     public Vector2 newPos;
@@ -20,71 +27,40 @@ public class GeneralAI : MonoBehaviour
     bool atOriginalPosition = true;
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         originalPosition = transform.position;
-        newPos = pivotPoint();
-    }
-
-    int createMathOperation()
-    {
-        // 0 = -
-        // 1 = +
-        int operation = Random.Range(0, 2);
-
-        return operation;
-    }
-
-    Vector2 createPivotPoint(int operation, bool _x, bool _y)
-    {
-        float[] newVectors = { 0,0 };
-
-        if(operation == 0)
-        {
-            if (_x) { newVectors[0] = transform.position.x - moveOffset.x; }
-            if (_y) { newVectors[1] = transform.position.y - moveOffset.y; }
-        }
-
-        if (operation == 1)
-        {
-            if (_x) { newVectors[0] = transform.position.x + moveOffset.x; }
-            if (_y) { newVectors[1] = transform.position.y + moveOffset.y; }
-        }
-
-        Debug.Log(newVectors[0] + "." + newVectors[1]);
-        return new Vector2(newVectors[0], newVectors[1]);
-    }
-
-    Vector2 pivotPoint()
-    {
-        // 0 = x true, y false
-        // 1 = x true, y true
-        // 2 = x false, y true
-        // 3 = x false, y false
-        int pivotPosition = Random.Range(0,4);
-
-        Vector2 pivotPoint = new Vector2();
-
-        int operation = createMathOperation();
-
-
-        if (pivotPosition == 0) { pivotPoint = createPivotPoint(operation, true, false);  }
-        if (pivotPosition == 1) { pivotPoint = createPivotPoint(operation, true, true);   }
-        if (pivotPosition == 2) { pivotPoint = createPivotPoint(operation, false, true);  }
-        if (pivotPosition == 3) { pivotPoint = createPivotPoint(operation, false, false); }
-
-        return pivotPoint;
+        newPos = _pivot.pivotPoint();
     }
 
     // Update is called once per frame
     void Update()
     {
-        Idle();
+        StateController();
+    }
+
+    void StateController(){
+        if(fieldDetection.spotted){
+            Shoot();
+        } else {
+            Idle();
+        }
+    }
+
+    void LookAt_Z(Vector3 _target){
+        // Get Angle in Radians
+             float AngleRad = Mathf.Atan2(_target.y - transform.position.y, _target.x - transform.position.x);
+             // Get Angle in Degrees
+             float AngleDeg = (180 / Mathf.PI) * AngleRad;
+             // Rotate Object
+             Quaternion newRotation = Quaternion.Euler(0, 0, AngleDeg);
+             this.transform.rotation = Quaternion.Lerp(transform.rotation, newRotation, Time.deltaTime * speed);
     }
 
     void Idle()
     {
-        Vector2 target = new Vector2(0, 0);
+
+        Vector3 target = new Vector3(0, 0, 0);
 
         if (atOriginalPosition)
         {
@@ -95,31 +71,19 @@ public class GeneralAI : MonoBehaviour
             target = originalPosition;
         }
 
-        transform.position = Vector2.Lerp(transform.position, target, Time.deltaTime * speed);
+        transform.position = Vector3.Lerp(transform.position, target, Time.deltaTime * speed);
+        LookAt_Z(target);
 
         if(transform.position == lastFrame)
         {
             if (atOriginalPosition) { atOriginalPosition = false; }
             else { atOriginalPosition = true; }
-            newPos = pivotPoint();
+            newPos = _pivot.pivotPoint();
         }
-
-        lastFrame = transform.position;
-    }
-
-    void Spotted()
-    {
-
     }
 
     void Shoot()
     {
-
+        LookAt_Z(fieldDetection.player.transform.position);
     }
-
-    void Move()
-    {
-
-    }
-
 }
