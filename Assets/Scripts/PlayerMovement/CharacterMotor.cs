@@ -23,8 +23,8 @@ public class CharacterMotor : MonoBehaviour
         rb.transform.Translate(movementvect * Time.fixedDeltaTime);
     }
 
-    public void CharactorRotator(Vector3 rotationVector)
+    public void CharactorRotator(float rotationVector)
     {
-        transform.rotation = Quaternion.Euler(rotationVector);
+        transform.rotation = Quaternion.AngleAxis(rotationVector + 90, Vector3.forward);
     }
 }

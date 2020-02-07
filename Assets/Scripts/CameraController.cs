@@ -11,6 +11,11 @@ public class CameraController : MonoBehaviour
     public GameObject PlayerMotor;
     public float speed = 15f;
 
+    private void Start()
+    {
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Confined;
+    }
 
     // Update is called once per frame
     void Update()

@@ -11,6 +11,6 @@ public class Player : MonoBehaviour
 
     private void Start()
     {
-        stats = new PlayerStats(SaveManager.Instance.Load());
+       // stats = new PlayerStats(SaveManager.Instance.Load());
     }
 }

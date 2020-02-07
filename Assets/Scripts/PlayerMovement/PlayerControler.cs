@@ -31,8 +31,8 @@ public class PlayerControler : Player
          
          //Get the angle between the points
          float angle = GetAngle(positionOnScreen, mouseOnScreen);
-
-         controlledObject.GetComponent<CharacterMotor>().CharactorRotator(new Vector3(0f, 0f, angle));
+        
+         controlledObject.GetComponent<CharacterMotor>().CharactorRotator(angle);
 
         if (Input.GetButtonDown("Fire1"))
         {
@@ -41,6 +41,7 @@ public class PlayerControler : Player
 
         if (Input.GetButtonDown("Fire2"))
         {
+            Debug.Log("Ping");
             controlledObject.transform.GetComponentInChildren<Weapon>().SecondaryFire();
         }
 
