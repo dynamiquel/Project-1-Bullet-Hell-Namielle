@@ -58,9 +58,7 @@ public class Menu : MonoBehaviour
 
     void CheckIfControllerPluggedIn()
     {
-        string[] joysticks = Input.GetJoystickNames();
-
-        if (joysticks.Any(x => x.Length != 0))
+        if (Input.GetJoystickNames().Length > 0)
         {
             isController = true;
             ChangeUserInputButtonsState(true);
