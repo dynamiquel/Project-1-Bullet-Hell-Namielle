@@ -9,7 +9,6 @@ public class GeneralAI : MonoBehaviour
 
     // If Bradley is reading this: I will route to the CharacterMotor after I have finished each method :)
 
-    // KNOWN BUGS: KEEPS GENERATING 0,0 (UNSURE OF FIX)
     // DOESNT REVERT BACK TO IDOL (AIDETECTION CLASS)
 
 
@@ -26,17 +25,25 @@ public class GeneralAI : MonoBehaviour
     Vector3 lastFrame;
     bool atOriginalPosition = true;
 
+    [Range(1.0f, 10.0f)]
+    public float erratic;
+
+    public PlayerControler _pc;
+    GameObject player;
+
     // Start is called before the first frame update
     void Awake()
     {
         originalPosition = transform.position;
-        newPos = _pivot.pivotPoint();
+        StartCoroutine(triggerNewPosition());
     }
 
     // Update is called once per frame
     void Update()
     {
         StateController();
+        _pc.controlledObject = player;
+        if (fieldDetection.moveTowards) { transform.position = Vector3.MoveTowards(transform.position, player.transform.position, speed * Time.deltaTime); }
     }
 
     void StateController(){
@@ -73,17 +80,22 @@ public class GeneralAI : MonoBehaviour
 
         transform.position = Vector3.Lerp(transform.position, target, Time.deltaTime * speed);
         LookAt_Z(target);
-
-        if(transform.position == lastFrame)
-        {
-            if (atOriginalPosition) { atOriginalPosition = false; }
-            else { atOriginalPosition = true; }
-            newPos = _pivot.pivotPoint();
-        }
     }
 
     void Shoot()
     {
         LookAt_Z(fieldDetection.player.transform.position);
+    }
+
+    IEnumerator triggerNewPosition()
+    {
+        while (1 == 1)
+        {
+            Vector2 _tempPivot = _pivot.pivotPoint();
+            newPos = _tempPivot;
+            if (atOriginalPosition) { atOriginalPosition = false; }
+            else { atOriginalPosition = true; }
+            yield return new WaitForSeconds(erratic);
+        }
     }
 }
