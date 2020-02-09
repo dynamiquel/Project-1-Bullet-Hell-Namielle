@@ -28,7 +28,7 @@ public class GeneralAI : MonoBehaviour
     [Range(1.0f, 10.0f)]
     public float erratic;
 
-    public PlayerControler _pc;
+    public PlayerController _pc;
     GameObject player;
 
     // Start is called before the first frame update

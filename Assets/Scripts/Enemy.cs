@@ -1,15 +1,18 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class Enemy : MonoBehaviour, IDamagable
 {
-    public string id;
+    public string id = "default_enemy";
 
     [SerializeField]
-    decimal _maxHealth = 100;
-    public decimal MaxHealth { get => _maxHealth; set => _maxHealth = value; }
-    public decimal Health { get; set ; }
+    int _maxHealth = 100;
+    public int MaxHealth { get => _maxHealth; set => _maxHealth = value; }
+    public int Health { get; set; }
+
+    public event Action OnHealthChanged;
 
     private void Awake()
     {
@@ -19,16 +22,22 @@ public class Enemy : MonoBehaviour, IDamagable
 
     public virtual void OnDamage()
     {
-        throw new System.NotImplementedException();
+        OnHealthChanged?.Invoke();
     }
 
     public virtual void OnDeath()
     {
-        throw new System.NotImplementedException();
+        Destroy(gameObject);
     }
 
-    public void Damage(decimal damage)
+    public void Damage(int damage)
     {
         DamageableEntityManager.Instance.DamageEntity(this, damage);
+    }
+
+    void OnDestroy()
+    {
+        if (LevelController.Instance.CurrentBoss == this)
+            LevelController.Instance.CurrentBoss = null;
     }
 }

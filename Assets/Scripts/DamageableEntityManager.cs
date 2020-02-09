@@ -20,10 +20,9 @@ public class DamageableEntityManager : MonoBehaviour
         }
     }
 
-    public void DamageEntity(IDamagable entity, decimal damage)
+    public void DamageEntity(IDamagable entity, int damage)
     {
         entity.Health -= damage;
-
         entity.OnDamage();
 
         if (entity.Health <= 0)
