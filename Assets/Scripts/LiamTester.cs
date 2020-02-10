@@ -5,9 +5,6 @@ using UnityEngine;
 public class LiamTester : MonoBehaviour
 {
     [SerializeField]
-    BossSection bossSection;
-
-    [SerializeField]
     Enemy boss;
 
     // Start is called before the first frame update
