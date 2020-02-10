@@ -5,6 +5,7 @@ using TMPro;
 using System.Diagnostics;
 using System;
 
+// Move all time shit to player/level controller or something. This should be UI only.
 public class ScoreTimeSection : HUDComponent
 {
     float _score = 0;

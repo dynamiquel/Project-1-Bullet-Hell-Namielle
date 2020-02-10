@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2557710907157412912}
+  - component: {fileID: 1697846207}
   m_Layer: 5
   m_Name: Health Section
   m_TagString: Untagged
@@ -36,6 +37,19 @@ RectTransform:
   m_AnchoredPosition: {x: 200, y: -200}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1697846207
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2557710907157412914}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62692d77762375848b0f4660e0ee1a77, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerHealthFillBar: {fileID: 2557710907682730076}
 --- !u!1001 &3579842958505552683
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -148,20 +162,15 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 1355856926394162039, guid: c2c13c04251f5d943a30d7e89741b3bb,
+        type: 3}
+      propertyPath: textMode
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 1355856926394162042, guid: c2c13c04251f5d943a30d7e89741b3bb,
         type: 3}
       propertyPath: m_Name
       value: Player Health Bar
-      objectReference: {fileID: 0}
-    - target: {fileID: 1355856926409280731, guid: c2c13c04251f5d943a30d7e89741b3bb,
-        type: 3}
-      propertyPath: m_AnchorMax.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1355856926409280731, guid: c2c13c04251f5d943a30d7e89741b3bb,
-        type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c2c13c04251f5d943a30d7e89741b3bb, type: 3}
@@ -171,3 +180,15 @@ RectTransform:
     type: 3}
   m_PrefabInstance: {fileID: 3579842958505552683}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &2557710907682730076 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1355856926394162039, guid: c2c13c04251f5d943a30d7e89741b3bb,
+    type: 3}
+  m_PrefabInstance: {fileID: 3579842958505552683}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9ddfd94e405ec447a06424362d41a4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

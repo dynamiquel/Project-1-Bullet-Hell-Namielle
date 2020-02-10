@@ -221,7 +221,7 @@ GameObject:
   - component: {fileID: 158951877}
   - component: {fileID: 158951876}
   m_Layer: 0
-  m_Name: GameObject (3)
+  m_Name: Managers
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -572,7 +572,7 @@ GameObject:
   - component: {fileID: 497071136}
   - component: {fileID: 497071135}
   m_Layer: 0
-  m_Name: GameObject (2)
+  m_Name: Enemy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2271,7 +2271,7 @@ GameObject:
   - component: {fileID: 1713822941}
   - component: {fileID: 1713822940}
   m_Layer: 0
-  m_Name: GameObject (1)
+  m_Name: Level Controller
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2365,7 +2365,7 @@ GameObject:
   - component: {fileID: 1830171765}
   - component: {fileID: 1830171764}
   m_Layer: 0
-  m_Name: GameObject (4)
+  m_Name: Testing
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2383,7 +2383,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 10e03e60cc62c7c418dcffe05a02f002, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bossSection: {fileID: 0}
   boss: {fileID: 497071135}
 --- !u!4 &1830171765
 Transform:
@@ -3078,18 +3077,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Health Section
       objectReference: {fileID: 0}
-    - target: {fileID: 2557710907299252761, guid: bf70aa565bd5dc743a9fd20456c3eb09,
-        type: 3}
-      propertyPath: m_fontAsset
-      value: 
-      objectReference: {fileID: 11400000, guid: 21211cb61b45f6740974f06c849ac802,
-        type: 2}
-    - target: {fileID: 2557710907299252761, guid: bf70aa565bd5dc743a9fd20456c3eb09,
-        type: 3}
-      propertyPath: m_sharedMaterial
-      value: 
-      objectReference: {fileID: 21433209166460302, guid: 21211cb61b45f6740974f06c849ac802,
-        type: 2}
     - target: {fileID: 2557710907329800176, guid: bf70aa565bd5dc743a9fd20456c3eb09,
         type: 3}
       propertyPath: m_AnchorMax.x
@@ -3099,11 +3086,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2557710907682730076, guid: bf70aa565bd5dc743a9fd20456c3eb09,
-        type: 3}
-      propertyPath: textMode
-      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bf70aa565bd5dc743a9fd20456c3eb09, type: 3}
