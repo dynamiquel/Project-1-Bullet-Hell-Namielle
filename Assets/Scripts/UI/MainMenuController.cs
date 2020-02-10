@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MainMenuManager : MonoBehaviour
+public class MainMenuController : MonoBehaviour
 {
-    public static MainMenuManager Instance { get; private set; }
+    public static MainMenuController Instance { get; private set; }
 
     [SerializeField]
     GameObject mainMenu;

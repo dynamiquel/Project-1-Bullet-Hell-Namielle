@@ -46,6 +46,7 @@ public class GameManager : MonoBehaviour
     void OnSceneChanged()
     {
         Debug.Log(SceneManager.GetActiveScene().name);
+
         switch (SceneManager.GetActiveScene().name)
         {
             case "Title Screen":

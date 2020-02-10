@@ -2,25 +2,28 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MainMenu : Menu
+public class PauseMenu : Menu
 {
+    [SerializeField] PauseMenuController pauseMenuController;
+
     public void UserInputButtonClicked(int x)
     {
         switch (x)
         {
             case 1:
-                Debug.Log("Play game button clicked");
+                Debug.Log("Resume button clicked");
                 ButtonClick(0);
+                pauseMenuController.CloseMenu();
                 break;
             case 2:
                 Debug.Log("Options button clicked");
-                MainMenuController.Instance.LoadMenu(1);
+                
                 ButtonClick(0);
                 break;
             case 3:
-                Debug.Log("Exit game button clicked");
-                Application.Quit();
+                Debug.Log("Exit to Main Menu button clicked");
                 ButtonClick(0);
+                UnityEngine.SceneManagement.SceneManager.LoadScene("Main Menu");
                 break;
         }
     }

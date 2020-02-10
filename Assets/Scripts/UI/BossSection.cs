@@ -1,17 +1,12 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using TMPro;
-using UnityEngine.UI;
 
 public class BossSection : HUDComponent
 {
     [SerializeField]
     TextMeshProUGUI bossNameText;
     [SerializeField]
-    TextMeshProUGUI bossHealthText;
-    [SerializeField]
-    Slider bossHealthSlider;
+    FillBar bossHealthFillBar;
 
     Enemy boundBoss;
 
@@ -24,11 +19,8 @@ public class BossSection : HUDComponent
 
     void HandleBossHealthChanged()
     {
-        if (bossHealthText != null)
-            bossHealthText.text = boundBoss.Health.ToString();
-
-        if (bossHealthSlider != null)
-            bossHealthSlider.value = ((float)boundBoss.Health / boundBoss.MaxHealth);
+        if (bossHealthFillBar != null)
+            bossHealthFillBar.Value = boundBoss.Health;
     }
 
     void HandleBossChanged(Enemy boss)
@@ -42,6 +34,7 @@ public class BossSection : HUDComponent
         {
             gameObject.SetActive(true);
             boundBoss.OnHealthChanged += HandleBossHealthChanged;
+            bossHealthFillBar.MaxValue = boundBoss.MaxHealth;
             HandleBossHealthChanged();
         }
         else

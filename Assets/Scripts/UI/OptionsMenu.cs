@@ -8,7 +8,7 @@ public class OptionsMenu : Menu
     {
         if (Input.GetButtonDown("Cancel"))
         {
-            MainMenuManager.Instance.LoadMenu(0);
+            MainMenuController.Instance.LoadMenu(0);
         }
     }
 }
