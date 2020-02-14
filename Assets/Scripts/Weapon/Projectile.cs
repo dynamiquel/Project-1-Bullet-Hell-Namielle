@@ -8,23 +8,25 @@ public class Projectile : MonoBehaviour
     float lifetime = 0;
     int dmg;
     float sizeModifier = 0f;
+    bool explosive = false;
     private void Awake()
     {
         rb = this.GetComponent<Rigidbody2D>();
         
     }
 
-    public void Fired(float speed, int damage, float x)
+    public void Fired(float speed, int damage, float x, bool _explosive)
     {
         dmg = damage;
         rb.velocity = transform.up * speed;
         sizeModifier = x;
+        explosive = _explosive;
     }
 
     private void FixedUpdate()
     {
         if (lifetime >= 2f)
-            Destroy(gameObject);
+            endObject();
 
         lifetime += Time.fixedDeltaTime;
         transform.localScale = new Vector3(3+lifetime* sizeModifier, 3+lifetime* sizeModifier, 3+lifetime* sizeModifier);
@@ -34,6 +36,17 @@ public class Projectile : MonoBehaviour
     {
         //DealDamage
         //Destroy(this);
+    }
+
+    void endObject()
+    {
+        print("Running");
+        if (explosive)
+        {
+
+        }
+
+        Destroy(gameObject);
     }
 
     
