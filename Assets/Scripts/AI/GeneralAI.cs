@@ -7,15 +7,14 @@ using UnityEngine;
 public class GeneralAI : MonoBehaviour
 {
 
-    // If Bradley is reading this: I will route to the CharacterMotor after I have finished each method :)
-
-    // DOESNT REVERT BACK TO IDOL (AIDETECTION CLASS)
+    // AI SCRIPT AWAITING SHOOTING SCRIPT, NOT FINISHED BUT HALTING PROGRESS FOR NOW.
 
 
     public CharacterMotor motor;
     public Pivot _pivot;
     
-    float speed = 1;
+    public float pivotSpeed = 1;
+    public float followSpeed = 1;
 
     public AIDetection fieldDetection;
 
@@ -42,8 +41,7 @@ public class GeneralAI : MonoBehaviour
     void Update()
     {
         StateController();
-        _pc.controlledObject = player;
-        if (fieldDetection.moveTowards) { transform.position = Vector3.MoveTowards(transform.position, player.transform.position, speed * Time.deltaTime); }
+        if (fieldDetection.moveTowards) { transform.position = Vector3.MoveTowards(transform.position, fieldDetection.player.transform.position, followSpeed * Time.deltaTime); }
     }
 
     void StateController(){
@@ -61,7 +59,7 @@ public class GeneralAI : MonoBehaviour
              float AngleDeg = (180 / Mathf.PI) * AngleRad;
              // Rotate Object
              Quaternion newRotation = Quaternion.Euler(0, 0, AngleDeg);
-             this.transform.rotation = Quaternion.Lerp(transform.rotation, newRotation, Time.deltaTime * speed);
+             this.transform.rotation = Quaternion.Lerp(transform.rotation, newRotation, Time.deltaTime * pivotSpeed);
     }
 
     void Idle()
@@ -78,7 +76,7 @@ public class GeneralAI : MonoBehaviour
             target = originalPosition;
         }
 
-        transform.position = Vector3.Lerp(transform.position, target, Time.deltaTime * speed);
+        transform.position = Vector3.Lerp(transform.position, target, Time.deltaTime * pivotSpeed);
         LookAt_Z(target);
     }
 
