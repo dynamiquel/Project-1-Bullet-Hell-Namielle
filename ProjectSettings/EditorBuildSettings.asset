@@ -6,6 +6,9 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/Scenes/BradleyTesting.unity
+    guid: e132ff9f38743b84ab5db5925c8c0877
+  - enabled: 1
     path: Assets/Scenes/Title Screen.unity
     guid: 3625eac3926257049b69aa8d5ad7e42c
   - enabled: 1

@@ -26,22 +26,20 @@ public class PlayerController : Player
 
     void ControlManager()
     {
-         Vector2 positionOnScreen = Camera.main.WorldToViewportPoint(transform.position);
-         Vector2 mouseOnScreen = (Vector2)Camera.main.ScreenToViewportPoint(Input.mousePosition);
-         
-         //Get the angle between the points
-         float angle = GetAngle(positionOnScreen, mouseOnScreen);
+         Vector2 dir = Input.mousePosition - Camera.main.WorldToScreenPoint(controlledObject.transform.position);
+         float angle = Mathf.Atan2(dir.y,dir.x) * Mathf.Rad2Deg;
+
         
          controlledObject.GetComponent<CharacterMotor>().CharactorRotator(angle);
 
         if (Input.GetButtonDown("Fire1"))
         {
+            print("Ping");
             controlledObject.transform.GetComponentInChildren<Weapon>().PrimaryFire();
         }
 
         if (Input.GetButtonDown("Fire2"))
         {
-            Debug.Log("Ping");
             controlledObject.transform.GetComponentInChildren<Weapon>().SecondaryFire();
         }
 
@@ -81,6 +79,7 @@ public class PlayerController : Player
 
     void GlobalManager()
     {
+        this.transform.position = controlledObject.transform.position;
         //used to keep track of when the character takes control of a new unity and updates the unit's control system.
         if (controlledObject != lastControlled)
         {
@@ -92,13 +91,8 @@ public class PlayerController : Player
 
     void MovementManager()
     {
-        float xVect = Input.GetAxisRaw("Horizontal");
-        float yVect = Input.GetAxisRaw("Vertical");
+        float yVect = Input.GetAxisRaw("Horizontal");
+        float xVect = Input.GetAxisRaw("Vertical");
         controlledObject.GetComponent<CharacterMotor>().MovementMotor((new Vector2(xVect,yVect).normalized) * characterSpeed);
-    }
-
-    float GetAngle(Vector3 a, Vector3 b)
-    {
-        return Mathf.Atan2(a.y - b.y, a.x - b.x) * Mathf.Rad2Deg;
     }
 }
