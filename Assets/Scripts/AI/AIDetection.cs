@@ -21,7 +21,8 @@ public class AIDetection : MonoBehaviour
 
     void OnTriggerExit2D(Collider2D coll){
         if(coll.gameObject.tag == "Player"){
-            moveTowards = true;
+            moveTowards = false;
+            spotted = false;
         }
     }
 
