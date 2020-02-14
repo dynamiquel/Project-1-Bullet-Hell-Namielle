@@ -13,11 +13,11 @@ TagManager:
   - UI
   - 
   - 
-  - 
-  - 
-  - 
-  - 
-  - 
+  - Player
+  - Bullets
+  - Lava
+  - Walls
+  - Enviroment
   - 
   - 
   - 
@@ -40,4 +40,25 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: GroundLayer
+    uniqueID: 2249640577
+    locked: 0
+  - name: EnviromentLayer
+    uniqueID: 202696363
+    locked: 0
+  - name: LavaLayer
+    uniqueID: 3910379915
+    locked: 0
+  - name: DangerLayer
+    uniqueID: 3763749263
+    locked: 0
+  - name: BulletLayer
+    uniqueID: 2206130989
+    locked: 0
+  - name: PlayerLayer
+    uniqueID: 2121718509
+    locked: 0
+  - name: WallLayer
+    uniqueID: 3530209063
     locked: 0
