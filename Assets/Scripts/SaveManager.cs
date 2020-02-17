@@ -21,6 +21,7 @@ public class SaveManager : MonoBehaviour
         else
         {
             Instance = this;
+            DontDestroyOnLoad(this);
         }
 
         saveFilePath = Path.Combine(Application.persistentDataPath, saveFilePath);

@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class ItemDatabase : MonoBehaviour
@@ -15,12 +16,35 @@ public class ItemDatabase : MonoBehaviour
         else
         {
             Instance = this;
+            DontDestroyOnLoad(this);
         }
     }
 
+    public Dictionary<string, Weapon> Weapons { get; private set; } = new Dictionary<string, Weapon>();
+    public Dictionary<string, Ability> Abilities { get; private set; } = new Dictionary<string, Ability>();
+    public Dictionary<string, Perk> Perks { get; private set; } = new Dictionary<string, Perk>();
+    public Dictionary<string, Enemy> Enemies { get; private set; } = new Dictionary<string, Enemy>();
+
+    // Easy way to allow game objects to be added through the inspector.
+    [SerializeField]
+    List<Weapon> _weapons;
+    [SerializeField]
+    List<Ability> _abilities;
+    [SerializeField]
+    List<Perk> _perks;
+    [SerializeField]
+    List<Enemy> _enemies;
+
     private void Start()
     {
-        // Adds all the inspector weapons to the weapons dictionary and then empties the list.
+        AddInspectorItems();
+
+        ReadWeaponJson();
+    }
+
+    // Adds all the inspector weapons to the weapons dictionary and then empties the list.
+    void AddInspectorItems()
+    {
         foreach (var weapon in _weapons)
         {
             Weapons[weapon.id] = weapon;
@@ -50,18 +74,31 @@ public class ItemDatabase : MonoBehaviour
         _enemies = null;
     }
 
-    public Dictionary<string, Weapon> Weapons { get; private set; }
-    public Dictionary<string, Ability> Abilities { get; private set; }
-    public Dictionary<string, Perk> Perks { get; private set; }
-    public Dictionary<string, Enemy> Enemies { get; private set; }
+    // Creates weapon data from the weapons.json file.
+    void ReadWeaponJson()
+    {
+        string path = System.IO.Path.Combine(Application.persistentDataPath, "resources", "weapons.json");
 
-    // Easy way to allow game objects to be added through the inspector.
-    [SerializeField]
-    List<Weapon> _weapons;
-    [SerializeField]
-    List<Ability> _abilities;
-    [SerializeField]
-    List<Perk> _perks;
-    [SerializeField]
-    List<Enemy> _enemies;
+        string json = System.IO.File.ReadAllText(path);
+
+        var weaponsData = Newtonsoft.Json.JsonConvert.DeserializeObject<Dictionary<string, WeaponData>>(json);
+
+        foreach (var weapon in weaponsData)
+        {
+            CreateWeapon(weapon.Key, weapon.Value);
+        }
+    }
+
+    // Creates a weapon with the given weapon data.
+    void CreateWeapon(string id, WeaponData weaponData)
+    {
+        Weapon weapon = new Weapon(weaponData);
+
+        /// TODO:
+        /// Gets a particular bullet prefab with the weaponData.PrimaryBulletPrefabId.
+        /// Gets a particular 'base model' with the weaponData.prefabId.
+
+        // Adds the newly created weapon to the Weapons dictionary.
+        Weapons[id] = weapon;
+    }
 }

@@ -198,7 +198,9 @@ MonoBehaviour:
     type: 3}
   secondaryBulletPrefab: {fileID: 2181984451575923305, guid: 5a5da69b80025654685422b60cec500d,
     type: 3}
+  primaryClipAmmo: 0
   primaryClipMaxAmmo: 5
+  secondaryClipAmmo: 0
   secondaryClipMaxAmmo: 5
   primaryClipUseage: 1
   secondaryClipUseage: 1
@@ -642,7 +644,9 @@ MonoBehaviour:
     type: 3}
   secondaryBulletPrefab: {fileID: 2181984451575923305, guid: 5a5da69b80025654685422b60cec500d,
     type: 3}
+  primaryClipAmmo: 0
   primaryClipMaxAmmo: 5
+  secondaryClipAmmo: 0
   secondaryClipMaxAmmo: 5
   primaryClipUseage: 1
   secondaryClipUseage: 1
@@ -1033,7 +1037,9 @@ MonoBehaviour:
     type: 3}
   secondaryBulletPrefab: {fileID: 2181984451575923305, guid: 5a5da69b80025654685422b60cec500d,
     type: 3}
+  primaryClipAmmo: 0
   primaryClipMaxAmmo: 5
+  secondaryClipAmmo: 0
   secondaryClipMaxAmmo: 5
   primaryClipUseage: 1
   secondaryClipUseage: 1
@@ -1198,8 +1204,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9afcd341ff94ad24aa16947fb62939fe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PlayerMotor: {fileID: 1233573033}
-  speed: 15
 --- !u!1 &1889385802
 GameObject:
   m_ObjectHideFlags: 0

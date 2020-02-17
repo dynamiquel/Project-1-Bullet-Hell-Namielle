@@ -34,6 +34,11 @@ public class LevelController : MonoBehaviour
 
     public event Action<Objective> OnObjectiveChanged;
 
+    public PlayerController PlayerController { get; set; }
+
+    [SerializeField] Transform _decalsTransform;
+    public Transform DecalsTransform { get => _decalsTransform; }
+
     private void Awake()
     {
         if (Instance != null && Instance != this)
@@ -48,6 +53,5 @@ public class LevelController : MonoBehaviour
 
     private void Start()
     {
-
     }
 }

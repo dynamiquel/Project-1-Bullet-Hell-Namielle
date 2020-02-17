@@ -34,7 +34,8 @@ public class HUDComponent : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        OnOpacityChange();
+        OnVisibilityChange();
     }
 
     // Update is called once per frame

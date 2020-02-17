@@ -5,12 +5,18 @@ using UnityEngine;
 
 public class PlayerController : Player
 {
+    public event Action<Weapon> OnWeaponChanged;
+
+    Weapon currentWeapon;
+    CharacterMotor currentCharacterMotor;
 
     private void Awake()
     {
         //Players local save for starting game object its controling
-        lastControlled = controlledObject;
-        controlledObject.GetComponent<CharacterMotor>().TakenOver();
+        HandleNewControlledObject();
+
+        if (LevelController.Instance)
+            LevelController.Instance.PlayerController = this;
     }
 
     void Update()
@@ -24,28 +30,65 @@ public class PlayerController : Player
         MovementManager();
     }
 
+    void HandleNewControlledObject()
+    {
+        try
+        {
+            currentCharacterMotor = controlledObject.GetComponent<CharacterMotor>();
+            currentCharacterMotor.TakenOver();
+        }
+        catch (Exception e)
+        {
+            Debug.LogWarning("No character motor found on controlled object.");
+        }
+
+        lastControlled = controlledObject;
+
+        try
+        {
+            currentWeapon = controlledObject.GetComponentInChildren<Weapon>();
+            OnWeaponChanged?.Invoke(currentWeapon);
+        }
+        catch (Exception e)
+        {
+            Debug.LogWarning("No weapon found on controlled object.");
+        }
+    }
+
     void ControlManager()
     {
          Vector2 dir = Input.mousePosition - Camera.main.WorldToScreenPoint(controlledObject.transform.position);
          float angle = Mathf.Atan2(dir.y,dir.x) * Mathf.Rad2Deg;
 
-        
-         controlledObject.GetComponent<CharacterMotor>().CharactorRotator(angle);
+        if (currentCharacterMotor)
+            currentCharacterMotor.CharactorRotator(angle);
 
         if (Input.GetButtonDown("Fire1"))
         {
             print("Ping");
-            controlledObject.transform.GetComponentInChildren<Weapon>().PrimaryFire();
+            if (currentWeapon)
+            {
+                currentWeapon.PrimaryFire();
+                OnWeaponChanged?.Invoke(currentWeapon);
+            }
         }
 
         if (Input.GetButtonDown("Fire2"))
         {
-            controlledObject.transform.GetComponentInChildren<Weapon>().SecondaryFire();
+            if (currentWeapon)
+            {
+                currentWeapon.SecondaryFire();
+                OnWeaponChanged?.Invoke(currentWeapon);
+            }
         }
 
         if (Input.GetButtonDown("Reload"))
         {
-            controlledObject.transform.GetComponentInChildren<Weapon>().ReloadAll();
+            if (currentWeapon)
+            {
+                currentWeapon.ReloadAll();
+                OnWeaponChanged?.Invoke(currentWeapon);
+            }
         }
 
         if (Input.GetButton("Ability1"))
@@ -84,8 +127,7 @@ public class PlayerController : Player
         if (controlledObject != lastControlled)
         {
             lastControlled.GetComponent<CharacterMotor>().TakenOver();
-            controlledObject.GetComponent<CharacterMotor>().TakenOver();
-            lastControlled = controlledObject;
+            HandleNewControlledObject();
         }
     }
 
@@ -93,6 +135,6 @@ public class PlayerController : Player
     {
         float yVect = Input.GetAxisRaw("Horizontal");
         float xVect = Input.GetAxisRaw("Vertical");
-        controlledObject.GetComponent<CharacterMotor>().MovementMotor((new Vector2(xVect,yVect).normalized) * characterSpeed);
+        currentCharacterMotor.MovementMotor((new Vector2(xVect,yVect).normalized) * characterSpeed);
     }
 }

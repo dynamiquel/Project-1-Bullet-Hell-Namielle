@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class HealthSection : MonoBehaviour
+public class HealthSection : HUDComponent
 {
     [SerializeField]
     FillBar playerHealthFillBar;

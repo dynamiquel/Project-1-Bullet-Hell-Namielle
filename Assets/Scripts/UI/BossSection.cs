@@ -32,7 +32,9 @@ public class BossSection : HUDComponent
 
         if (boundBoss != null)
         {
-            gameObject.SetActive(true);
+            if (Visible)
+                gameObject.SetActive(true);
+
             boundBoss.OnHealthChanged += HandleBossHealthChanged;
             bossHealthFillBar.MaxValue = boundBoss.MaxHealth;
             HandleBossHealthChanged();
