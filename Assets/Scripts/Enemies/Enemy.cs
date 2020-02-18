@@ -3,9 +3,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+// Only inherit from this class. Do not actually this class as a game object.
+[RequireComponent(typeof(Rigidbody2D))]
+[RequireComponent(typeof(BoxCollider2D))]
 public class Enemy : MonoBehaviour, IDamagable, IScorable
 {
     public string id = "default_enemy";
+
+    [SerializeField] string bulletLayerName = "Bullets";
+    LayerMask bulletLayerMask;
 
     [SerializeField] int _maxHealth = 100;
     public int MaxHealth { get => _maxHealth; set => _maxHealth = value; }
@@ -22,6 +28,19 @@ public class Enemy : MonoBehaviour, IDamagable, IScorable
     {
         Health = MaxHealth;
         DamageableEntityManager.Instance.AddEntity(this);
+        bulletLayerMask = LayerMask.NameToLayer(bulletLayerName);
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        Debug.Log($"Collided with '{collision.gameObject.name}'");
+
+        // Perhaps there's a more efficient way.
+        if (collision.gameObject.layer == bulletLayerMask)
+        {
+            int damage = collision.gameObject.GetComponent<Projectile>().dmg;
+            DamageableEntityManager.Instance?.DamageEntity(this, damage);
+        }
     }
 
     public virtual void OnDamage()

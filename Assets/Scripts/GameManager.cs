@@ -26,42 +26,61 @@ public class GameManager : MonoBehaviour
         OnSceneChanged();
     }
 
-    // Start is called before the first frame update
-    void Start()
-    {
-
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
-
     private void OnLevelWasLoaded(int level)
     {
         OnSceneChanged();
     }
 
+    // Just a less redundant way to show the loading screen, unload the current scene and load a new scene.
+    public void LoadScene(string sceneName)
+    {
+        try
+        {
+            string currentSceneName = SceneManager.GetActiveScene().name;
+
+            SceneManager.LoadSceneAsync("Loading Screen", LoadSceneMode.Additive);
+            // Unloads the current scene first to save memory.
+            SceneManager.UnloadSceneAsync(currentSceneName);
+            StartCoroutine(LoadSceneAsync(sceneName));
+        }
+        catch (Exception e)
+        {
+            Debug.LogWarning($"Could not load scene '{sceneName}'. Does it exist?");
+        }
+    }
+
+    IEnumerator LoadSceneAsync(string sceneName)
+    {
+        AsyncOperation operation = SceneManager.LoadSceneAsync(sceneName);
+
+        while (!operation.isDone)
+        {
+            LoadingScreen.Instance?.SetProgress(Mathf.Clamp01(operation.progress / .9f));
+            yield return null;
+        }
+    }
+
     void OnSceneChanged()
     {
-        Debug.Log(SceneManager.GetActiveScene().name);
+        string sceneName = SceneManager.GetActiveScene().name;
+        Debug.Log(sceneName);
 
-        switch (SceneManager.GetActiveScene().name)
-        {
-            case "Title Screen":
-                GameState = GameState.TitleScreen;
-                break;
-            case "Main Menu":
-                GameState = GameState.MainMenu;
-                break;
-            case "InGame":
-                GameState = GameState.InGame;
-                break;
-            default:
-                GameState = GameState.Other;
-                break;
-        }
+        // If the user is in a playable level.
+        if (sceneName.StartsWith("LVL_"))
+            GameState = GameState.InGame;
+        else
+            switch (sceneName)
+            {
+                case "Title Screen":
+                    GameState = GameState.TitleScreen;
+                    break;
+                case "Main Menu":
+                    GameState = GameState.MainMenu;
+                    break;
+                default:
+                    GameState = GameState.Other;
+                    break;
+            }
     }
 }
 

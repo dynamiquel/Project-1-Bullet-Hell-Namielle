@@ -39,7 +39,7 @@ public class ItemDatabase : MonoBehaviour
     {
         AddInspectorItems();
 
-        ReadWeaponJson();
+        StartCoroutine(ReadWeaponJson());
     }
 
     // Adds all the inspector weapons to the weapons dictionary and then empties the list.
@@ -75,11 +75,11 @@ public class ItemDatabase : MonoBehaviour
     }
 
     // Creates weapon data from the weapons.json file.
-    void ReadWeaponJson()
+    IEnumerator ReadWeaponJson()
     {
-        string path = System.IO.Path.Combine(Application.persistentDataPath, "resources", "weapons.json");
-
-        string json = System.IO.File.ReadAllText(path);
+        var request = UnityEngine.Networking.UnityWebRequest.Get(Application.streamingAssetsPath + "/JSON/Weapons.json");
+        yield return request.SendWebRequest();
+        string json = request.downloadHandler.text;
 
         var weaponsData = Newtonsoft.Json.JsonConvert.DeserializeObject<Dictionary<string, WeaponData>>(json);
 

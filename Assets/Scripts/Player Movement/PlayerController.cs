@@ -56,6 +56,7 @@ public class PlayerController : Player
 
     void HandleNewControlledObject()
     {
+        // So many try-catches ;)
         try
         {
             lastControlled.GetComponentInChildren<IDamagable>().OnHealthChanged -= OnHealthChange;
@@ -65,7 +66,14 @@ public class PlayerController : Player
             Debug.LogWarning("Could not unsubscribe OnHealthChange from last controlled object. Ignore if this is the first controller.");
         }
 
-        GetControlledIDamagable().OnHealthChanged += HandleHealthChange;
+        try
+        {
+            GetControlledIDamagable().OnHealthChanged += HandleHealthChange;
+        }
+        catch (NullReferenceException e)
+        {
+            Debug.LogWarning($"Could not subscribe to OnHealthChanged for currently controlled object as {controlledObject.name} does not have an IDamagable interface.");
+        }
 
         try
         {

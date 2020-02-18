@@ -1,0 +1,21 @@
+{
+    "pistol": {
+        "prefabId": "pistol",
+        "primaryBulletPrefabId": "small",
+        "primaryMaxAmmo": "7",
+        "primaryClipUsage": "1",
+        "primaryFireDamage": "10",
+        "primaryFireVelocity": "2",
+        "primarySizeModi": "1",
+        "primaryExplosive": "False",
+        "shotgun": "False",
+        "twinguns": "False",
+        "secondaryBulletPrefabId": "big",
+        "secondaryMaxAmmo": "7",
+        "secondaryClipUsage": "1",
+        "secondaryFireDamage": "10",
+        "secondaryFireVelocity": "2",
+        "secondarySizeModi": "1",
+        "secondaryExplosive": "False"
+    }
+}

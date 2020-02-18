@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class Projectile : MonoBehaviour
 {
+    public int dmg;
     Rigidbody2D rb;
     float lifetime = 0;
-    int dmg;
     float sizeModifier = 0f;
     bool explosive = false;
     private void Awake()
