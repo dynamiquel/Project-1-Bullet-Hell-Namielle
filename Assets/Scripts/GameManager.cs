@@ -70,18 +70,18 @@ public class GameManager : MonoBehaviour
         if (sceneName.StartsWith("LVL_"))
         {
             GameState = GameState.InGame;
-            musicController?.Stop();
+            musicController?.PlayClip(0, AddState.Queue, 0.2f, true, 0.04f, 0.07f);
         }
         else
             switch (sceneName)
             {
                 case "Title Screen":
                     GameState = GameState.TitleScreen;
-                    musicController?.PlayClip(0, false);
+                    musicController?.PlayClip(0, AddState.DontReplace, 1f, true, .004f);
                     break;
                 case "Main Menu":
                     GameState = GameState.MainMenu;
-                    musicController?.PlayClip(0, false);
+                    musicController?.PlayClip(0, AddState.DontReplace, 1f, true, .05f);
                     break;
                 default:
                     GameState = GameState.Other;
