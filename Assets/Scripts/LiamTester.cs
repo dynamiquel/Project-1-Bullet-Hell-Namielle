@@ -6,11 +6,13 @@ public class LiamTester : MonoBehaviour
 {
     [SerializeField]
     Enemy boss;
+    [SerializeField]
+    Enemy playerish;
 
     // Start is called before the first frame update
     void Start()
     {
-        LevelController.Instance.Objective = new Objective(ObjectiveState.New, "Kill Everything!");
+        LevelController.Instance.Objective = new Objective(ObjectiveState.New, "Press A!");
     }
 
     // Update is called once per frame
@@ -19,10 +21,16 @@ public class LiamTester : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.K))
         {
             if (LevelController.Instance.CurrentBoss)
-                LevelController.Instance.CurrentBoss.Damage(10);
+                DamageableEntityManager.Instance.DamageEntity(LevelController.Instance.CurrentBoss, 10);
         }
 
         if (Input.GetKeyDown(KeyCode.A))
+        {
+            LevelController.Instance.Objective = new Objective(ObjectiveState.Updated, "Kill Big Nan!");
             LevelController.Instance.CurrentBoss = boss;
+        }
+
+        if (Input.GetKeyDown(KeyCode.B))
+            DamageableEntityManager.Instance.DamageEntity(playerish, 5);
     }
 }

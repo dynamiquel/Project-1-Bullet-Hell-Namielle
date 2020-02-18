@@ -14,13 +14,14 @@ public class BossSection : HUDComponent
     void Start()
     {
         LevelController.Instance.OnBossChanged += HandleBossChanged;
+        HandleBossChanged(LevelController.Instance.CurrentBoss);
         gameObject.SetActive(false);
     }
 
-    void HandleBossHealthChanged()
+    void HandleBossHealthChanged(IDamagable health)
     {
         if (bossHealthFillBar != null)
-            bossHealthFillBar.Value = boundBoss.Health;
+            bossHealthFillBar.Value = health.Health;
     }
 
     void HandleBossChanged(Enemy boss)
@@ -37,7 +38,7 @@ public class BossSection : HUDComponent
 
             boundBoss.OnHealthChanged += HandleBossHealthChanged;
             bossHealthFillBar.MaxValue = boundBoss.MaxHealth;
-            HandleBossHealthChanged();
+            HandleBossHealthChanged(boss);
         }
         else
         {

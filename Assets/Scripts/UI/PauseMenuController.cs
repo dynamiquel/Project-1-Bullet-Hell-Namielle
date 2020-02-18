@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class PauseMenuController : MonoBehaviour
 {
+    // Unity Inspector sucks ass. Doesn't even support ArrayLists, so disappointing.
+    public ArrayList disabledComponents = new ArrayList();
+
     [SerializeField] GameObject pauseMenu;
     [SerializeField] GameObject optionsMenu;
     PauseMenuState pauseMenuState = PauseMenuState.Closed;
@@ -33,6 +36,8 @@ public class PauseMenuController : MonoBehaviour
             optionsMenu.SetActive(false);
         if (pauseMenu)
             pauseMenu.SetActive(true);
+
+        PauseGame(true);
     }
 
     public void OpenOptionsMenu()
@@ -53,6 +58,29 @@ public class PauseMenuController : MonoBehaviour
             pauseMenu.SetActive(false);
         if (optionsMenu)
             optionsMenu.SetActive(false);
+
+        PauseGame(false);
+    }
+
+    void PauseGame(bool value)
+    {
+        if (value)
+        {
+            Time.timeScale = 0;
+
+            // Adds components to disabled list.
+            foreach (var item in FindObjectsOfType<PlayerController>())
+                disabledComponents.Add(item);
+        }
+        else
+            Time.timeScale = 1;
+
+        // Enables / disables components.
+        foreach (var item in disabledComponents)
+        {
+            MonoBehaviour component = (MonoBehaviour)item;
+            component.enabled = !value;
+        }
     }
 }
 

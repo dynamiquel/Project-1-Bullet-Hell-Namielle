@@ -2,10 +2,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class LevelController : MonoBehaviour
 {
     public static LevelController Instance { get; private set; }
+    public string levelId = "placeholder";
 
     [SerializeField]
     Enemy _currentBoss;
@@ -18,7 +20,6 @@ public class LevelController : MonoBehaviour
             OnBossChanged?.Invoke(CurrentBoss);
         }
     }
-
     public event Action<Enemy> OnBossChanged;
 
     Objective _objective = new Objective(ObjectiveState.New, "Kill");
@@ -31,13 +32,16 @@ public class LevelController : MonoBehaviour
             OnObjectiveChanged?.Invoke(Objective);
         }
     }
-
     public event Action<Objective> OnObjectiveChanged;
 
     public PlayerController PlayerController { get; set; }
 
     [SerializeField] Transform _decalsTransform;
     public Transform DecalsTransform { get => _decalsTransform; }
+
+    public LevelReport report = new LevelReport();
+
+    public event Action<long> OnScoreChanged;
 
     private void Awake()
     {
@@ -49,9 +53,52 @@ public class LevelController : MonoBehaviour
         {
             Instance = this;
         }
+
+        // Loads the UI as a seperate scene.
+        if (!SceneManager.GetSceneByName("UI").isLoaded)
+            SceneManager.LoadSceneAsync("UI", LoadSceneMode.Additive);
     }
 
     private void Start()
     {
+        report.LevelId = levelId;
+        DamageableEntityManager.Instance.OnEnemyDeath += HandleEnemyDeath;
+        DamageableEntityManager.Instance.OnPlayerDeath += HandlePlayerDeath;
+        PlayerController.OnTakeover += HandleTakeover;
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        UpdateTimer();
+    }
+
+    public void AddBulletsShot(int bulletsShot)
+    {
+        report.BulletsShot += bulletsShot;
+    }
+
+    void UpdateTimer()
+    {
+        // Converts float to double for precision, then rounds back to float.
+        report.Time += Mathf.RoundToInt((float)((double)Time.deltaTime * 1000));
+    }
+
+    void HandleEnemyDeath(Enemy entity)
+    {
+        report.Kills++;
+        report.Score += entity.Score;
+
+        OnScoreChanged?.Invoke(report.Score);
+    }
+
+    void HandlePlayerDeath(Player entity)
+    {
+        report.Deaths++;
+    }
+
+    void HandleTakeover()
+    {
+        report.EnemiesHijacked++;
     }
 }

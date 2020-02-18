@@ -1,10 +1,14 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class DamageableEntityManager : MonoBehaviour
 {
     public static DamageableEntityManager Instance { get; private set; }
+
+    public event Action<Enemy> OnEnemyDeath;
+    public event Action<Player> OnPlayerDeath;
 
     List<IDamagable> DamageableEntities = new List<IDamagable>();
 
@@ -31,6 +35,11 @@ public class DamageableEntityManager : MonoBehaviour
 
     public void KillEntity(IDamagable entity)
     {
+        if (entity is Enemy)
+            OnEnemyDeath?.Invoke((Enemy)entity);
+        else if (entity is Player)
+            OnPlayerDeath?.Invoke((Player)entity);
+
         entity.OnDeath();
     }
 

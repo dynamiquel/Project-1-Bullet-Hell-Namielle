@@ -49,6 +49,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 62692d77762375848b0f4660e0ee1a77, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _visible: 0
+  _opacity: 0
   playerHealthFillBar: {fileID: 2557710907682730076}
 --- !u!1001 &3579842958505552683
 PrefabInstance:
@@ -166,6 +168,46 @@ PrefabInstance:
         type: 3}
       propertyPath: textMode
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1355856926394162039, guid: c2c13c04251f5d943a30d7e89741b3bb,
+        type: 3}
+      propertyPath: gradient.key0.r
+      value: 0.754717
+      objectReference: {fileID: 0}
+    - target: {fileID: 1355856926394162039, guid: c2c13c04251f5d943a30d7e89741b3bb,
+        type: 3}
+      propertyPath: gradient.key0.g
+      value: 0.053051773
+      objectReference: {fileID: 0}
+    - target: {fileID: 1355856926394162039, guid: c2c13c04251f5d943a30d7e89741b3bb,
+        type: 3}
+      propertyPath: gradient.key0.b
+      value: 0.03203986
+      objectReference: {fileID: 0}
+    - target: {fileID: 1355856926394162039, guid: c2c13c04251f5d943a30d7e89741b3bb,
+        type: 3}
+      propertyPath: gradient.key1.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1355856926394162039, guid: c2c13c04251f5d943a30d7e89741b3bb,
+        type: 3}
+      propertyPath: gradient.key1.g
+      value: 0.2770127
+      objectReference: {fileID: 0}
+    - target: {fileID: 1355856926394162039, guid: c2c13c04251f5d943a30d7e89741b3bb,
+        type: 3}
+      propertyPath: gradient.key1.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1355856926394162039, guid: c2c13c04251f5d943a30d7e89741b3bb,
+        type: 3}
+      propertyPath: gradient.ctime0
+      value: 21010
+      objectReference: {fileID: 0}
+    - target: {fileID: 1355856926394162039, guid: c2c13c04251f5d943a30d7e89741b3bb,
+        type: 3}
+      propertyPath: gradient.m_Mode
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1355856926394162042, guid: c2c13c04251f5d943a30d7e89741b3bb,
         type: 3}

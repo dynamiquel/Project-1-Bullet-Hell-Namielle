@@ -11,11 +11,19 @@ public class HealthSection : HUDComponent
     void Start()
     {
         gameObject.SetActive(false);
+        // Subscribe.
+        LevelController.Instance.PlayerController.OnHealthChange += HandlePlayerHealthChanged;
+        // Initialise (required since UI is in a seperate scene).
+        HandlePlayerHealthChanged(LevelController.Instance.PlayerController.GetControlledIDamagable());
     }
 
-    void HandlePlayerHealthChanged()
+    void HandlePlayerHealthChanged(IDamagable entity)
     {
+        Debug.Log("Health changed");
         if (playerHealthFillBar != null)
-            playerHealthFillBar.SetValues(0, 1); // player health, player max health.
+        {
+            gameObject.SetActive(true);
+            playerHealthFillBar.SetValues(entity.Health, entity.MaxHealth); // player health, player max health.
+        }
     }
 }

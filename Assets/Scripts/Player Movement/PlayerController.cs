@@ -6,13 +6,15 @@ using UnityEngine;
 public class PlayerController : Player
 {
     public event Action<Weapon> OnWeaponChanged;
+    public event Action OnTakeover;
+    public event Action<IDamagable> OnHealthChange;
 
     Weapon currentWeapon;
     CharacterMotor currentCharacterMotor;
 
     private void Awake()
     {
-        //Players local save for starting game object its controling
+        // Players local save for starting game object its controlling.
         HandleNewControlledObject();
 
         if (LevelController.Instance)
@@ -30,8 +32,41 @@ public class PlayerController : Player
         MovementManager();
     }
 
+    public Weapon GetWeapon()
+    {
+        return currentWeapon;
+    }
+
+    public IDamagable GetControlledIDamagable()
+    {
+        return controlledObject.GetComponentInChildren<IDamagable>();
+    }
+
+    void HandleHealthChange(IDamagable entity)
+    {
+        if (entity.Health <= 0)
+        {
+            Debug.Log("You died. We haven't done anything past this point ;)");
+            // Unsubscribe so runtime errors don't happen.
+            GetControlledIDamagable().OnHealthChanged -= HandleHealthChange;
+        }
+
+        OnHealthChange?.Invoke(entity);
+    }
+
     void HandleNewControlledObject()
     {
+        try
+        {
+            lastControlled.GetComponentInChildren<IDamagable>().OnHealthChanged -= OnHealthChange;
+        }
+        catch (Exception e)
+        {
+            Debug.LogWarning("Could not unsubscribe OnHealthChange from last controlled object. Ignore if this is the first controller.");
+        }
+
+        GetControlledIDamagable().OnHealthChanged += HandleHealthChange;
+
         try
         {
             currentCharacterMotor = controlledObject.GetComponent<CharacterMotor>();
@@ -48,6 +83,8 @@ public class PlayerController : Player
         {
             currentWeapon = controlledObject.GetComponentInChildren<Weapon>();
             OnWeaponChanged?.Invoke(currentWeapon);
+
+            OnTakeover?.Invoke();
         }
         catch (Exception e)
         {

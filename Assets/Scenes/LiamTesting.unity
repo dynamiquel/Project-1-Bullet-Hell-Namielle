@@ -126,6 +126,7 @@ GameObject:
   - component: {fileID: 103149840}
   - component: {fileID: 103149839}
   - component: {fileID: 103149838}
+  - component: {fileID: 103149844}
   m_Layer: 0
   m_Name: AI1
   m_TagString: Untagged
@@ -252,6 +253,22 @@ Transform:
   m_Father: {fileID: 2084469239}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &103149844
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 103149837}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5e2f64c30fecd014fbca904451c4ad0f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  id: default_enemy
+  _maxHealth: 100
+  _exp: 1
+  _score: 10
 --- !u!1 &155396028
 GameObject:
   m_ObjectHideFlags: 0
@@ -556,6 +573,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: Big Nan
   _maxHealth: 200
+  _exp: 1
+  _score: 10
 --- !u!4 &497071136
 Transform:
   m_ObjectHideFlags: 0
@@ -844,12 +863,12 @@ GameObject:
   m_Component:
   - component: {fileID: 925620164}
   m_Layer: 0
-  m_Name: UI
+  m_Name: Old UI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &925620164
 Transform:
   m_ObjectHideFlags: 0
@@ -1757,6 +1776,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dd94344236408d9429872621ae5fefa2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  levelId: placeholder
   _currentBoss: {fileID: 0}
   _decalsTransform: {fileID: 1018583114}
 --- !u!1 &1496621032
@@ -1981,6 +2001,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   boss: {fileID: 497071135}
+  playerish: {fileID: 103149844}
 --- !u!4 &1830171765
 Transform:
   m_ObjectHideFlags: 0
@@ -3082,12 +3103,12 @@ PrefabInstance:
     - target: {fileID: 2557710907329800176, guid: bf70aa565bd5dc743a9fd20456c3eb09,
         type: 3}
       propertyPath: m_AnchorMax.x
-      value: 0
+      value: 0.7
       objectReference: {fileID: 0}
     - target: {fileID: 2557710907329800176, guid: bf70aa565bd5dc743a9fd20456c3eb09,
         type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bf70aa565bd5dc743a9fd20456c3eb09, type: 3}
@@ -3394,12 +3415,12 @@ PrefabInstance:
     - target: {fileID: 4703216195564221288, guid: 4deb23c85a5cb5f448ccab5b4da1bb3c,
         type: 3}
       propertyPath: m_AnchorMax.x
-      value: 0
+      value: 0.7
       objectReference: {fileID: 0}
     - target: {fileID: 4703216195564221288, guid: 4deb23c85a5cb5f448ccab5b4da1bb3c,
         type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4703216196246335393, guid: 4deb23c85a5cb5f448ccab5b4da1bb3c,
         type: 3}

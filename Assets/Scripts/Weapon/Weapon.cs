@@ -76,13 +76,15 @@ public class Weapon : MonoBehaviour
 
     public void PrimaryFire(int attackModi = 1, int ammoConsumptionModi = 0, float bulletSpeedModi = 1)
     {
-
         if (primaryClipAmmo >= primaryClipUseage + ammoConsumptionModi)
         {
             // Moves all projectiles to its own group.
             Transform parentTrans = null;
             if (LevelController.Instance)
+            {
                 parentTrans = LevelController.Instance.DecalsTransform;
+                LevelController.Instance.AddBulletsShot(1);
+            }
 
             GameObject bullet = GameObject.Instantiate(primaryBulletPrefab, Barrel.position, transform.parent.rotation, parentTrans);
 

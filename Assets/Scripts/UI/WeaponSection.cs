@@ -17,6 +17,7 @@ public class WeaponSection : HUDComponent
     {
         // Get the player controller and subscribe to it's event.
         LevelController.Instance.PlayerController.OnWeaponChanged += HandleWeaponChanged;
+        HandleWeaponChanged(LevelController.Instance.PlayerController.GetWeapon());
     }
 
     void HandleWeaponChanged(Weapon weapon)

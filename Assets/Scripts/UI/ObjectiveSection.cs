@@ -14,6 +14,7 @@ public class ObjectiveSection : HUDComponent
     void Start()
     {
         LevelController.Instance.OnObjectiveChanged += HandleObjectiveChanged;
+        HandleObjectiveChanged(LevelController.Instance.Objective);
     }
 
     // Update is called once per frame
