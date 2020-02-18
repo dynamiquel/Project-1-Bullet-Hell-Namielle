@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class LoadingScreen : MonoBehaviour
+public class LoadingScreenController : MonoBehaviour
 {
-    public static LoadingScreen Instance { get; private set; }
+    public static LoadingScreenController Instance { get; private set; }
 
     [SerializeField] FillBar fillBar;
 

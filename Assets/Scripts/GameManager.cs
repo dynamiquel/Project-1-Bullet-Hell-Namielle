@@ -55,7 +55,7 @@ public class GameManager : MonoBehaviour
 
         while (!operation.isDone)
         {
-            LoadingScreen.Instance?.SetProgress(Mathf.Clamp01(operation.progress / .9f));
+            LoadingScreenController.Instance?.SetProgress(Mathf.Clamp01(operation.progress / .9f));
             yield return null;
         }
     }
