@@ -17,7 +17,7 @@ public class HealthSection : HUDComponent
         HandlePlayerHealthChanged(LevelController.Instance.PlayerController.GetControlledIDamagable());
     }
 
-    void HandlePlayerHealthChanged(IDamagable entity)
+    void HandlePlayerHealthChanged(IDamageable entity)
     {
         Debug.Log("Health changed");
         if (playerHealthFillBar != null)

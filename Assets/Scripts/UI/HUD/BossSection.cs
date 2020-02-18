@@ -18,7 +18,7 @@ public class BossSection : HUDComponent
         gameObject.SetActive(false);
     }
 
-    void HandleBossHealthChanged(IDamagable health)
+    void HandleBossHealthChanged(IDamageable health)
     {
         if (bossHealthFillBar != null)
             bossHealthFillBar.Value = health.Health;

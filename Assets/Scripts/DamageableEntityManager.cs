@@ -10,7 +10,7 @@ public class DamageableEntityManager : MonoBehaviour
     public event Action<Enemy> OnEnemyDeath;
     public event Action<Player> OnPlayerDeath;
 
-    List<IDamagable> DamageableEntities = new List<IDamagable>();
+    List<IDamageable> DamageableEntities = new List<IDamageable>();
 
     private void Awake()
     {
@@ -24,7 +24,7 @@ public class DamageableEntityManager : MonoBehaviour
         }
     }
 
-    public void DamageEntity(IDamagable entity, int damage)
+    public void DamageEntity(IDamageable entity, int damage)
     {
         entity.Health -= damage;
         entity.OnDamage();
@@ -33,23 +33,29 @@ public class DamageableEntityManager : MonoBehaviour
             KillEntity(entity);
     }
 
-    public void KillEntity(IDamagable entity)
+    public void KillEntity(IDamageable entity)
     {
         if (entity is Enemy)
             OnEnemyDeath?.Invoke((Enemy)entity);
         else if (entity is Player)
             OnPlayerDeath?.Invoke((Player)entity);
 
+        RemoveEntity(entity);
+
         entity.OnDeath();
+
+        print($"Enemies remaining: {DamageableEntities.Count}");
     }
 
-    public void AddEntity(IDamagable entity)
+    public void AddEntity(IDamageable entity)
     {
         if (!DamageableEntities.Contains(entity))
             DamageableEntities.Add(entity);
+
+        print($"Enemies remaining: {DamageableEntities.Count}");
     }
 
-    public void RemoveEntity(IDamagable entity)
+    public void RemoveEntity(IDamageable entity)
     {
         DamageableEntities.Remove(entity);
     }

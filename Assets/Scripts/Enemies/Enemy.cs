@@ -6,7 +6,7 @@ using UnityEngine;
 // Only inherit from this class. Do not actually this class as a game object.
 [RequireComponent(typeof(Rigidbody2D))]
 [RequireComponent(typeof(BoxCollider2D))]
-public class Enemy : MonoBehaviour, IDamagable, IScorable
+public class Enemy : MonoBehaviour, IDamageable, IScorable
 {
     public string id = "default_enemy";
 
@@ -22,9 +22,9 @@ public class Enemy : MonoBehaviour, IDamagable, IScorable
     [SerializeField] int _score = 10;
     public int Score { get => _score; set => _score = value; }
 
-    public event Action<IDamagable> OnHealthChanged;
+    public event Action<IDamageable> OnHealthChanged;
 
-    private void Awake()
+    public virtual void Awake()
     {
         Health = MaxHealth;
         DamageableEntityManager.Instance.AddEntity(this);

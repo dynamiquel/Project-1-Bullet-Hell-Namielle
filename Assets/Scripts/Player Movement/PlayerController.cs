@@ -7,7 +7,7 @@ public class PlayerController : Player
 {
     public event Action<Weapon> OnWeaponChanged;
     public event Action OnTakeover;
-    public event Action<IDamagable> OnHealthChange;
+    public event Action<IDamageable> OnHealthChange;
 
     Weapon currentWeapon;
     CharacterMotor currentCharacterMotor;
@@ -37,12 +37,12 @@ public class PlayerController : Player
         return currentWeapon;
     }
 
-    public IDamagable GetControlledIDamagable()
+    public IDamageable GetControlledIDamagable()
     {
-        return controlledObject.GetComponentInChildren<IDamagable>();
+        return controlledObject.GetComponentInChildren<IDamageable>();
     }
 
-    void HandleHealthChange(IDamagable entity)
+    void HandleHealthChange(IDamageable entity)
     {
         if (entity.Health <= 0)
         {
@@ -59,7 +59,7 @@ public class PlayerController : Player
         // So many try-catches ;)
         try
         {
-            lastControlled.GetComponentInChildren<IDamagable>().OnHealthChanged -= OnHealthChange;
+            lastControlled.GetComponentInChildren<IDamageable>().OnHealthChanged -= OnHealthChange;
         }
         catch (Exception e)
         {

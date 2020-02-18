@@ -27,7 +27,7 @@ public class LiamTester : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.F1))
         {
             LevelController.Instance.Objective = new Objective(ObjectiveState.Updated, "Kill Big Nan!");
-            LevelController.Instance.CurrentBoss = boss;
+            
         }
 
         if (Input.GetKeyDown(KeyCode.F3))
