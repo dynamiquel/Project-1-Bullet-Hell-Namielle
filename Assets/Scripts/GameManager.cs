@@ -8,8 +8,9 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; private set; }
 
-    [SerializeField]
-    public GameState GameState { get; set; }
+    [SerializeField] public GameState GameState { get; set; }
+
+    [SerializeField] MusicController musicController;
 
     private void Awake()
     {
@@ -67,15 +68,20 @@ public class GameManager : MonoBehaviour
 
         // If the user is in a playable level.
         if (sceneName.StartsWith("LVL_"))
+        {
             GameState = GameState.InGame;
+            musicController?.Stop();
+        }
         else
             switch (sceneName)
             {
                 case "Title Screen":
                     GameState = GameState.TitleScreen;
+                    musicController?.PlayClip(0, false);
                     break;
                 case "Main Menu":
                     GameState = GameState.MainMenu;
+                    musicController?.PlayClip(0, false);
                     break;
                 default:
                     GameState = GameState.Other;
