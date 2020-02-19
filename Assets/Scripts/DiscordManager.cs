@@ -30,9 +30,7 @@ public class DiscordManager : MonoBehaviour
     public void SetActivity(string state, string details, string largeImageKey = "default", string largeImageText = "", string smallImageKey = "", string smallImageText = "")
     {
         if (discord == null)
-        {
             return;
-        }
 
         var activityManager = discord.GetActivityManager();
         var activity = new Discord.Activity
@@ -41,7 +39,7 @@ public class DiscordManager : MonoBehaviour
             Details = details,
             Timestamps =
             {
-                Start = 0
+                Start = DateTimeOffset.UtcNow.ToUnixTimeSeconds()
             },
             Assets =
             {
