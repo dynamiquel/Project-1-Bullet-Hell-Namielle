@@ -9,12 +9,15 @@ public class PauseMenuController : MonoBehaviour
 
     [SerializeField] GameObject pauseMenu;
     [SerializeField] GameObject optionsMenu;
-    PauseMenuState pauseMenuState = PauseMenuState.Closed;
+    [SerializeField] GameObject hudCanvas;
+    [SerializeField] HubMenuController hubMenuController;
+
+    public PauseMenuState PauseMenuState { get; private set; } = PauseMenuState.Closed;
 
     private void Update()
     {
         if (Input.GetButtonDown("Pause"))
-            switch (pauseMenuState)
+            switch (PauseMenuState)
             {
                 case PauseMenuState.Closed:
                     OpenPauseMenu();
@@ -28,21 +31,52 @@ public class PauseMenuController : MonoBehaviour
             }
     }
 
+    public void PauseGame(bool value)
+    {
+        if (value)
+        {
+            Time.timeScale = 0;
+            Cursor.lockState = CursorLockMode.None;
+
+            // Adds components to disabled list.
+            foreach (var item in FindObjectsOfType<PlayerController>())
+                disabledComponents.Add(item);
+        }
+        else
+        {
+            Time.timeScale = 1;
+            //Cursor.lockState = CursorLockMode.Locked;
+        }
+
+        // Enables / disables components.
+        foreach (var item in disabledComponents)
+        {
+            MonoBehaviour component = (MonoBehaviour)item;
+            component.enabled = !value;
+        }
+
+        hudCanvas.SetActive(!value);
+    }
+
     void OpenPauseMenu()
     {
-        pauseMenuState = PauseMenuState.Main;
+        PauseMenuState = PauseMenuState.Main;
 
         if (optionsMenu)
             optionsMenu.SetActive(false);
         if (pauseMenu)
             pauseMenu.SetActive(true);
 
+        // Closes the Hub if it's open.
+        if (hubMenuController?.HubMenuState != HubMenuState.Closed)
+            hubMenuController.CloseMenu();
+
         PauseGame(true);
     }
 
     public void OpenOptionsMenu()
     {
-        pauseMenuState = PauseMenuState.Options;
+        PauseMenuState = PauseMenuState.Options;
 
         if (pauseMenu)
             pauseMenu.SetActive(false);
@@ -52,7 +86,7 @@ public class PauseMenuController : MonoBehaviour
 
     public void CloseMenu()
     {
-        pauseMenuState = PauseMenuState.Closed;
+        PauseMenuState = PauseMenuState.Closed;
 
         if (pauseMenu)
             pauseMenu.SetActive(false);
@@ -60,27 +94,6 @@ public class PauseMenuController : MonoBehaviour
             optionsMenu.SetActive(false);
 
         PauseGame(false);
-    }
-
-    void PauseGame(bool value)
-    {
-        if (value)
-        {
-            Time.timeScale = 0;
-
-            // Adds components to disabled list.
-            foreach (var item in FindObjectsOfType<PlayerController>())
-                disabledComponents.Add(item);
-        }
-        else
-            Time.timeScale = 1;
-
-        // Enables / disables components.
-        foreach (var item in disabledComponents)
-        {
-            MonoBehaviour component = (MonoBehaviour)item;
-            component.enabled = !value;
-        }
     }
 }
 

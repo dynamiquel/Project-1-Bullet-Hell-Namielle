@@ -13,6 +13,7 @@ public class WeaponData
     public float PrimaryFireVelocity { get; set; }
     public float PrimarySizeModi { get; set; }
     public bool PrimaryExplosive { get; set; }
+    public float PrimaryFireRate { get; set; }
     public bool Shotgun { get; set; }
     public bool Twinguns { get; set; }
 
@@ -20,8 +21,8 @@ public class WeaponData
     public int SecondaryMaxAmmo { get; set; }
     public int SecondaryClipUsage { get; set; }
     public int SecondaryFireDamage { get; set; }
-
     public float SecondaryFireVelocity { get; set; }
     public float SecondarySizeModi { get; set; }
     public bool SecondaryExplosive { get; set; }
+    public float SecondaryFireRate { get; set; }
 }

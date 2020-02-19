@@ -146,6 +146,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b22659a7fe4b6204a985b9aa66b455b8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rb: {fileID: 0}
 --- !u!61 &103149839
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -578,6 +579,8 @@ MonoBehaviour:
   TwinGuns: 0
   primaryExplosive: 0
   secondaryExplosive: 0
+  primaryFireRate: 240
+  secondaryFireRate: 20
 --- !u!65 &509697932
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -797,6 +800,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b22659a7fe4b6204a985b9aa66b455b8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rb: {fileID: 0}
 --- !u!50 &569357947
 Rigidbody2D:
   serializedVersion: 4
@@ -99698,6 +99702,8 @@ MonoBehaviour:
   TwinGuns: 0
   primaryExplosive: 0
   secondaryExplosive: 0
+  primaryFireRate: 0
+  secondaryFireRate: 0
 --- !u!65 &2011799501
 BoxCollider:
   m_ObjectHideFlags: 0

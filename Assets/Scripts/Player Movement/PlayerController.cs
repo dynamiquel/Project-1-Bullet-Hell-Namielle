@@ -9,10 +9,12 @@ public class PlayerController : Player
     public event Action<Weapon> OnWeaponChanged;
     public event Action OnTakeover;
     public event Action<IDamageable> OnHealthChange;
+    public bool CompassMovement { get; set; } = true;
 
     Weapon currentWeapon;
     CharacterMotor currentCharacterMotor;
     PerkController perkController;
+    Vector2 mousePos;
 
     [SerializeField] List<string> activePerks; // temp
 
@@ -113,24 +115,19 @@ public class PlayerController : Player
 
     void ControlManager()
     {
-         Vector2 dir = Input.mousePosition - Camera.main.WorldToScreenPoint(controlledObject.transform.position);
-         float angle = Mathf.Atan2(dir.y,dir.x) * Mathf.Rad2Deg;
-
-        if (currentCharacterMotor)
-            currentCharacterMotor.CharactorRotator(angle);
-
-        if (Input.GetButtonDown("Fire1"))
+        mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        
+        if (Input.GetAxis("Fire1") == 1)
         {
             //print("Ping");
             if (currentWeapon)
             {
-                print(perkController.CanUse("sprint"));
                 currentWeapon.PrimaryFire();
                 OnWeaponChanged?.Invoke(currentWeapon);
             }
         }
 
-        if (Input.GetButtonDown("Fire2"))
+        if (Input.GetAxis("Fire2") == 1)
         {
             if (currentWeapon)
             {
@@ -179,7 +176,7 @@ public class PlayerController : Player
 
     void GlobalManager()
     {
-        this.transform.position = controlledObject.transform.position;
+        transform.position = controlledObject.transform.position;
         //used to keep track of when the character takes control of a new unity and updates the unit's control system.
         if (controlledObject != lastControlled)
         {
@@ -190,14 +187,46 @@ public class PlayerController : Player
 
     void MovementManager()
     {
-        float yVect = Input.GetAxisRaw("Horizontal");
-        float xVect = Input.GetAxisRaw("Vertical");
-        currentCharacterMotor.MovementMotor((new Vector2(xVect,yVect).normalized) * characterSpeed);
+        UpdatePlayerMovement();
+        UpdatePlayerRotation();
+    }
+
+    void UpdatePlayerMovement()
+    {
+        float xVect = Input.GetAxisRaw("Horizontal");
+        float yVect = Input.GetAxisRaw("Vertical");
+
+        if (CompassMovement)
+        {
+            Vector2 controllerPosition = new Vector2(xVect, yVect).normalized;
+            Vector2 desiredLocation = currentCharacterMotor.rb.position + (controllerPosition * 0.02f * characterSpeed); // Float is used to slow down the player as it's too fast without it.
+            currentCharacterMotor.MovementMotor_Compass(desiredLocation);
+        }
+        else
+            currentCharacterMotor.MovementMotor((new Vector2(xVect, yVect).normalized) * characterSpeed);
+    }
+
+    void UpdatePlayerRotation()
+    {
+        Vector2 lookDir;
+        float rotation;
+
+        // If controller.
+        if (Input.GetAxis("Horizontal_2") != 0 || Input.GetAxis("Vertical_2") != 0)
+            lookDir = new Vector2(-Input.GetAxis("Horizontal_2"), Input.GetAxis("Vertical_2"));
+        else // Else if mouse.
+            lookDir = mousePos - currentCharacterMotor.rb.position;
+
+        float angle = Mathf.Atan2(lookDir.y, lookDir.x) * Mathf.Rad2Deg - 90f;
+        currentCharacterMotor.CharactorRotator(angle);
     }
 
     void SetupPerks()
     {
-        foreach (var item in activePerks)
-            perkController.AddPerk(item);
+        if (perkController != null)
+            foreach (var item in activePerks)
+                perkController.AddPerk(item);
+        else
+            Debug.LogError("No Perk Controller was found.");
     }
 }

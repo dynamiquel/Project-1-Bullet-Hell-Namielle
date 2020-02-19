@@ -40,6 +40,13 @@ public class Weapon : MonoBehaviour
     public bool primaryExplosive = false;
     public bool secondaryExplosive = false;
 
+    // Measured in RPM
+    public float primaryFireRate = -1; // -1 = currently no delay, but should be semi-auto.
+    public float secondaryFireRate = -1;
+
+    Coroutine primaryFireDelay;
+    Coroutine secondaryFireDelay;
+
     public Weapon(WeaponData weaponData)
     {
         primaryClipMaxAmmo = weaponData.PrimaryMaxAmmo;
@@ -47,6 +54,7 @@ public class Weapon : MonoBehaviour
         primaryFireDamage = weaponData.PrimaryFireDamage;
         primaryFireSpeed = weaponData.PrimaryFireVelocity;
         primaryExplosive = weaponData.PrimaryExplosive;
+        primaryFireRate = weaponData.PrimaryFireRate;
         Shotgun = weaponData.Shotgun;
         TwinGuns = weaponData.Twinguns;
 
@@ -55,6 +63,7 @@ public class Weapon : MonoBehaviour
         secondaryFireDamage = weaponData.SecondaryFireDamage;
         secondaryFireSpeed = weaponData.SecondaryFireVelocity;
         secondaryExplosive = weaponData.SecondaryExplosive;
+        secondaryFireRate = weaponData.SecondaryFireRate;
     }
 
     private void Awake()
@@ -74,8 +83,30 @@ public class Weapon : MonoBehaviour
         }
     }
 
+    // Wasn't sure if updating time was more efficient than coroutine.
+    IEnumerator StartPrimaryFireDelay()
+    {
+        if (primaryFireRate >= 0)
+        {
+            yield return new WaitForSeconds(60 / primaryFireRate);
+            primaryFireDelay = null;
+        }
+    }
+
+    IEnumerator StartSecondaryFireDelay()
+    {
+        if (primaryFireRate >= 0)
+        {
+            yield return new WaitForSeconds(60 / secondaryFireRate);
+            secondaryFireDelay = null;
+        }
+    }
+
     public void PrimaryFire(int attackModi = 1, int ammoConsumptionModi = 0, float bulletSpeedModi = 1)
     {
+        if (primaryFireDelay != null)
+            return;
+
         if (primaryClipAmmo >= primaryClipUseage + ammoConsumptionModi)
         {
             // Moves all projectiles to its own group.
@@ -117,13 +148,17 @@ public class Weapon : MonoBehaviour
             SkipToFirstBullet:
             bullet.GetComponent<Projectile>().Fired(primaryFireSpeed * bulletSpeedModi, primaryFireDamage * attackModi, primarySizeModi, primaryExplosive);
             primaryClipAmmo -= primaryClipUseage + ammoConsumptionModi;
-            
+
             //print("Pong");
+            primaryFireDelay = StartCoroutine(StartPrimaryFireDelay());
         } 
     }
 
     public void SecondaryFire(int attackModi = 1, int ammoConsumptionModi = 0, float bulletSpeedModi = 1)
     {
+        if (secondaryFireDelay != null)
+            return;
+
         if (secondaryClipAmmo >= secondaryClipUseage + ammoConsumptionModi)
         {
             // Moves all projectiles to its own group.
@@ -133,6 +168,8 @@ public class Weapon : MonoBehaviour
             bullet.GetComponent<Projectile>().Fired(secondaryFireSpeed * bulletSpeedModi, secondaryFireDamage * attackModi, seccondarySizeModi, secondaryExplosive);
             secondaryClipAmmo -= secondaryClipUseage + ammoConsumptionModi;
         }
+
+        secondaryFireDelay = StartCoroutine(StartSecondaryFireDelay());
     }
 
     public void PrimaryReload(float reloadSpeedModi = 1)

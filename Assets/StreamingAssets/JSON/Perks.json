@@ -1,7 +1,7 @@
 {
     "doubleTap": {
         "name": "Double Tap",
-        "description": "Shoot twice the bullets.",
+        "description": "Shoot twice the bullets, but not for free.",
         "cost": "2",
         "cooldown": "5"
     },
