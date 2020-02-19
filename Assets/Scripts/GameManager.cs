@@ -11,6 +11,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] public GameState GameState { get; set; }
 
     [SerializeField] MusicController musicController;
+    [SerializeField] DiscordManager discordManager;
 
     private void Awake()
     {
@@ -71,6 +72,7 @@ public class GameManager : MonoBehaviour
         {
             GameState = GameState.InGame;
             musicController?.PlayClip(0, AddState.Queue, 0.2f, true, 0.04f, 0.07f);
+            discordManager?.SetActivity("In Game", sceneName.Split('_')[1]);
         }
         else
             switch (sceneName)
@@ -78,13 +80,16 @@ public class GameManager : MonoBehaviour
                 case "Title Screen":
                     GameState = GameState.TitleScreen;
                     musicController?.PlayClip(0, AddState.DontReplace, 1f, true, .004f);
+                    discordManager?.SetActivity("Title Screen", "Idle");
                     break;
                 case "Main Menu":
                     GameState = GameState.MainMenu;
                     musicController?.PlayClip(0, AddState.DontReplace, 1f, true, .05f);
+                    discordManager?.SetActivity("Main Menu", "Navigating...");
                     break;
                 default:
                     GameState = GameState.Other;
+                    discordManager?.SetActivity("The Void", "How did I end up here?");
                     break;
             }
     }
