@@ -10,7 +10,7 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] public GameState GameState { get; set; }
 
-    [SerializeField] MusicController musicController;
+    public MusicController musicController;
     [SerializeField] DiscordManager discordManager;
 
     private void Awake()

@@ -42,8 +42,15 @@ public class BossSection : HUDComponent
         }
         else
         {
-            gameObject.SetActive(false);
-            return;
+            try
+            {
+                gameObject.SetActive(false);
+                return;
+            }
+            catch (MissingReferenceException e)
+            {
+
+            }
         }
 
         if (bossNameText != null)

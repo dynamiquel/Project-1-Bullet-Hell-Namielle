@@ -23,6 +23,7 @@ public class PauseMenu : Menu
             case 3:
                 Debug.Log("Exit to Main Menu button clicked");
                 ButtonClick(0);
+                GameManager.Instance.musicController?.Stop();
                 UnityEngine.SceneManagement.SceneManager.LoadScene("Main Menu");
                 break;
         }

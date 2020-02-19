@@ -50,12 +50,13 @@ public class MusicController : MonoBehaviour
     public void Stop()
     {
         if (musicAudioSource.isPlaying)
-            musicAudioSource.Stop();
+            musicAudioSource.clip = null;
     }
 
     // Adds a fade-in transition to the audio source.
     public void StartFadeIn(float speed, float maxVolume)
     {
+        Stop();
         StopAllCoroutines();
         StartCoroutine(FadeIn(speed, maxVolume));
         musicAudioSource.Play();

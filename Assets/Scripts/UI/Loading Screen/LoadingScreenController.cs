@@ -22,6 +22,13 @@ public class LoadingScreenController : MonoBehaviour
 
     public void SetProgress(float percent)
     {
-        fillBar.SetValues(percent);
+        try
+        {
+            fillBar.SetValues(percent);
+        }
+        catch (MissingReferenceException e)
+        {
+
+        }
     }
 }
