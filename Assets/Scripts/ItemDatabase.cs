@@ -18,11 +18,13 @@ public class ItemDatabase : MonoBehaviour
             Instance = this;
             DontDestroyOnLoad(this);
         }
+
+        Init();
     }
 
     public Dictionary<string, Weapon> Weapons { get; private set; } = new Dictionary<string, Weapon>();
     public Dictionary<string, Ability> Abilities { get; private set; } = new Dictionary<string, Ability>();
-    public Dictionary<string, Perk> Perks { get; private set; } = new Dictionary<string, Perk>();
+    public Dictionary<string, PerkData> PerkDatas { get; private set; } = new Dictionary<string, PerkData>();
     public Dictionary<string, Enemy> Enemies { get; private set; } = new Dictionary<string, Enemy>();
 
     // Easy way to allow game objects to be added through the inspector.
@@ -35,11 +37,12 @@ public class ItemDatabase : MonoBehaviour
     [SerializeField]
     List<Enemy> _enemies;
 
-    private void Start()
+    private void Init()
     {
         AddInspectorItems();
 
         StartCoroutine(ReadWeaponJson());
+        StartCoroutine(ReadPerksJson());
     }
 
     // Adds all the inspector weapons to the weapons dictionary and then empties the list.
@@ -59,10 +62,10 @@ public class ItemDatabase : MonoBehaviour
 
         _abilities = null;
 
-        foreach (var perk in _perks)
+        /*foreach (var perk in _perks)
         {
             Perks[perk.id] = perk;
-        }
+        }*/
 
         _perks = null;
 
@@ -86,6 +89,21 @@ public class ItemDatabase : MonoBehaviour
         foreach (var weapon in weaponsData)
         {
             CreateWeapon(weapon.Key, weapon.Value);
+        }
+    }
+
+    IEnumerator ReadPerksJson()
+    {
+        var request = UnityEngine.Networking.UnityWebRequest.Get(Application.streamingAssetsPath + "/JSON/Perks.json");
+        yield return request.SendWebRequest();
+        string json = request.downloadHandler.text;
+
+        var perksData = Newtonsoft.Json.JsonConvert.DeserializeObject<Dictionary<string, PerkData>>(json);
+
+        foreach (var perkData in perksData)
+        {
+            PerkDatas[perkData.Key] = perkData.Value;
+            Debug.Log(perkData.Key);
         }
     }
 

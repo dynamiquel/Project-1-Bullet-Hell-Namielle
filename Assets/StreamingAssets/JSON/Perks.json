@@ -1,0 +1,12 @@
+{
+    "doubleTap": {
+        "name": "Double Tap",
+        "description": "Shoot twice the bullets.",
+        "cost": "2",
+        "cooldown": "5"
+    },
+    "sprint": {
+        "name": "Sprint",
+        "description": "Move twice as fast."
+    }
+}

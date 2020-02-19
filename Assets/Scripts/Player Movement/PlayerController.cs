@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(PerkController))]
 public class PlayerController : Player
 {
     public event Action<Weapon> OnWeaponChanged;
@@ -11,6 +12,9 @@ public class PlayerController : Player
 
     Weapon currentWeapon;
     CharacterMotor currentCharacterMotor;
+    PerkController perkController;
+
+    [SerializeField] List<string> activePerks; // temp
 
     private void Awake()
     {
@@ -19,6 +23,13 @@ public class PlayerController : Player
 
         if (LevelController.Instance)
             LevelController.Instance.PlayerController = this;
+
+        perkController = GetComponent<PerkController>();
+    }
+
+    private void Start()
+    {
+        SetupPerks();
     }
 
     void Update()
@@ -110,9 +121,10 @@ public class PlayerController : Player
 
         if (Input.GetButtonDown("Fire1"))
         {
-            print("Ping");
+            //print("Ping");
             if (currentWeapon)
             {
+                print(perkController.CanUse("sprint"));
                 currentWeapon.PrimaryFire();
                 OnWeaponChanged?.Invoke(currentWeapon);
             }
@@ -181,5 +193,11 @@ public class PlayerController : Player
         float yVect = Input.GetAxisRaw("Horizontal");
         float xVect = Input.GetAxisRaw("Vertical");
         currentCharacterMotor.MovementMotor((new Vector2(xVect,yVect).normalized) * characterSpeed);
+    }
+
+    void SetupPerks()
+    {
+        foreach (var item in activePerks)
+            perkController.AddPerk(item);
     }
 }

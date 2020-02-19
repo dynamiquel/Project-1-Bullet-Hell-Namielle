@@ -67696,8 +67696,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1162322584}
-  - component: {fileID: 1162322583}
   - component: {fileID: 1162322582}
+  - component: {fileID: 1162322583}
   m_Layer: 0
   m_Name: Global Managers - WILL BE MOVED ELSEWHERE
   m_TagString: Untagged
@@ -67732,7 +67732,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _weapons: []
   _abilities: []
-  _perks: []
   _enemies: []
 --- !u!4 &1162322584
 Transform:
@@ -88509,6 +88508,7 @@ MonoBehaviour:
     AbilitiesUsed: 0
     EnemiesHijacked: 0
     PlayTime: 0
+  activePerks: []
 --- !u!4 &1350258631
 Transform:
   m_ObjectHideFlags: 0

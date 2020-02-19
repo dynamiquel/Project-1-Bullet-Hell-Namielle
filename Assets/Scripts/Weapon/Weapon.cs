@@ -117,7 +117,8 @@ public class Weapon : MonoBehaviour
             SkipToFirstBullet:
             bullet.GetComponent<Projectile>().Fired(primaryFireSpeed * bulletSpeedModi, primaryFireDamage * attackModi, primarySizeModi, primaryExplosive);
             primaryClipAmmo -= primaryClipUseage + ammoConsumptionModi;
-            print("Pong");
+            
+            //print("Pong");
         } 
     }
 
