@@ -5,8 +5,6 @@ using UnityEngine;
 [RequireComponent(typeof(AudioSource))]
 public class MusicController : MonoBehaviour
 {
-    public List<AudioClip> musicClips = new List<AudioClip>();
-
     AudioSource musicAudioSource;
     Coroutine currentQueueWait;
 
@@ -24,14 +22,11 @@ public class MusicController : MonoBehaviour
     /// <param name="loop">Whether the clip should be looped</param>
     /// <param name="fadeInSpeed">Speed at which to fade-in. 1 = instantaneous</param>
     /// <param name="fadeOutSpeed">Speed at which to fade-out the previous clip (if AddState.Queue). 1 = instantaneous</param>
-    public void PlayClip(int clipIndex, AddState addState, float maxVolume = 1f, bool loop = false, float fadeInSpeed = 1f, float fadeOutSpeed = 1f)
+    public void PlayClip(string audioClipId, AddState addState, float maxVolume = 1f, bool loop = false, float fadeInSpeed = 1f, float fadeOutSpeed = 1f)
     {
-        if (clipIndex >= musicClips.Count)
-            return;
-
         if (!musicAudioSource.isPlaying || addState == AddState.Replace)
         {
-            musicAudioSource.clip = musicClips[clipIndex];
+            musicAudioSource.clip = AudioDatabase.GetClip(audioClipId);
             StartFadeIn(fadeInSpeed, maxVolume);
             musicAudioSource.loop = loop;
 
@@ -42,7 +37,7 @@ public class MusicController : MonoBehaviour
                 StopCoroutine(currentQueueWait);
 
             StartFadeOut(fadeOutSpeed);        
-            currentQueueWait = StartCoroutine(WaitForStop(clipIndex, maxVolume, loop, fadeInSpeed));
+            currentQueueWait = StartCoroutine(WaitForStop(audioClipId, maxVolume, loop, fadeInSpeed));
         }
     }
 
@@ -97,10 +92,10 @@ public class MusicController : MonoBehaviour
         Stop();
     }
 
-    IEnumerator WaitForStop(int clipIndex, float maxVolume, bool loop, float fadeInSpeed)
+    IEnumerator WaitForStop(string audioClipId, float maxVolume, bool loop, float fadeInSpeed)
     {
         yield return new WaitUntil(() => !musicAudioSource.isPlaying);
-        PlayClip(clipIndex, AddState.DontReplace, maxVolume, loop, fadeInSpeed);
+        PlayClip(audioClipId, AddState.DontReplace, maxVolume, loop, fadeInSpeed);
     }
 }
 

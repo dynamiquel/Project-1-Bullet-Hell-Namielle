@@ -18,6 +18,15 @@ public class PlayerController : Player
 
     [SerializeField] List<string> activePerks; // temp
 
+    #region Walk Sounds
+    [SerializeField] AudioSource feetAudioSource;
+    [SerializeField] float walkSoundRate = 1f;
+    float currentWalkSoundDelay = 0.5f;
+    [SerializeField]
+    string[] walkAudioClipsId;
+    byte currentWalkAudioIndex = 0;
+    #endregion
+
     private void Awake()
     {
         // Players local save for starting game object its controlling.
@@ -196,6 +205,10 @@ public class PlayerController : Player
         float xVect = Input.GetAxisRaw("Horizontal");
         float yVect = Input.GetAxisRaw("Vertical");
 
+        // If no movement...
+        if (xVect == 0 && yVect == 0)
+            return;
+
         if (CompassMovement)
         {
             Vector2 controllerPosition = new Vector2(xVect, yVect).normalized;
@@ -204,6 +217,8 @@ public class PlayerController : Player
         }
         else
             currentCharacterMotor.MovementMotor((new Vector2(xVect, yVect).normalized) * characterSpeed);
+
+        UpdateWalkSound();
     }
 
     void UpdatePlayerRotation()
@@ -228,5 +243,19 @@ public class PlayerController : Player
                 perkController.AddPerk(item);
         else
             Debug.LogError("No Perk Controller was found.");
+    }
+
+    void UpdateWalkSound()
+    {
+        if ((currentWalkSoundDelay += Time.deltaTime) >= walkSoundRate)
+        {
+            currentWalkSoundDelay = 0f;
+            feetAudioSource.PlayOneShot(AudioDatabase.GetClip(walkAudioClipsId[currentWalkAudioIndex]));
+
+            if (currentWalkAudioIndex < walkAudioClipsId.Length - 1)
+                currentWalkAudioIndex++;
+            else
+                currentWalkAudioIndex = 0;
+        }
     }
 }

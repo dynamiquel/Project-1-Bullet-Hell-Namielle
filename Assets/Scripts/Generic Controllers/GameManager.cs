@@ -10,7 +10,9 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] public GameState GameState { get; set; }
 
-    public MusicController musicController;
+    [SerializeField]
+    MusicController _musicController;
+    public MusicController MusicController { get => _musicController; private set => _musicController = value; }
     [SerializeField] DiscordManager discordManager;
 
     private void Awake()
@@ -71,7 +73,7 @@ public class GameManager : MonoBehaviour
         if (sceneName.StartsWith("LVL_"))
         {
             GameState = GameState.InGame;
-            musicController?.PlayClip(0, AddState.Queue, 0.2f, true, 0.04f, 0.07f);
+            MusicController?.PlayClip("Main Menu", AddState.Queue, 0.05f, true, 0.04f, 0.07f);
             discordManager?.SetActivity("In Game", sceneName.Split('_')[1]);
         }
         else
@@ -79,12 +81,12 @@ public class GameManager : MonoBehaviour
             {
                 case "Title Screen":
                     GameState = GameState.TitleScreen;
-                    musicController?.PlayClip(0, AddState.DontReplace, 1f, true, .004f);
+                    MusicController?.PlayClip("Main Menu", AddState.DontReplace, 1f, true, .004f);
                     discordManager?.SetActivity("Title Screen", "Idle");
                     break;
                 case "Main Menu":
                     GameState = GameState.MainMenu;
-                    musicController?.PlayClip(0, AddState.DontReplace, 1f, true, .05f);
+                    MusicController?.PlayClip("Main Menu", AddState.DontReplace, 1f, true, .05f);
                     discordManager?.SetActivity("Main Menu", "Navigating...");
                     break;
                 default:

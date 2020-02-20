@@ -491,8 +491,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 393602f446343944ba0fb287a4b1dffd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  musicClips:
-  - {fileID: 8300000, guid: d80515f8b894f6b4088f2170fe0f0955, type: 3}
 --- !u!1 &699990890
 GameObject:
   m_ObjectHideFlags: 0
@@ -621,6 +619,7 @@ GameObject:
   - component: {fileID: 1371752613}
   - component: {fileID: 1371752612}
   - component: {fileID: 1371752614}
+  - component: {fileID: 1371752615}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -640,7 +639,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0043126f91c12404dbad15d47340dbc5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  musicController: {fileID: 658003484}
+  _musicController: {fileID: 658003484}
   discordManager: {fileID: 1371752614}
 --- !u!4 &1371752613
 Transform:
@@ -670,6 +669,58 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   clientId: 679471264213106737
+--- !u!114 &1371752615
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1371752611}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 98f9932d87deccf438e854108fdcb8b3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  soundClips:
+  - id: Main Menu
+    audioClip: {fileID: 8300000, guid: d80515f8b894f6b4088f2170fe0f0955, type: 3}
+  - id: Enemy Death
+    audioClip: {fileID: 8300000, guid: ce4d0b7dab2328d4883b3c1d825e793b, type: 3}
+  - id: Enemy Death 2
+    audioClip: {fileID: 8300000, guid: 8083673fa332a284781e71b420c5146c, type: 3}
+  - id: Enemy Death 3
+    audioClip: {fileID: 8300000, guid: 1e9ba0607db81d243b4c82267fa3c653, type: 3}
+  - id: Enemy Spotted
+    audioClip: {fileID: 8300000, guid: a6fbc09a156c4c3469480101aca6b911, type: 3}
+  - id: Enemy Spotted 2
+    audioClip: {fileID: 8300000, guid: eaded896583a3e44983f43bd1a4d96d5, type: 3}
+  - id: Body Swap
+    audioClip: {fileID: 8300000, guid: 17714e0416bad084da2d017308f4ff66, type: 3}
+  - id: Pickup
+    audioClip: {fileID: 8300000, guid: e3cfa60e3e79db84a90a1c066ccea0e0, type: 3}
+  - id: Select
+    audioClip: {fileID: 8300000, guid: 1da915e34b698974f9e5d40b23b27af4, type: 3}
+  - id: Walk
+    audioClip: {fileID: 8300000, guid: 59dd93f858a5caa48b701321581eaf89, type: 3}
+  - id: Walk 2
+    audioClip: {fileID: 8300000, guid: b936bec648130a74d83c1d861aa57a4e, type: 3}
+  - id: Walk 3
+    audioClip: {fileID: 8300000, guid: 1b48b848fbbaaf34686e6a819a5eacf1, type: 3}
+  - id: Walk 4
+    audioClip: {fileID: 8300000, guid: d941c64eb0fb6a64b84dbd9269fb611d, type: 3}
+  - id: default
+    audioClip: {fileID: 8300000, guid: 1da915e34b698974f9e5d40b23b27af4, type: 3}
+  - id: Machine Gun
+    audioClip: {fileID: 8300000, guid: 11d54f53c7801074f89f7d61092bfc2b, type: 3}
+  - id: Machine Gun 2
+    audioClip: {fileID: 8300000, guid: cf454b0818ffdfe41bfe11ca0fc69061, type: 3}
+  - id: Pistol
+    audioClip: {fileID: 8300000, guid: 9e273f66fb907b241814096a65b48815, type: 3}
+  - id: Reload
+    audioClip: {fileID: 8300000, guid: 4c96dadb7ed623646a6a9affd57689bd, type: 3}
+  - id: Reload 2
+    audioClip: {fileID: 8300000, guid: a3010f65d139dba419f5dbea10a0e4f4, type: 3}
+  destroyAfterInjection: 1
 --- !u!1 &1676149352
 GameObject:
   m_ObjectHideFlags: 0

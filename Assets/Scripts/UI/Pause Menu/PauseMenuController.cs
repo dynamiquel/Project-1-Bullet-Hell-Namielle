@@ -45,7 +45,7 @@ public class PauseMenuController : MonoBehaviour
         else
         {
             Time.timeScale = 1;
-            //Cursor.lockState = CursorLockMode.Locked;
+            Cursor.lockState = CursorLockMode.Confined;
         }
 
         // Enables / disables components.

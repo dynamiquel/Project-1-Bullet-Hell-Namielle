@@ -84,6 +84,7 @@ public class ItemDatabase : MonoBehaviour
         yield return request.SendWebRequest();
         string json = request.downloadHandler.text;
 
+
         var weaponsData = Newtonsoft.Json.JsonConvert.DeserializeObject<Dictionary<string, WeaponData>>(json);
 
         foreach (var weapon in weaponsData)
@@ -97,6 +98,7 @@ public class ItemDatabase : MonoBehaviour
         var request = UnityEngine.Networking.UnityWebRequest.Get(Application.streamingAssetsPath + "/JSON/Perks.json");
         yield return request.SendWebRequest();
         string json = request.downloadHandler.text;
+
 
         var perksData = Newtonsoft.Json.JsonConvert.DeserializeObject<Dictionary<string, PerkData>>(json);
 

@@ -44,6 +44,14 @@ public class Weapon : MonoBehaviour
     public float primaryFireRate = -1; // -1 = currently no delay, but should be semi-auto.
     public float secondaryFireRate = -1;
 
+    [SerializeField] string primaryBulletSoundId;
+    [SerializeField] string primaryReloadSoundId;
+    [SerializeField] string secondaryBulletSoundId;
+    [SerializeField] string secondaryReloadSoundId;
+
+    AudioSource primaryFireAudioSource;
+    AudioSource primaryReloadAudioSource;
+
     Coroutine primaryFireDelay;
     Coroutine secondaryFireDelay;
 
@@ -70,16 +78,24 @@ public class Weapon : MonoBehaviour
     {
         //Search item database for clip ammo for each weapon and set it here and there useages and there stats
         //Set both bulletPrefab here from database
-        foreach(Transform a in transform)
+
+        var transforms = GetComponentsInChildren<Transform>();
+
+        foreach(var a in transforms)
         {
             if (a.name == "Barrel M")
+            {
                 Barrel = a;
+                primaryFireAudioSource = Barrel.GetComponent<AudioSource>();
+            }
             else if (a.name == "Barrel S1")
                 SBarrel1 = a;
             else if (a.name == "Barrel S2")
                 SBarrel2 = a;
             else if (a.name == "Barrel T1")
                 TBarrel = a;
+            else if (a.name == "Model")
+                primaryReloadAudioSource = a.GetComponent<AudioSource>();
         }
     }
 
@@ -149,6 +165,7 @@ public class Weapon : MonoBehaviour
             bullet.GetComponent<Projectile>().Fired(primaryFireSpeed * bulletSpeedModi, primaryFireDamage * attackModi, primarySizeModi, primaryExplosive);
             primaryClipAmmo -= primaryClipUseage + ammoConsumptionModi;
 
+            primaryFireAudioSource.PlayOneShot(AudioDatabase.GetClip(primaryBulletSoundId));
             //print("Pong");
             primaryFireDelay = StartCoroutine(StartPrimaryFireDelay());
         } 
@@ -169,12 +186,14 @@ public class Weapon : MonoBehaviour
             secondaryClipAmmo -= secondaryClipUseage + ammoConsumptionModi;
         }
 
+        primaryFireAudioSource.PlayOneShot(AudioDatabase.GetClip(secondaryBulletSoundId));
         secondaryFireDelay = StartCoroutine(StartSecondaryFireDelay());
     }
 
     public void PrimaryReload(float reloadSpeedModi = 1)
     {
         primaryClipAmmo = primaryClipMaxAmmo;
+        primaryReloadAudioSource.PlayOneShot(AudioDatabase.GetClip(primaryReloadSoundId));
     }
 
     public void SecondaryReload(float reloadSpeedModi = 1)
