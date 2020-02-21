@@ -167,6 +167,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
+    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
+      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_text: Press any button to start
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: c8cfe5e0b0d57784586e199404a2a9f9, type: 2}
@@ -377,7 +379,7 @@ AudioSource:
   m_GameObject: {fileID: 658003481}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 243630671968916298, guid: 3bacbe95e0090d947b84ad16baafa0d4,
+  OutputAudioMixerGroup: {fileID: 243218166176141550, guid: 3bacbe95e0090d947b84ad16baafa0d4,
     type: 2}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
@@ -591,6 +593,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
+    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
+      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_Sprite: {fileID: 0}
   m_Type: 0
   m_PreserveAspect: 0
