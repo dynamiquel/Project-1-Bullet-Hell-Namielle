@@ -31,8 +31,8 @@ public class PerkTooltip : MonoBehaviour
     {
         if (relativeToMouse)
         {
-            x += (rectTransform.sizeDelta.x / 2) + 2;
-            y += (rectTransform.sizeDelta.y / 2) + 2;
+            x += (rectTransform.sizeDelta.x / 2);
+            y += (rectTransform.sizeDelta.y / 2);
         }
 
         transform.position = new Vector3(x, y, transform.position.z);
