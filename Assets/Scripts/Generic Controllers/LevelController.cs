@@ -78,6 +78,23 @@ public class LevelController : MonoBehaviour
         report.BulletsShot += bulletsShot;
     }
 
+    public void EndLevel()
+    {
+        Debug.Log("Ending level...");
+        // Save all data
+        PlayerController.stats.UpdatePlayerProgress();
+        PlayerController.stats.CreateLevelReport();
+
+        // Save perks
+        foreach (var key in PlayerController.PerkController.ActivePerks.Keys)
+            PlayerController.stats.PersistentPlayerData.PerkUnlocks.Add(key, true);
+
+        SaveManager.Instance.Save(PlayerController.stats.PersistentPlayerData);
+
+        // Show summary screen
+        Debug.Log("Level ended");
+    }
+
     void UpdateTimer()
     {
         // Converts float to double for precision, then rounds back to float.

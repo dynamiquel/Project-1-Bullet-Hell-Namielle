@@ -45,7 +45,7 @@ public class SaveManager : MonoBehaviour
         finally
         {
             fs.Close();
-            Debug.Log("File saved");
+            Debug.Log($"File saved at: {saveFilePath}");
         }
     }
 
@@ -72,6 +72,8 @@ public class SaveManager : MonoBehaviour
                 Debug.Log("File loaded");
             }
         }
+        else
+            Debug.Log($"No save file found at {saveFilePath}");
 
         return persistentPlayerData;
     }

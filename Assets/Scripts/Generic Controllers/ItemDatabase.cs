@@ -6,6 +6,7 @@ using UnityEngine;
 public class ItemDatabase : MonoBehaviour
 {
     public static ItemDatabase Instance { get; private set; }
+    public bool Loaded { get; private set; }
 
     private void Awake()
     {
@@ -43,6 +44,8 @@ public class ItemDatabase : MonoBehaviour
 
         StartCoroutine(ReadWeaponJson());
         StartCoroutine(ReadPerksJson());
+
+        Loaded = true;
     }
 
     // Adds all the inspector weapons to the weapons dictionary and then empties the list.

@@ -9,8 +9,8 @@ public class Player : MonoBehaviour
     public GameObject lastControlled;
     public PlayerStats stats;
 
-    private void Start()
+    public virtual void Start()
     {
-       // stats = new PlayerStats(SaveManager.Instance.Load());
+       stats = new PlayerStats(SaveManager.Instance.Load());
     }
 }

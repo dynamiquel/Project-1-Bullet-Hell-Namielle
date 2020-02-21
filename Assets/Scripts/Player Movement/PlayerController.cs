@@ -38,9 +38,10 @@ public class PlayerController : Player
         PerkController = GetComponent<PerkController>();
     }
 
-    private void Start()
+    public override void Start()
     {
-        SetupPerks();
+        base.Start();
+        StartCoroutine(SetupPerks());
     }
 
     void Update()
@@ -236,11 +237,18 @@ public class PlayerController : Player
         currentCharacterMotor.CharactorRotator(angle);
     }
 
-    void SetupPerks()
+    IEnumerator SetupPerks()
     {
+        yield return new WaitUntil(() => ItemDatabase.Instance.Loaded);
+        foreach (var savedPerk in stats.PersistentPlayerData.PerkUnlocks)
+            activePerks.Add(savedPerk.Key);
+
         if (PerkController != null)
+        {
             foreach (var item in activePerks)
                 PerkController.AddPerk(item);
+            Debug.Log("Perks added to player");
+        }
         else
             Debug.LogError("No Perk Controller was found.");
     }
