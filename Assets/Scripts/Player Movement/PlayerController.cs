@@ -13,7 +13,7 @@ public class PlayerController : Player
 
     Weapon currentWeapon;
     CharacterMotor currentCharacterMotor;
-    PerkController perkController;
+    public PerkController PerkController { get; private set; }
     Vector2 mousePos;
 
     [SerializeField] List<string> activePerks; // temp
@@ -35,7 +35,7 @@ public class PlayerController : Player
         if (LevelController.Instance)
             LevelController.Instance.PlayerController = this;
 
-        perkController = GetComponent<PerkController>();
+        PerkController = GetComponent<PerkController>();
     }
 
     private void Start()
@@ -238,9 +238,9 @@ public class PlayerController : Player
 
     void SetupPerks()
     {
-        if (perkController != null)
+        if (PerkController != null)
             foreach (var item in activePerks)
-                perkController.AddPerk(item);
+                PerkController.AddPerk(item);
         else
             Debug.LogError("No Perk Controller was found.");
     }

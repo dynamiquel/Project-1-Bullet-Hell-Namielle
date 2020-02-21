@@ -4,8 +4,14 @@ using UnityEngine;
 
 public class PerkMenu : Menu
 {
+    public PerkController PerkController
+    {
+        get => LevelController.Instance.PlayerController.PerkController;
+    }
+
     [SerializeField] GameObject perkToolTipPrefab;
     [SerializeField] GameObject perkSlotPrefab;
+    [SerializeField] Transform perkGrid;
     PerkTooltip perkTooltip;
 
     PerkData perkData = null;
@@ -16,13 +22,19 @@ public class PerkMenu : Menu
         CreatePerkSlots();
         CreatePerkTooltip();
     }
+
     private void OnGUI()
     {
         // Will improve. 
         if (perkData != null)
         {
-            Vector2 v2 = Input.mousePosition;
-            perkTooltip.SetPosition(v2.x, v2.y, true);
+            Vector2 position;
+            if (!isController)
+                position = Input.mousePosition;
+            else // Eh, it'll do I guess.
+                position = new Vector2(0, 0);
+
+            perkTooltip.SetPosition(position.x, position.y, true);
         }
         else
             perkTooltip.Clear();
@@ -44,6 +56,11 @@ public class PerkMenu : Menu
         perkData = null;
     }
 
+    public void BuyPerk(PerkSlot perkSlot)
+    {
+
+    }
+
     void CreatePerkTooltip()
     {
         perkTooltip = Instantiate(perkToolTipPrefab, transform).GetComponent<PerkTooltip>();
@@ -54,7 +71,7 @@ public class PerkMenu : Menu
     {
         foreach (var perk in ItemDatabase.Instance.PerkDatas)
         {
-            PerkSlot perkSlot = Instantiate(perkSlotPrefab, transform).GetComponent<PerkSlot>();
+            PerkSlot perkSlot = Instantiate(perkSlotPrefab, perkGrid).GetComponent<PerkSlot>();
             perkSlot.Setup(perk.Key, this);
             perkSlots.Add(perkSlot);
         }
@@ -64,5 +81,8 @@ public class PerkMenu : Menu
     {
         foreach (var slot in perkSlots)
             slot.SetContent();
+
+        if (perkSlots.Count > 0)
+            GetComponent<UnityEngine.EventSystems.EventSystem>().firstSelectedGameObject = perkSlots[0].gameObject;
     }
 }

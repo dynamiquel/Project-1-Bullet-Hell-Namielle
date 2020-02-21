@@ -3,13 +3,26 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
+[RequireComponent(typeof(Image))]
+[RequireComponent(typeof(Button))]
+[RequireComponent(typeof(BoxCollider2D))]
 public class PerkSlot : MonoBehaviour, ISelectHandler, IPointerEnterHandler, IPointerExitHandler
 {
     [SerializeField] string perkDataId;
     [SerializeField] TextMeshProUGUI perkNameText;
+    [SerializeField] Color32 unlockedColour = new Color32(66, 245, 123, 255);
+    [SerializeField] Color32 lockedColour = new Color32(230, 189, 9, 255);
+    [SerializeField] Color32 outOfReachColour = new Color32(214, 92, 4, 128);
     PerkMenu perkMenu;
     PerkData perkData;
+    Image fillImage;
+
+    private void Awake()
+    {
+        fillImage = GetComponent<Image>();
+    }
 
     private void Start()
     {
@@ -34,13 +47,7 @@ public class PerkSlot : MonoBehaviour, ISelectHandler, IPointerEnterHandler, IPo
     public void Click()
     {
         // if not already unlocked.
-        Buy();
-    }
-
-    void Buy()
-    {
-        // if have enough points.
-        // add to player's perk list.
+        perkMenu.BuyPerk(this);
     }
 
     public void Setup(string perkId, PerkMenu perkMenu)
@@ -57,5 +64,14 @@ public class PerkSlot : MonoBehaviour, ISelectHandler, IPointerEnterHandler, IPo
         // if unlocked, set text to green.
         // if cant afford, set text to red.
         // else, grey.
+
+        // Player has unlocked perk
+        if (perkMenu.PerkController != null)
+        {
+            if (perkMenu.PerkController.ActivePerks.ContainsKey(perkDataId))
+                fillImage.color = unlockedColour;
+            else
+                fillImage.color = lockedColour;
+        }
     }
 }
