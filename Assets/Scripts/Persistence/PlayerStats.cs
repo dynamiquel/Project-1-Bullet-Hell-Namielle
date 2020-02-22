@@ -12,12 +12,17 @@ public class PlayerStats
     public int AbilitiesUsed = 0;
     public int EnemiesHijacked = 0;
     public long PlayTime = 0;
-    public int Level { get => PersistentPlayerData.Exp / 100; } // temp calculation
+    public int Level { get => UnityEngine.Mathf.FloorToInt(PersistentPlayerData.Exp / 100f); } // temp calculation
     int previousLevel;
+
+    public event Action<int> OnPlayerLevelUp;
 
     public PlayerStats(PersistentPlayerData persistentPlayerData)
     {
         PersistentPlayerData = persistentPlayerData;
+        previousLevel = Level;
+        UnityEngine.Debug.Log(Level);
+        UnityEngine.Debug.Log(previousLevel);
     }
 
     // Call when level is complete so player data is generated.
@@ -49,5 +54,12 @@ public class PlayerStats
     public void AddExp(int exp)
     {
         PersistentPlayerData.Exp += exp;
+        
+        if (Level > previousLevel)
+        {
+            UnityEngine.Debug.Log("Level up!");
+            OnPlayerLevelUp?.Invoke(Level);
+            previousLevel = Level;
+        }
     }
 }

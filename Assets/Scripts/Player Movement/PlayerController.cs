@@ -40,6 +40,7 @@ public class PlayerController : Player
     {
         base.Start();
         StartCoroutine(SetupPerks());
+        stats.OnPlayerLevelUp += HandlePlayerLevelUp;
     }
 
     void Update()
@@ -265,5 +266,11 @@ public class PlayerController : Player
             else
                 currentWalkAudioIndex = 0;
         }
+    }
+
+    void HandlePlayerLevelUp(int newLevel)
+    {
+        Debug.Log(string.Format("Player is now level: {0}", newLevel));
+        stats.PersistentPlayerData.PerkPoints++;
     }
 }

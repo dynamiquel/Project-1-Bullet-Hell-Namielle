@@ -23,7 +23,8 @@ public class ItemDatabase : MonoBehaviour
         Init();
     }
 
-    public Dictionary<string, Weapon> Weapons { get; private set; } = new Dictionary<string, Weapon>();
+    //public Dictionary<string, Weapon> Weapons { get; private set; } = new Dictionary<string, Weapon>();
+    public Dictionary<string, WeaponData> WeaponDatas { get; private set; } = new Dictionary<string, WeaponData>();
     public Dictionary<string, Ability> Abilities { get; private set; } = new Dictionary<string, Ability>();
     public Dictionary<string, PerkData> PerkDatas { get; private set; } = new Dictionary<string, PerkData>();
     public Dictionary<string, Enemy> Enemies { get; private set; } = new Dictionary<string, Enemy>();
@@ -51,10 +52,10 @@ public class ItemDatabase : MonoBehaviour
     // Adds all the inspector weapons to the weapons dictionary and then empties the list.
     void AddInspectorItems()
     {
-        foreach (var weapon in _weapons)
+        /*foreach (var weapon in _weapons)
         {
             Weapons[weapon.id] = weapon;
-        }
+        }*/
 
         _weapons = null;
 
@@ -92,7 +93,8 @@ public class ItemDatabase : MonoBehaviour
 
         foreach (var weapon in weaponsData)
         {
-            CreateWeapon(weapon.Key, weapon.Value);
+            //CreateWeapon(weapon.Key, weapon.Value);
+            WeaponDatas[weapon.Key] = weapon.Value;
         }
     }
 
@@ -113,7 +115,7 @@ public class ItemDatabase : MonoBehaviour
     }
 
     // Creates a weapon with the given weapon data.
-    void CreateWeapon(string id, WeaponData weaponData)
+    /*void CreateWeapon(string id, WeaponData weaponData)
     {
         Weapon weapon = new Weapon(weaponData);
 
@@ -123,5 +125,5 @@ public class ItemDatabase : MonoBehaviour
 
         // Adds the newly created weapon to the Weapons dictionary.
         Weapons[id] = weapon;
-    }
+    }*/
 }

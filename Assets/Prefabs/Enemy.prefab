@@ -245,6 +245,7 @@ MonoBehaviour:
   destroyAudioPlayer: {fileID: 6905128238690889380, guid: c0bb2c8873a75d34398ca0edefb3d9d7,
     type: 3}
   audioClipId: Enemy Death
+  volume: 1
   lifeTime: 0.5
 --- !u!1 &3512358277247769315
 GameObject:
@@ -391,6 +392,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 90
+      objectReference: {fileID: 0}
+    - target: {fileID: 930831416717374439, guid: 7de09873c6c9e4544874064541265e27,
+        type: 3}
+      propertyPath: secondaryFireDamage
+      value: 200
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7de09873c6c9e4544874064541265e27, type: 3}

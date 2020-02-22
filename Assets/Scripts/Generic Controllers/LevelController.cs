@@ -99,6 +99,7 @@ public class LevelController : MonoBehaviour
     {
         PlayerController.stats.Kills++;
         PlayerController.stats.Score += entity.Score;
+        PlayerController.stats.AddExp(entity.Exp);
 
         OnScoreChanged?.Invoke(PlayerController.stats.Score);
     }
