@@ -21,8 +21,6 @@ public class PlayerStats
     {
         PersistentPlayerData = persistentPlayerData;
         previousLevel = Level;
-        UnityEngine.Debug.Log(Level);
-        UnityEngine.Debug.Log(previousLevel);
     }
 
     // Call when level is complete so player data is generated.
@@ -57,7 +55,6 @@ public class PlayerStats
         
         if (Level > previousLevel)
         {
-            UnityEngine.Debug.Log("Level up!");
             OnPlayerLevelUp?.Invoke(Level);
             previousLevel = Level;
         }
