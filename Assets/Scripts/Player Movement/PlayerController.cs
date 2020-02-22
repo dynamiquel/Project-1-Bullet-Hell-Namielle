@@ -130,7 +130,10 @@ public class PlayerController : Player
             //print("Ping");
             if (currentWeapon)
             {
-                currentWeapon.PrimaryFire();
+                // Attempt to fire the weapon, if the weapon does fire, increase bullets shot.
+                if (currentWeapon.PrimaryFire())
+                    stats.BulletsShot++;
+
                 OnWeaponChanged?.Invoke(currentWeapon);
             }
         }
@@ -185,6 +188,7 @@ public class PlayerController : Player
     void GlobalManager()
     {
         transform.position = controlledObject.transform.position;
+
         //used to keep track of when the character takes control of a new unity and updates the unit's control system.
         if (controlledObject != lastControlled)
         {

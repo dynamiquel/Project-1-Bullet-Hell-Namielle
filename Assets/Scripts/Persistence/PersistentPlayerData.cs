@@ -27,7 +27,11 @@ public class PersistentPlayerData
 
     public void AddLevelReport(LevelReport levelReport)
     {
-        //LevelDatas[levelReport.LevelId].UpdateLevelData(levelReport);
+        if (!LevelDatas.ContainsKey(levelReport.LevelId))
+            LevelDatas[levelReport.LevelId] = new LevelData(levelReport.LevelId, levelReport, levelReport);
+        else
+            LevelDatas[levelReport.LevelId].UpdateLevelData(levelReport);
+
         LevelsCompleted++;
     }
 
@@ -41,7 +45,8 @@ public class PersistentPlayerData
         AbilitiesUsed = abilitiesUsed;
         EnemiesHijacked = enemiesHijacked;
         PlayTime = playTime;
-        LevelDatas = levelDatas;
+        if (levelDatas != null)
+            LevelDatas = levelDatas;
         PerkPoints = perkPoints;
         Exp = exp;
         if (unlockedPerks != null)

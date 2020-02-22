@@ -39,8 +39,6 @@ public class LevelController : MonoBehaviour
     [SerializeField] Transform _decalsTransform;
     public Transform DecalsTransform { get => _decalsTransform; }
 
-    public LevelReport report = new LevelReport();
-
     public event Action<long> OnScoreChanged;
 
     private void Awake()
@@ -61,7 +59,6 @@ public class LevelController : MonoBehaviour
 
     private void Start()
     {
-        report.LevelId = levelId;
         DamageableEntityManager.Instance.OnEnemyDeath += HandleEnemyDeath;
         DamageableEntityManager.Instance.OnPlayerDeath += HandlePlayerDeath;
         PlayerController.OnTakeover += HandleTakeover;
@@ -71,11 +68,6 @@ public class LevelController : MonoBehaviour
     void Update()
     {
         UpdateTimer();
-    }
-
-    public void AddBulletsShot(int bulletsShot)
-    {
-        report.BulletsShot += bulletsShot;
     }
 
     public void EndLevel()
@@ -88,7 +80,8 @@ public class LevelController : MonoBehaviour
         // Save perks
         if (PlayerController.PerkController != null)
             foreach (var key in PlayerController.PerkController.ActivePerks.Keys)
-                PlayerController.stats.PersistentPlayerData.UnlockedPerks.Add(key);
+                if (!PlayerController.stats.PersistentPlayerData.UnlockedPerks.Contains(key))
+                    PlayerController.stats.PersistentPlayerData.UnlockedPerks.Add(key);
 
         SaveManager.Instance.Save(PlayerController.stats.PersistentPlayerData);
 
@@ -99,24 +92,24 @@ public class LevelController : MonoBehaviour
     void UpdateTimer()
     {
         // Converts float to double for precision, then rounds back to float.
-        report.Time += Mathf.RoundToInt((float)((double)Time.deltaTime * 1000));
+        PlayerController.stats.PlayTime += Mathf.RoundToInt((float)((double)Time.deltaTime * 1000));
     }
 
     void HandleEnemyDeath(Enemy entity)
     {
-        report.Kills++;
-        report.Score += entity.Score;
+        PlayerController.stats.Kills++;
+        PlayerController.stats.Score += entity.Score;
 
-        OnScoreChanged?.Invoke(report.Score);
+        OnScoreChanged?.Invoke(PlayerController.stats.Score);
     }
 
     void HandlePlayerDeath(Player entity)
     {
-        report.Deaths++;
+        PlayerController.stats.Deaths++;
     }
 
     void HandleTakeover()
     {
-        report.EnemiesHijacked++;
+        PlayerController.stats.EnemiesHijacked++;
     }
 }

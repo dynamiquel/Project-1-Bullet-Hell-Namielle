@@ -24,7 +24,12 @@ public class PlayerStats
     // Also call SaveManager.Instance.Save() afterwards to save the data.
     public void CreateLevelReport()
     {
-        var levelReport = new LevelReport("TestLevel", Kills, Deaths, BulletsShot, AbilitiesUsed, EnemiesHijacked, true, Score, PlayTime);
+        string levelId = "N/A";
+
+        if (LevelController.Instance)
+            levelId = LevelController.Instance.levelId;
+
+        var levelReport = new LevelReport(levelId, Kills, Deaths, BulletsShot, AbilitiesUsed, EnemiesHijacked, true, Score, PlayTime);
         PersistentPlayerData.AddLevelReport(levelReport);
         UpdatePlayerProgress();
     }
