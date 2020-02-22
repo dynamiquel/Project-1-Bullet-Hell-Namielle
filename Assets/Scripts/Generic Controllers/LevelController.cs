@@ -86,8 +86,9 @@ public class LevelController : MonoBehaviour
         PlayerController.stats.CreateLevelReport();
 
         // Save perks
-        foreach (var key in PlayerController.PerkController.ActivePerks.Keys)
-            PlayerController.stats.PersistentPlayerData.PerkUnlocks.Add(key, true);
+        if (PlayerController.PerkController != null)
+            foreach (var key in PlayerController.PerkController.ActivePerks.Keys)
+                PlayerController.stats.PersistentPlayerData.UnlockedPerks.Add(key);
 
         SaveManager.Instance.Save(PlayerController.stats.PersistentPlayerData);
 

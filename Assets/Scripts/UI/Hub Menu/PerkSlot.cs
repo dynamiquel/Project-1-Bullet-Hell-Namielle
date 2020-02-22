@@ -10,7 +10,7 @@ using UnityEngine.UI;
 [RequireComponent(typeof(BoxCollider2D))]
 public class PerkSlot : MonoBehaviour, ISelectHandler, IPointerEnterHandler, IPointerExitHandler
 {
-    [SerializeField] string perkDataId;
+    public string perkDataId;
     [SerializeField] TextMeshProUGUI perkNameText;
     [SerializeField] Color32 unlockedColour = new Color32(66, 245, 123, 255);
     [SerializeField] Color32 lockedColour = new Color32(230, 189, 9, 255);
@@ -61,17 +61,20 @@ public class PerkSlot : MonoBehaviour, ISelectHandler, IPointerEnterHandler, IPo
     {
         perkData = ItemDatabase.Instance.PerkDatas[perkDataId];
         perkNameText.text = perkData.Name;
-        // if unlocked, set text to green.
-        // if cant afford, set text to red.
-        // else, grey.
+        // if unlocked, set text to unlockedColour
+        // if cant afford, outOfReachColour
 
-        // Player has unlocked perk
         if (perkMenu.PerkController != null)
         {
             if (perkMenu.PerkController.ActivePerks.ContainsKey(perkDataId))
                 fillImage.color = unlockedColour;
             else
-                fillImage.color = lockedColour;
+            {
+                if (perkMenu.PerkPoints >= perkData.Cost)
+                    fillImage.color = lockedColour;
+                else
+                    fillImage.color = outOfReachColour;
+            }
         }
     }
 }

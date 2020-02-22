@@ -16,8 +16,6 @@ public class PlayerController : Player
     public PerkController PerkController { get; private set; }
     Vector2 mousePos;
 
-    [SerializeField] List<string> activePerks; // temp
-
     #region Walk Sounds
     [SerializeField] AudioSource feetAudioSource;
     [SerializeField] float walkSoundRate = 1f;
@@ -240,17 +238,15 @@ public class PlayerController : Player
     IEnumerator SetupPerks()
     {
         yield return new WaitUntil(() => ItemDatabase.Instance.Loaded);
-        foreach (var savedPerk in stats.PersistentPlayerData.PerkUnlocks)
-            activePerks.Add(savedPerk.Key);
 
         if (PerkController != null)
         {
-            foreach (var item in activePerks)
-                PerkController.AddPerk(item);
-            Debug.Log("Perks added to player");
+            foreach (var savedPerk in stats.PersistentPlayerData.UnlockedPerks)
+                PerkController.AddPerk(savedPerk);
+            Debug.Log("Player's perks have been added.");
         }
         else
-            Debug.LogError("No Perk Controller was found.");
+            Debug.LogError("No Perk Controller was found.");                
     }
 
     void UpdateWalkSound()

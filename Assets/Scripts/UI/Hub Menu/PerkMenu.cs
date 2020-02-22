@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class PerkMenu : Menu
 {
@@ -8,10 +9,16 @@ public class PerkMenu : Menu
     {
         get => LevelController.Instance.PlayerController.PerkController;
     }
+    public int PerkPoints
+    {
+        get => LevelController.Instance.PlayerController.stats.PersistentPlayerData.PerkPoints;
+        private set => LevelController.Instance.PlayerController.stats.PersistentPlayerData.PerkPoints = value;
+    }
 
     [SerializeField] GameObject perkToolTipPrefab;
     [SerializeField] GameObject perkSlotPrefab;
     [SerializeField] Transform perkGrid;
+    [SerializeField] TextMeshProUGUI perkPointsText;
     PerkTooltip perkTooltip;
 
     PerkData perkData = null;
@@ -58,7 +65,29 @@ public class PerkMenu : Menu
 
     public void BuyPerk(PerkSlot perkSlot)
     {
+        PlayerController playerController = LevelController.Instance.PlayerController;
 
+        if (playerController.PerkController.ActivePerks.ContainsKey(perkSlot.perkDataId))
+        {
+            Debug.Log(string.Format("Player has already unlocked perk: {0}", perkSlot.perkDataId));
+        }
+        else
+        {
+            // If the player can afford the perk..
+            if (PerkPoints >= ItemDatabase.Instance.PerkDatas[perkSlot.perkDataId].Cost)
+            {
+                // Add the perk to the player.
+                playerController.PerkController.AddPerk(perkSlot.perkDataId);
+                // Pay for the perk.
+                PerkPoints -= ItemDatabase.Instance.PerkDatas[perkSlot.perkDataId].Cost;
+
+                Debug.Log(string.Format("Player has unlocked the perk: {0}", perkSlot.perkDataId));
+            }
+            else
+                Debug.Log(string.Format("Player cannot afford the perk: {0}", perkSlot.perkDataId));
+        }
+
+        RefreshPerkSlots();
     }
 
     void CreatePerkTooltip()
@@ -79,6 +108,8 @@ public class PerkMenu : Menu
 
     void RefreshPerkSlots()
     {
+        perkPointsText.text = string.Format("Perk Points: {0}", PerkPoints);
+
         foreach (var slot in perkSlots)
             slot.SetContent();
 

@@ -22,7 +22,7 @@ public class PersistentPlayerData
     public int PerkPoints;
     public int Exp;
     // Stores the perks that the player has locked/unlocked.
-    public Dictionary<string, bool> PerkUnlocks = new Dictionary<string, bool>();
+    public List<string> UnlockedPerks = new List<string>();
     public string[] ActiveAbilities = new string[4];
 
     public void AddLevelReport(LevelReport levelReport)
@@ -31,7 +31,7 @@ public class PersistentPlayerData
         LevelsCompleted++;
     }
 
-    public PersistentPlayerData(int kills = 0, int deaths = 0, int bulletsShot = 0, int levelsCompleted = 0, int score = 0, int abilitiesUsed = 0, int enemiesHijacked = 0, long playTime = 0, int perkPoints = 0, int exp = 0, Dictionary<string, LevelData> levelDatas = null, Dictionary<string, bool> perkUnlocks = null, string[] activeAbilities = null)
+    public PersistentPlayerData(int kills = 0, int deaths = 0, int bulletsShot = 0, int levelsCompleted = 0, int score = 0, int abilitiesUsed = 0, int enemiesHijacked = 0, long playTime = 0, int perkPoints = 0, int exp = 0, Dictionary<string, LevelData> levelDatas = null, List<string> unlockedPerks = null, string[] activeAbilities = null)
     {
         Kills = kills;
         Deaths = deaths;
@@ -44,8 +44,8 @@ public class PersistentPlayerData
         LevelDatas = levelDatas;
         PerkPoints = perkPoints;
         Exp = exp;
-        if (perkUnlocks != null)
-            PerkUnlocks = perkUnlocks;
+        if (unlockedPerks != null)
+            UnlockedPerks = unlockedPerks;
         if (activeAbilities != null)
             ActiveAbilities = activeAbilities;
     }
