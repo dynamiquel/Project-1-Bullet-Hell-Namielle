@@ -13,5 +13,6 @@ public class BigNan : Enemy
     {
         Debug.Log("Can't kill me, beach!");
         LevelController.Instance.Objective = new Objective(ObjectiveState.Updated, "Well, you tried!");
+        LevelController.Instance.EndLevel();
     }
 }
