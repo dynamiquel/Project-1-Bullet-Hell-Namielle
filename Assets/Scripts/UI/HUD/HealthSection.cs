@@ -4,8 +4,7 @@ using UnityEngine;
 
 public class HealthSection : HUDComponent
 {
-    [SerializeField]
-    FillBar playerHealthFillBar;
+    [SerializeField] FillBar playerHealthFillBar;
 
     // Start is called before the first frame update
     void Start()
