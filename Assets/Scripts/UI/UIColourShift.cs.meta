@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 16fcf53a1d30adf4383995817d370d7e
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - colourShiftTextPrefab: {fileID: 6220246888806343860, guid: b49c5cc41d6b2754a828341c8cdbf57c,
+      type: 3}
+  - colourShiftImagePrefab: {fileID: 3130406697018914503, guid: 519d9c71b508dee4782f5d1b4c79d74e,
+      type: 3}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

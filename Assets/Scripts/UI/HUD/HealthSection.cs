@@ -5,7 +5,7 @@ using UnityEngine;
 public class HealthSection : HUDComponent
 {
     [SerializeField] FillBar playerHealthFillBar;
-    [SerializeField] TextColourShift tcs;
+    [SerializeField] UIColourShift[] uics;
 
     // Start is called before the first frame update
     void Start()
@@ -26,6 +26,7 @@ public class HealthSection : HUDComponent
             playerHealthFillBar.SetValues(entity.Health, entity.MaxHealth); // player health, player max health.
         }
 
-        tcs.StartShift();
+        foreach (var ui in uics)
+            ui.StartShift();
     }
 }
