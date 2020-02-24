@@ -118,7 +118,7 @@ public class Weapon : MonoBehaviour
         }
     }
 
-    public bool PrimaryFire(int attackModi = 1, int ammoConsumptionModi = 0, float bulletSpeedModi = 1)
+    public bool PrimaryFire(bool isPlayer = false, int attackModi = 1, int ammoConsumptionModi = 0, float bulletSpeedModi = 1)
     {
         if (primaryFireDelay != null)
             return false;
@@ -172,7 +172,7 @@ public class Weapon : MonoBehaviour
         return false;
     }
 
-    public void SecondaryFire(int attackModi = 1, int ammoConsumptionModi = 0, float bulletSpeedModi = 1)
+    public void SecondaryFire(bool isPlayer = false, int attackModi = 1, int ammoConsumptionModi = 0, float bulletSpeedModi = 1)
     {
         if (secondaryFireDelay != null)
             return;
@@ -191,20 +191,20 @@ public class Weapon : MonoBehaviour
         secondaryFireDelay = StartCoroutine(StartSecondaryFireDelay());
     }
 
-    public void PrimaryReload(float reloadSpeedModi = 1)
+    public void PrimaryReload(bool isPlayer = false, float reloadSpeedModi = 1)
     {
         primaryClipAmmo = primaryClipMaxAmmo;
         primaryReloadAudioSource.PlayOneShot(AudioDatabase.GetClip(primaryReloadSoundId));
     }
 
-    public void SecondaryReload(float reloadSpeedModi = 1)
+    public void SecondaryReload(bool isPlayer = false, float reloadSpeedModi = 1)
     {
         secondaryClipAmmo = secondaryClipMaxAmmo;
     }
 
-    public void ReloadAll(float reloadSpeedModi = 1)
+    public void ReloadAll(bool isPlayer = false, float reloadSpeedModi = 1)
     {
-        PrimaryReload(reloadSpeedModi);
-        SecondaryReload(reloadSpeedModi);
+        PrimaryReload(isPlayer, reloadSpeedModi);
+        SecondaryReload(isPlayer, reloadSpeedModi);
     }
 }

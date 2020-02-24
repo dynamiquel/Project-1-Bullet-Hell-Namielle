@@ -132,7 +132,7 @@ public class PlayerController : Player
             if (currentWeapon)
             {
                 // Attempt to fire the weapon, if the weapon does fire, increase bullets shot.
-                if (currentWeapon.PrimaryFire())
+                if (currentWeapon.PrimaryFire(true))
                     stats.BulletsShot++;
 
                 OnWeaponChanged?.Invoke(currentWeapon);
@@ -143,7 +143,7 @@ public class PlayerController : Player
         {
             if (currentWeapon)
             {
-                currentWeapon.SecondaryFire();
+                currentWeapon.SecondaryFire(true);
                 OnWeaponChanged?.Invoke(currentWeapon);
             }
         }
@@ -152,7 +152,7 @@ public class PlayerController : Player
         {
             if (currentWeapon)
             {
-                currentWeapon.ReloadAll();
+                currentWeapon.ReloadAll(true);
                 OnWeaponChanged?.Invoke(currentWeapon);
             }
         }
