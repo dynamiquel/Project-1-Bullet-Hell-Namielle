@@ -808,6 +808,11 @@ PrefabInstance:
       propertyPath: colourShift
       value: 
       objectReference: {fileID: 942254191511270224}
+    - target: {fileID: 942254190857671737, guid: dce99734550e4d0438f50244596564dc,
+        type: 3}
+      propertyPath: tcs
+      value: 
+      objectReference: {fileID: 942254191511270224}
     - target: {fileID: 942254191953734808, guid: dce99734550e4d0438f50244596564dc,
         type: 3}
       propertyPath: m_Name
@@ -933,6 +938,26 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5099565130240929038, guid: dce99734550e4d0438f50244596564dc,
+        type: 3}
+      propertyPath: m_Name
+      value: Score Heading
+      objectReference: {fileID: 0}
+    - target: {fileID: 5099565130774638562, guid: dce99734550e4d0438f50244596564dc,
+        type: 3}
+      propertyPath: m_Name
+      value: Time Value
+      objectReference: {fileID: 0}
+    - target: {fileID: 5099565131060361606, guid: dce99734550e4d0438f50244596564dc,
+        type: 3}
+      propertyPath: m_Name
+      value: Time Heading
+      objectReference: {fileID: 0}
+    - target: {fileID: 5099565131326582250, guid: dce99734550e4d0438f50244596564dc,
+        type: 3}
+      propertyPath: m_Name
+      value: Score Value
+      objectReference: {fileID: 0}
     - target: {fileID: 5500761049014479304, guid: dce99734550e4d0438f50244596564dc,
         type: 3}
       propertyPath: m_AnchorMax.x
@@ -1018,6 +1043,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   shiftTime: 0.5
+  rChannel:
+    serializedVersion: 2
+    rgba: 2097152255
+  gChannel:
+    serializedVersion: 2
+    rgba: 2097217280
+  bChannel:
+    serializedVersion: 2
+    rgba: 2113863680
+  withGarbageCollection: 0
   textElements:
   - {fileID: 942254191511270222}
   - {fileID: 942254191511270221}

@@ -14,6 +14,8 @@ public class ShiftedTextGroup : MonoBehaviour
     public Color32 GChannel { get; set; }
     public Color32 BChannel { get; set; }
 
+    float originalOpacity = 1f;
+
     private void OnGUI()
     {
         // Ensures the text content is up to date.
@@ -37,8 +39,18 @@ public class ShiftedTextGroup : MonoBehaviour
         GChannel = gChannel;
         BChannel = bChannel;
 
+        originalOpacity = Original.color.a;
+
         SetColours();
         SetPosition();
+    }
+
+    public void Enable(bool state = true)
+    {
+        var originalColour = Original.color;
+        originalColour.a = state ? 0f : originalOpacity;
+        Original.color = originalColour;
+        gameObject.SetActive(state);
     }
 
     void SetColours()
@@ -50,8 +62,8 @@ public class ShiftedTextGroup : MonoBehaviour
 
     void SetPosition()
     {
-        R.gameObject.transform.Translate(5f, 2f, 0f);
-        G.gameObject.transform.Translate(0f, -1f, 0f);
-        B.gameObject.transform.Translate(-5f, 2f, 0f);
+        R.transform.Translate(5f, 2f, 0f);
+        G.transform.Translate(0f, -1f, 0f);
+        B.transform.Translate(-5f, 2f, 0f);
     }
 }
