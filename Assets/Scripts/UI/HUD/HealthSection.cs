@@ -7,6 +7,8 @@ public class HealthSection : HUDComponent
     [SerializeField] FillBar playerHealthFillBar;
     [SerializeField] UIColourShift[] uics;
 
+    int previousHealth = 0;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -26,7 +28,10 @@ public class HealthSection : HUDComponent
             playerHealthFillBar.SetValues(entity.Health, entity.MaxHealth); // player health, player max health.
         }
 
-        foreach (var ui in uics)
-            ui.StartShift();
+        if (entity.Health < previousHealth)
+            foreach (var ui in uics)
+                ui.StartShift();
+
+        previousHealth = entity.Health; // Probably shouldn't do this, but cba creating an OnEntityDamage event.
     }
 }

@@ -9,6 +9,7 @@ public class PlayerController : Player
     public event Action<Weapon> OnWeaponChanged;
     public event Action OnTakeover;
     public event Action<IDamageable> OnHealthChange;
+    public event Action<Player> OnPlayerDeath;
     public bool CompassMovement { get; set; } = true;
 
     Weapon currentWeapon;
@@ -71,6 +72,7 @@ public class PlayerController : Player
             Debug.Log("You died. We haven't done anything past this point ;)");
             // Unsubscribe so runtime errors don't happen.
             GetControlledIDamagable().OnHealthChanged -= HandleHealthChange;
+            OnPlayerDeath?.Invoke(this);
         }
 
         OnHealthChange?.Invoke(entity);

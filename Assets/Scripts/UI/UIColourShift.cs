@@ -23,7 +23,8 @@ public class UIColourShift : MonoBehaviour
 
     public void StartShift()
     {
-        StartCoroutine(Shift());
+        if (gameObject.activeSelf)
+            StartCoroutine(Shift());
     }
 
     IEnumerator Shift()
