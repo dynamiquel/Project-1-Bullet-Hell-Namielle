@@ -6,6 +6,7 @@ using UnityEngine;
 // Only inherit from this class. Do not actually this class as a game object.
 [RequireComponent(typeof(Rigidbody2D))]
 [RequireComponent(typeof(BoxCollider2D))]
+[RequireComponent(typeof(AudioSource))]
 public class Enemy : MonoBehaviour, IDamageable, IScorable
 {
     public string id = "default_enemy";
@@ -24,11 +25,16 @@ public class Enemy : MonoBehaviour, IDamageable, IScorable
 
     public event Action<IDamageable> OnHealthChanged;
 
+    public string deathAudioClipId;
+    [HideInInspector]
+    public AudioSource mainAudioSource;
+
     public virtual void Awake()
     {
         Health = MaxHealth;
         DamageableEntityManager.Instance.AddEntity(this);
         bulletLayerMask = LayerMask.NameToLayer(bulletLayerName);
+        mainAudioSource = GetComponent<AudioSource>();
     }
 
     private void OnCollisionEnter2D(Collision2D collision)

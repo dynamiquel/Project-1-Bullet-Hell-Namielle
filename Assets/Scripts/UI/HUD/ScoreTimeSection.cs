@@ -22,7 +22,7 @@ public class ScoreTimeSection : HUDComponent
     {
         if (timeValueText != null)
         {
-            var t = TimeSpan.FromMilliseconds(LevelController.Instance.report.Time);
+            var t = TimeSpan.FromMilliseconds(LevelController.Instance.PlayerController.stats.PlayTime);
             timeValueText.text = t.ToString(@"mm\:ss\:f");
         }
     }

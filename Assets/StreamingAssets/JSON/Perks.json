@@ -1,12 +1,39 @@
 {
-    "doubleTap": {
-        "name": "Double Tap",
-        "description": "Shoot twice the bullets, but not for free.",
-        "cost": "2",
-        "cooldown": "5"
-    },
-    "sprint": {
-        "name": "Sprint",
-        "description": "Move twice as fast."
-    }
+  "doubleTap": {
+    "name": "Double Tap",
+    "description": "Shoot twice the bullets, but not for free.",
+    "cost": 2
+  },
+  "sprint": {
+    "name": "Sprint",
+    "description": "Move twice as fast."
+  },
+  "slightOfHand": {
+    "name": "Slight of Hand",
+    "description": "Increase reload speed by 40%"
+  },
+  "autoReload": {
+    "name": "Auto Reload",
+    "description": "Automatically reloads your primary weapon"
+  },
+  "quickShots": {
+    "name": "Quick Shots",
+    "description": "Increases the velocity of the projectiles shot from your primary weapon"
+  },
+  "virus": {
+    "name": "Virus",
+    "description": "When you leave an enemy, they die after 3 seconds"
+  },
+  "jugg": {
+    "name": "Juggernaut",
+    "description": "Increases your maximum health by 50%"
+  },
+  "fastCharge": {
+    "name": "Fast Charge",
+    "description": "Decreases your jump cooldown by 75%",
+  },
+  "highCalibre": {
+    "name": "High Calibre Rounds",
+    "description":  "Your primary weapon deals 50% more damage"
+  }
 }

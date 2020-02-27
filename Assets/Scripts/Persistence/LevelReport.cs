@@ -1,15 +1,15 @@
 ﻿[System.Serializable]
 public class LevelReport
 {
-    public string LevelId { get; set; }
-    public int Kills { get; set; }
-    public int Deaths { get; set; }
-    public int BulletsShot { get; set; }
-    public int AbilitiesUsed { get; set; }
-    public int EnemiesHijacked { get; set; }
-    public bool LevelCompleted { get; set; }
-    public long Score { get; set; }
-    public long Time { get; set; }
+    public string LevelId { get; set; } = "N/A";
+    public int Kills { get; set; } = 0;
+    public int Deaths { get; set; } = 0;
+    public int BulletsShot { get; set; } = 0;
+    public int AbilitiesUsed { get; set; } = 0;
+    public int EnemiesHijacked { get; set; } = 0;
+    public bool LevelCompleted { get; set; } = false;
+    public long Score { get; set; } = 0;
+    public long Time { get; set; } = 0;
 
     public LevelReport()
     {

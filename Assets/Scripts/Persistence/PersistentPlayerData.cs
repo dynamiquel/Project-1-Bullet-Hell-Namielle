@@ -22,16 +22,20 @@ public class PersistentPlayerData
     public int PerkPoints;
     public int Exp;
     // Stores the perks that the player has locked/unlocked.
-    public Dictionary<string, bool> PerkUnlocks;
+    public List<string> UnlockedPerks = new List<string>();
     public string[] ActiveAbilities = new string[4];
 
     public void AddLevelReport(LevelReport levelReport)
     {
-        LevelDatas[levelReport.LevelId].UpdateLevelData(levelReport);
+        if (!LevelDatas.ContainsKey(levelReport.LevelId))
+            LevelDatas[levelReport.LevelId] = new LevelData(levelReport.LevelId, levelReport, levelReport);
+        else
+            LevelDatas[levelReport.LevelId].UpdateLevelData(levelReport);
+
         LevelsCompleted++;
     }
 
-    public PersistentPlayerData(int kills = 0, int deaths = 0, int bulletsShot = 0, int levelsCompleted = 0, int score = 0, int abilitiesUsed = 0, int enemiesHijacked = 0, long playTime = 0, int perkPoints = 0, int exp = 0, Dictionary<string, LevelData> levelDatas = null, Dictionary<string, bool> perkUnlocks = null, string[] activeAbilities = null)
+    public PersistentPlayerData(int kills = 0, int deaths = 0, int bulletsShot = 0, int levelsCompleted = 0, int score = 0, int abilitiesUsed = 0, int enemiesHijacked = 0, long playTime = 0, int perkPoints = 0, int exp = 0, Dictionary<string, LevelData> levelDatas = null, List<string> unlockedPerks = null, string[] activeAbilities = null)
     {
         Kills = kills;
         Deaths = deaths;
@@ -41,10 +45,13 @@ public class PersistentPlayerData
         AbilitiesUsed = abilitiesUsed;
         EnemiesHijacked = enemiesHijacked;
         PlayTime = playTime;
-        LevelDatas = levelDatas;
+        if (levelDatas != null)
+            LevelDatas = levelDatas;
         PerkPoints = perkPoints;
         Exp = exp;
-        PerkUnlocks = perkUnlocks;
-        ActiveAbilities = activeAbilities;
+        if (unlockedPerks != null)
+            UnlockedPerks = unlockedPerks;
+        if (activeAbilities != null)
+            ActiveAbilities = activeAbilities;
     }
 }

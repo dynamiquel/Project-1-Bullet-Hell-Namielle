@@ -4,5 +4,8 @@ using UnityEngine;
 
 public class BasicEnemy : Enemy
 {
-
+    public override void OnDeath()
+    {
+        base.OnDeath();
+    }
 }

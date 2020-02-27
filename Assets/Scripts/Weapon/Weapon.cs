@@ -44,6 +44,14 @@ public class Weapon : MonoBehaviour
     public float primaryFireRate = -1; // -1 = currently no delay, but should be semi-auto.
     public float secondaryFireRate = -1;
 
+    [SerializeField] string primaryBulletSoundId;
+    [SerializeField] string primaryReloadSoundId;
+    [SerializeField] string secondaryBulletSoundId;
+    [SerializeField] string secondaryReloadSoundId;
+
+    AudioSource primaryFireAudioSource;
+    AudioSource primaryReloadAudioSource;
+
     Coroutine primaryFireDelay;
     Coroutine secondaryFireDelay;
 
@@ -70,16 +78,24 @@ public class Weapon : MonoBehaviour
     {
         //Search item database for clip ammo for each weapon and set it here and there useages and there stats
         //Set both bulletPrefab here from database
-        foreach(Transform a in transform)
+
+        var transforms = GetComponentsInChildren<Transform>();
+
+        foreach(var a in transforms)
         {
             if (a.name == "Barrel M")
+            {
                 Barrel = a;
+                primaryFireAudioSource = Barrel.GetComponent<AudioSource>();
+            }
             else if (a.name == "Barrel S1")
                 SBarrel1 = a;
             else if (a.name == "Barrel S2")
                 SBarrel2 = a;
             else if (a.name == "Barrel T1")
                 TBarrel = a;
+            else if (a.name == "Model")
+                primaryReloadAudioSource = a.GetComponent<AudioSource>();
         }
     }
 
@@ -102,20 +118,17 @@ public class Weapon : MonoBehaviour
         }
     }
 
-    public void PrimaryFire(int attackModi = 1, int ammoConsumptionModi = 0, float bulletSpeedModi = 1)
+    public bool PrimaryFire(bool isPlayer = false, int attackModi = 1, int ammoConsumptionModi = 0, float bulletSpeedModi = 1)
     {
         if (primaryFireDelay != null)
-            return;
+            return false;
 
         if (primaryClipAmmo >= primaryClipUseage + ammoConsumptionModi)
         {
             // Moves all projectiles to its own group.
             Transform parentTrans = null;
             if (LevelController.Instance)
-            {
                 parentTrans = LevelController.Instance.DecalsTransform;
-                LevelController.Instance.AddBulletsShot(1);
-            }
 
             GameObject bullet = GameObject.Instantiate(primaryBulletPrefab, Barrel.position, transform.parent.rotation, parentTrans);
 
@@ -149,12 +162,17 @@ public class Weapon : MonoBehaviour
             bullet.GetComponent<Projectile>().Fired(primaryFireSpeed * bulletSpeedModi, primaryFireDamage * attackModi, primarySizeModi, primaryExplosive);
             primaryClipAmmo -= primaryClipUseage + ammoConsumptionModi;
 
+            primaryFireAudioSource.PlayOneShot(AudioDatabase.GetClip(primaryBulletSoundId));
             //print("Pong");
             primaryFireDelay = StartCoroutine(StartPrimaryFireDelay());
-        } 
+
+            return true;
+        }
+
+        return false;
     }
 
-    public void SecondaryFire(int attackModi = 1, int ammoConsumptionModi = 0, float bulletSpeedModi = 1)
+    public void SecondaryFire(bool isPlayer = false, int attackModi = 1, int ammoConsumptionModi = 0, float bulletSpeedModi = 1)
     {
         if (secondaryFireDelay != null)
             return;
@@ -169,22 +187,24 @@ public class Weapon : MonoBehaviour
             secondaryClipAmmo -= secondaryClipUseage + ammoConsumptionModi;
         }
 
+        primaryFireAudioSource.PlayOneShot(AudioDatabase.GetClip(secondaryBulletSoundId));
         secondaryFireDelay = StartCoroutine(StartSecondaryFireDelay());
     }
 
-    public void PrimaryReload(float reloadSpeedModi = 1)
+    public void PrimaryReload(bool isPlayer = false, float reloadSpeedModi = 1)
     {
         primaryClipAmmo = primaryClipMaxAmmo;
+        primaryReloadAudioSource.PlayOneShot(AudioDatabase.GetClip(primaryReloadSoundId));
     }
 
-    public void SecondaryReload(float reloadSpeedModi = 1)
+    public void SecondaryReload(bool isPlayer = false, float reloadSpeedModi = 1)
     {
         secondaryClipAmmo = secondaryClipMaxAmmo;
     }
 
-    public void ReloadAll(float reloadSpeedModi = 1)
+    public void ReloadAll(bool isPlayer = false, float reloadSpeedModi = 1)
     {
-        PrimaryReload(reloadSpeedModi);
-        SecondaryReload(reloadSpeedModi);
+        PrimaryReload(isPlayer, reloadSpeedModi);
+        SecondaryReload(isPlayer, reloadSpeedModi);
     }
 }

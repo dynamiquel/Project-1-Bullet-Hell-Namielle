@@ -9,14 +9,22 @@ public class PlayerController : Player
     public event Action<Weapon> OnWeaponChanged;
     public event Action OnTakeover;
     public event Action<IDamageable> OnHealthChange;
+    public event Action<Player> OnPlayerDeath;
     public bool CompassMovement { get; set; } = true;
 
     Weapon currentWeapon;
     CharacterMotor currentCharacterMotor;
-    PerkController perkController;
+    public PerkController PerkController { get; private set; }
     Vector2 mousePos;
 
-    [SerializeField] List<string> activePerks; // temp
+    #region Walk Sounds
+    [SerializeField] AudioSource feetAudioSource;
+    [SerializeField] float walkSoundRate = 1f;
+    float currentWalkSoundDelay = 0.5f;
+    [SerializeField]
+    string[] walkAudioClipsId;
+    byte currentWalkAudioIndex = 0;
+    #endregion
 
     private void Awake()
     {
@@ -26,12 +34,14 @@ public class PlayerController : Player
         if (LevelController.Instance)
             LevelController.Instance.PlayerController = this;
 
-        perkController = GetComponent<PerkController>();
+        PerkController = GetComponent<PerkController>();
     }
 
-    private void Start()
+    public override void Start()
     {
-        SetupPerks();
+        base.Start();
+        StartCoroutine(SetupPerks());
+        stats.OnPlayerLevelUp += HandlePlayerLevelUp;
     }
 
     void Update()
@@ -62,6 +72,7 @@ public class PlayerController : Player
             Debug.Log("You died. We haven't done anything past this point ;)");
             // Unsubscribe so runtime errors don't happen.
             GetControlledIDamagable().OnHealthChanged -= HandleHealthChange;
+            OnPlayerDeath?.Invoke(this);
         }
 
         OnHealthChange?.Invoke(entity);
@@ -122,7 +133,10 @@ public class PlayerController : Player
             //print("Ping");
             if (currentWeapon)
             {
-                currentWeapon.PrimaryFire();
+                // Attempt to fire the weapon, if the weapon does fire, increase bullets shot.
+                if (currentWeapon.PrimaryFire(true))
+                    stats.BulletsShot++;
+
                 OnWeaponChanged?.Invoke(currentWeapon);
             }
         }
@@ -131,7 +145,7 @@ public class PlayerController : Player
         {
             if (currentWeapon)
             {
-                currentWeapon.SecondaryFire();
+                currentWeapon.SecondaryFire(true);
                 OnWeaponChanged?.Invoke(currentWeapon);
             }
         }
@@ -140,7 +154,7 @@ public class PlayerController : Player
         {
             if (currentWeapon)
             {
-                currentWeapon.ReloadAll();
+                currentWeapon.ReloadAll(true);
                 OnWeaponChanged?.Invoke(currentWeapon);
             }
         }
@@ -177,6 +191,7 @@ public class PlayerController : Player
     void GlobalManager()
     {
         transform.position = controlledObject.transform.position;
+
         //used to keep track of when the character takes control of a new unity and updates the unit's control system.
         if (controlledObject != lastControlled)
         {
@@ -196,6 +211,10 @@ public class PlayerController : Player
         float xVect = Input.GetAxisRaw("Horizontal");
         float yVect = Input.GetAxisRaw("Vertical");
 
+        // If no movement...
+        if (xVect == 0 && yVect == 0)
+            return;
+
         if (CompassMovement)
         {
             Vector2 controllerPosition = new Vector2(xVect, yVect).normalized;
@@ -204,6 +223,8 @@ public class PlayerController : Player
         }
         else
             currentCharacterMotor.MovementMotor((new Vector2(xVect, yVect).normalized) * characterSpeed);
+
+        UpdateWalkSound();
     }
 
     void UpdatePlayerRotation()
@@ -221,12 +242,37 @@ public class PlayerController : Player
         currentCharacterMotor.CharactorRotator(angle);
     }
 
-    void SetupPerks()
+    IEnumerator SetupPerks()
     {
-        if (perkController != null)
-            foreach (var item in activePerks)
-                perkController.AddPerk(item);
+        yield return new WaitUntil(() => ItemDatabase.Instance.Loaded);
+
+        if (PerkController != null)
+        {
+            foreach (var savedPerk in stats.PersistentPlayerData.UnlockedPerks)
+                PerkController.AddPerk(savedPerk);
+            Debug.Log("Player's perks have been added.");
+        }
         else
-            Debug.LogError("No Perk Controller was found.");
+            Debug.LogError("No Perk Controller was found.");                
+    }
+
+    void UpdateWalkSound()
+    {
+        if ((currentWalkSoundDelay += Time.deltaTime) >= walkSoundRate)
+        {
+            currentWalkSoundDelay = 0f;
+            feetAudioSource.PlayOneShot(AudioDatabase.GetClip(walkAudioClipsId[currentWalkAudioIndex]));
+
+            if (currentWalkAudioIndex < walkAudioClipsId.Length - 1)
+                currentWalkAudioIndex++;
+            else
+                currentWalkAudioIndex = 0;
+        }
+    }
+
+    void HandlePlayerLevelUp(int newLevel)
+    {
+        Debug.Log(string.Format("Player is now level: {0}", newLevel));
+        stats.PersistentPlayerData.PerkPoints++;
     }
 }

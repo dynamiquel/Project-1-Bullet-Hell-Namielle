@@ -1,0 +1,13 @@
+fileFormatVersion: 2
+guid: 01e584c82dea5d649b1594d1016c18b5
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - destroyAudioPlayer: {fileID: 6905128238690889380, guid: c0bb2c8873a75d34398ca0edefb3d9d7,
+      type: 3}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

@@ -12,19 +12,27 @@ public class PlayerStats
     public int AbilitiesUsed = 0;
     public int EnemiesHijacked = 0;
     public long PlayTime = 0;
-    public int Level { get => PersistentPlayerData.Exp / 100; } // temp calculation
+    public int Level { get => UnityEngine.Mathf.FloorToInt(PersistentPlayerData.Exp / 100f); } // temp calculation
     int previousLevel;
+
+    public event Action<int> OnPlayerLevelUp;
 
     public PlayerStats(PersistentPlayerData persistentPlayerData)
     {
         PersistentPlayerData = persistentPlayerData;
+        previousLevel = Level;
     }
 
     // Call when level is complete so player data is generated.
     // Also call SaveManager.Instance.Save() afterwards to save the data.
     public void CreateLevelReport()
     {
-        var levelReport = new LevelReport("TestLevel", Kills, Deaths, BulletsShot, AbilitiesUsed, EnemiesHijacked, true, Score, PlayTime);
+        string levelId = "N/A";
+
+        if (LevelController.Instance)
+            levelId = LevelController.Instance.levelId;
+
+        var levelReport = new LevelReport(levelId, Kills, Deaths, BulletsShot, AbilitiesUsed, EnemiesHijacked, true, Score, PlayTime);
         PersistentPlayerData.AddLevelReport(levelReport);
         UpdatePlayerProgress();
     }
@@ -44,5 +52,11 @@ public class PlayerStats
     public void AddExp(int exp)
     {
         PersistentPlayerData.Exp += exp;
+        
+        if (Level > previousLevel)
+        {
+            OnPlayerLevelUp?.Invoke(Level);
+            previousLevel = Level;
+        }
     }
 }

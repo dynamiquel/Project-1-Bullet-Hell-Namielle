@@ -11,11 +11,17 @@ public class PauseMenuController : MonoBehaviour
     [SerializeField] GameObject optionsMenu;
     [SerializeField] GameObject hudCanvas;
     [SerializeField] HubMenuController hubMenuController;
+    [SerializeField] DeathMenuController deathMenuController;
 
     public PauseMenuState PauseMenuState { get; private set; } = PauseMenuState.Closed;
 
     private void Update()
     {
+        // Prevent the pause menu from opening if the death menu is open.
+        // Really should have made some menu priority system.
+        if (deathMenuController.DeathMenuState != DeathMenuState.Closed)
+            return;
+
         if (Input.GetButtonDown("Pause"))
             switch (PauseMenuState)
             {
@@ -45,7 +51,7 @@ public class PauseMenuController : MonoBehaviour
         else
         {
             Time.timeScale = 1;
-            //Cursor.lockState = CursorLockMode.Locked;
+            Cursor.lockState = CursorLockMode.Confined;
         }
 
         // Enables / disables components.

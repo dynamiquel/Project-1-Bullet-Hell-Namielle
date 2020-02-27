@@ -38,7 +38,11 @@ public class DamageableEntityManager : MonoBehaviour
         if (entity is Enemy)
             OnEnemyDeath?.Invoke((Enemy)entity);
         else if (entity is Player)
+        {
+            Debug.Log("Player died");
             OnPlayerDeath?.Invoke((Player)entity);
+        }
+            
 
         RemoveEntity(entity);
 

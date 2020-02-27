@@ -9,4 +9,11 @@ public class LiamTester : MonoBehaviour
     {
         LevelController.Instance.Objective = new Objective(ObjectiveState.New, "Find Big Nan!");
     }
+
+    private void Update()
+    {
+        // Damages the player.
+        if (Input.GetKeyDown(KeyCode.K))
+            DamageableEntityManager.Instance.DamageEntity(LevelController.Instance.PlayerController.GetControlledIDamagable(), 10);
+    }
 }
