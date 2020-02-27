@@ -31,8 +31,8 @@ public class Weapon : MonoBehaviour
     public int secondaryFireDamage;
     public float secondaryFireSpeed;
 
-    float primarySizeModi = 1;
-    float seccondarySizeModi = 1;
+    float primarySizeModi = 3;
+    float seccondarySizeModi = 5;
 
     public bool Shotgun = false;
     public bool TwinGuns = false;
@@ -165,7 +165,7 @@ public class Weapon : MonoBehaviour
             Transform parentTrans = LevelController.Instance.DecalsTransform;
 
             GameObject bullet = GameObject.Instantiate(secondaryBulletPrefab, Barrel.position, transform.parent.rotation, parentTrans);
-            bullet.GetComponent<Projectile>().Fired(secondaryFireSpeed * bulletSpeedModi, secondaryFireDamage * attackModi, seccondarySizeModi, secondaryExplosive);
+            bullet.GetComponent<Projectile>().Fired(secondaryFireSpeed * bulletSpeedModi, secondaryFireDamage * attackModi, seccondarySizeModi, true);
             secondaryClipAmmo -= secondaryClipUseage + ammoConsumptionModi;
         }
 
