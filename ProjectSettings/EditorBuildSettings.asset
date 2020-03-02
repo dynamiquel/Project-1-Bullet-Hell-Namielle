@@ -20,4 +20,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/LVL_Game v2.unity
     guid: df8f2076e9ec5984e86f1ed184f2ec59
+  - enabled: 1
+    path: Assets/Scenes/LVL_Liam.unity
+    guid: 71800aa119108684797d1b823a7a053f
   m_configObjects: {}
