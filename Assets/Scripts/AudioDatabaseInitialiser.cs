@@ -16,7 +16,7 @@ public class AudioDatabaseInitialiser : MonoBehaviour
             if (!string.IsNullOrEmpty(item.id) || item.audioClip != null)
                 AudioDatabase.AddClip(item);
             else
-                Debug.LogWarning("Invalid Audio Clip addedto AudioDatabaseInitialiser");
+                Debug.LogWarning("Invalid Audio Clip added to AudioDatabaseInitialiser");
         }
 
         if (destroyAfterInjection)
