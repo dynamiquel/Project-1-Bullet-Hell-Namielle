@@ -1,0 +1,12 @@
+{
+  "LVL_Main": {
+    "name": "Main",
+    "description": "Default level.",
+    "difficulty": "Impossible"
+  },
+  "LVL_Liam": {
+    "name": "Liam",
+    "description": "Some big empty level.",
+	"difficulty": "Easy"
+  }
+}

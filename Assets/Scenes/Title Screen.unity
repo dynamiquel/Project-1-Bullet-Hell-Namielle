@@ -167,6 +167,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
+    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
+      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_text: Press any button to start
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: c8cfe5e0b0d57784586e199404a2a9f9, type: 2}
@@ -591,6 +593,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
+    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
+      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_Sprite: {fileID: 0}
   m_Type: 0
   m_PreserveAspect: 0
@@ -620,6 +624,7 @@ GameObject:
   - component: {fileID: 1371752612}
   - component: {fileID: 1371752614}
   - component: {fileID: 1371752615}
+  - component: {fileID: 1371752616}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -721,6 +726,21 @@ MonoBehaviour:
   - id: Reload 2
     audioClip: {fileID: 8300000, guid: a3010f65d139dba419f5dbea10a0e4f4, type: 3}
   destroyAfterInjection: 1
+--- !u!114 &1371752616
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1371752611}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b66b397656a6f994b9d95e8553aca17f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _weapons: []
+  _abilities: []
+  _enemies: []
 --- !u!1 &1676149352
 GameObject:
   m_ObjectHideFlags: 0

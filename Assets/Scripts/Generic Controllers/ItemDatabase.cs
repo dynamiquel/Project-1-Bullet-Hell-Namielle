@@ -28,6 +28,8 @@ public class ItemDatabase : MonoBehaviour
     public Dictionary<string, Ability> Abilities { get; private set; } = new Dictionary<string, Ability>();
     public Dictionary<string, PerkData> PerkDatas { get; private set; } = new Dictionary<string, PerkData>();
     public Dictionary<string, Enemy> Enemies { get; private set; } = new Dictionary<string, Enemy>();
+    public Dictionary<string, LevelSelectData> LevelDatas { get; private set; } = new Dictionary<string, LevelSelectData>();
+
 
     // Easy way to allow game objects to be added through the inspector.
     [SerializeField]
@@ -45,6 +47,7 @@ public class ItemDatabase : MonoBehaviour
 
         StartCoroutine(ReadWeaponJson());
         StartCoroutine(ReadPerksJson());
+        StartCoroutine(ReadLevelsJson());
 
         Loaded = true;
     }
@@ -111,6 +114,22 @@ public class ItemDatabase : MonoBehaviour
         {
             PerkDatas[perkData.Key] = perkData.Value;
             Debug.Log(perkData.Key);
+        }
+    }
+
+    IEnumerator ReadLevelsJson()
+    {
+        var request = UnityEngine.Networking.UnityWebRequest.Get(Application.streamingAssetsPath + "/JSON/Levels.json");
+        yield return request.SendWebRequest();
+        string json = request.downloadHandler.text;
+
+
+        var levelsData = Newtonsoft.Json.JsonConvert.DeserializeObject<Dictionary<string, LevelSelectData>>(json);
+
+        foreach (var levelData in levelsData)
+        {
+            LevelDatas[levelData.Key] = levelData.Value;
+            Debug.Log(levelData.Key);
         }
     }
 

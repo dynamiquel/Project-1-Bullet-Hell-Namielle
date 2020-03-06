@@ -17,7 +17,8 @@ public class MainMenu : Menu
             case 1:
                 Debug.Log("Play game button clicked");
                 ButtonClick(0);
-                GameManager.Instance?.LoadScene("LVL_Main");
+                MainMenuController.Instance.LoadMenu(2);
+                //GameManager.Instance?.LoadScene("LVL_Main");
                 break;
             case 2:
                 Debug.Log("Options button clicked");

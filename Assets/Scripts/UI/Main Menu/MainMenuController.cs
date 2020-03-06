@@ -6,10 +6,9 @@ public class MainMenuController : MonoBehaviour
 {
     public static MainMenuController Instance { get; private set; }
 
-    [SerializeField]
-    GameObject mainMenu;
-    [SerializeField]
-    GameObject optionsMenu;
+    [SerializeField] GameObject mainMenu;
+    [SerializeField] GameObject optionsMenu;
+    [SerializeField] GameObject levelMenu;
 
     private void Awake()
     {
@@ -35,6 +34,9 @@ public class MainMenuController : MonoBehaviour
             case 1:
                 OpenOptionsMenu();
                 break;
+            case 2:
+                OpenLevelMenu();
+                break;
         }
     }
 
@@ -48,5 +50,12 @@ public class MainMenuController : MonoBehaviour
     {
         mainMenu.SetActive(false);
         optionsMenu.SetActive(true);
+    }
+
+    void OpenLevelMenu()
+    {
+        mainMenu.SetActive(false);
+        optionsMenu.SetActive(false);
+        levelMenu.SetActive(true);
     }
 }
