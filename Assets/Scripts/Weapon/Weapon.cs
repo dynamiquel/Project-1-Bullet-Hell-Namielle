@@ -6,14 +6,11 @@ using UnityEngine;
 public class Weapon : MonoBehaviour
 {
     //Change to private anything that has been added to the item database aside from the id
-
     public string id;
 
     [SerializeField] GameObject primaryBulletPrefab;
     [SerializeField] GameObject secondaryBulletPrefab;
     Transform Barrel;
-    Transform SBarrel1;
-    Transform SBarrel2;
     Transform TBarrel;
 
     [HideInInspector]
@@ -31,14 +28,14 @@ public class Weapon : MonoBehaviour
     public int secondaryFireDamage;
     public float secondaryFireSpeed;
 
-    float primarySizeModi = 3;
-    float seccondarySizeModi = 5;
+    public float primarySizeModi = 0.03f;
+    public float seccondarySizeModi = 0.01f;
 
-    public bool Shotgun = false;
+    public int Shotgun = 0;
     public bool TwinGuns = false;
 
-    public bool primaryExplosive = false;
-    public bool secondaryExplosive = false;
+    public int primaryExplosive = 0;
+    public int secondaryExplosive = 5;
 
     // Measured in RPM
     public float primaryFireRate = -1; // -1 = currently no delay, but should be semi-auto.
@@ -61,17 +58,30 @@ public class Weapon : MonoBehaviour
         primaryClipUseage = weaponData.PrimaryClipUsage;
         primaryFireDamage = weaponData.PrimaryFireDamage;
         primaryFireSpeed = weaponData.PrimaryFireVelocity;
-        primaryExplosive = weaponData.PrimaryExplosive;
+        //primaryExplosive = weaponData.PrimaryExplosive;
         primaryFireRate = weaponData.PrimaryFireRate;
-        Shotgun = weaponData.Shotgun;
+        //Shotgun = weaponData.Shotgun;
         TwinGuns = weaponData.Twinguns;
 
         secondaryClipMaxAmmo = weaponData.SecondaryMaxAmmo;
         secondaryClipUseage = weaponData.SecondaryClipUsage;
         secondaryFireDamage = weaponData.SecondaryFireDamage;
         secondaryFireSpeed = weaponData.SecondaryFireVelocity;
-        secondaryExplosive = weaponData.SecondaryExplosive;
+        //secondaryExplosive = weaponData.SecondaryExplosive;
         secondaryFireRate = weaponData.SecondaryFireRate;
+    }
+
+
+    public void SetModifiers()
+    {
+        if (transform.parent.GetComponent<CharacterMotor>().isControlled == true)
+        {
+            //Add player Perks
+        }
+        else
+        {
+            //Remove Player Perks
+        }
     }
 
     private void Awake()
@@ -88,10 +98,6 @@ public class Weapon : MonoBehaviour
                 Barrel = a;
                 primaryFireAudioSource = Barrel.GetComponent<AudioSource>();
             }
-            else if (a.name == "Barrel S1")
-                SBarrel1 = a;
-            else if (a.name == "Barrel S2")
-                SBarrel2 = a;
             else if (a.name == "Barrel T1")
                 TBarrel = a;
             else if (a.name == "Model")
@@ -130,23 +136,28 @@ public class Weapon : MonoBehaviour
             if (LevelController.Instance)
                 parentTrans = LevelController.Instance.DecalsTransform;
 
-            GameObject bullet = GameObject.Instantiate(primaryBulletPrefab, Barrel.position, transform.parent.rotation, parentTrans);
+            
 
-            if (Shotgun == true)
+            if (Shotgun > 0)
             {
-                if (!SBarrel1 || !SBarrel2)
-                {
-                    Debug.LogWarning($"SBarrels of Weapon '{gameObject.name}' is not set.");
-                    goto SkipToFirstBullet;
-                }
+                int i = 0;
 
-                GameObject bullet2 = GameObject.Instantiate(primaryBulletPrefab, SBarrel1.position, SBarrel1.rotation, parentTrans);
-                GameObject bullet3 = GameObject.Instantiate(primaryBulletPrefab, SBarrel2.position, SBarrel2.rotation, parentTrans);
-                bullet2.GetComponent<Projectile>().Fired(primaryFireSpeed * bulletSpeedModi, primaryFireDamage * attackModi, primarySizeModi, primaryExplosive);
-                bullet3.GetComponent<Projectile>().Fired(primaryFireSpeed * bulletSpeedModi, primaryFireDamage * attackModi, primarySizeModi, primaryExplosive);
+                while (i < Shotgun)
+                {
+                    Vector3 newRotation = new Vector3(transform.parent.rotation.x, transform.parent.rotation.y, transform.parent.rotation.eulerAngles.z + ((45f / Shotgun) * (float)i) + -12);
+                    Debug.Log(transform.parent.rotation.eulerAngles.z + ((45f / 3f) * (float)i));
+                    GameObject bullet = GameObject.Instantiate(primaryBulletPrefab, Barrel.position, Quaternion.Euler(newRotation), parentTrans);
+                    bullet.GetComponent<Projectile>().Fired(primaryFireSpeed * bulletSpeedModi, primaryFireDamage * attackModi, primarySizeModi, primaryExplosive);
+                    if (TwinGuns == true)
+                    {
+                        GameObject bullet1 = GameObject.Instantiate(primaryBulletPrefab, TBarrel.position, Quaternion.Euler(newRotation), parentTrans);
+                        bullet1.GetComponent<Projectile>().Fired(primaryFireSpeed * bulletSpeedModi, primaryFireDamage * attackModi, primarySizeModi, primaryExplosive);
+                    }
+                    i++;
+                }
             }
 
-            if (TwinGuns == true)
+            if (TwinGuns == true && Shotgun == 0)
             {
                 if (!TBarrel)
                 {
@@ -158,8 +169,13 @@ public class Weapon : MonoBehaviour
                 bullet4.GetComponent<Projectile>().Fired(primaryFireSpeed * bulletSpeedModi, primaryFireDamage * attackModi, primarySizeModi, primaryExplosive);
             }
 
+            if (TwinGuns == false && Shotgun == 0)
+            {
+                GameObject bullet = GameObject.Instantiate(primaryBulletPrefab, Barrel.position, transform.parent.rotation, parentTrans);
+                bullet.GetComponent<Projectile>().Fired(primaryFireSpeed * bulletSpeedModi, primaryFireDamage * attackModi, primarySizeModi, primaryExplosive);
+            }
             SkipToFirstBullet:
-            bullet.GetComponent<Projectile>().Fired(primaryFireSpeed * bulletSpeedModi, primaryFireDamage * attackModi, primarySizeModi, primaryExplosive);
+            
             primaryClipAmmo -= primaryClipUseage + ammoConsumptionModi;
 
             primaryFireAudioSource.PlayOneShot(AudioDatabase.GetClip(primaryBulletSoundId));
@@ -183,7 +199,7 @@ public class Weapon : MonoBehaviour
             Transform parentTrans = LevelController.Instance.DecalsTransform;
 
             GameObject bullet = GameObject.Instantiate(secondaryBulletPrefab, Barrel.position, transform.parent.rotation, parentTrans);
-            bullet.GetComponent<Projectile>().Fired(secondaryFireSpeed * bulletSpeedModi, secondaryFireDamage * attackModi, seccondarySizeModi, true);
+            bullet.GetComponent<Projectile>().Fired(secondaryFireSpeed * bulletSpeedModi, secondaryFireDamage * attackModi, seccondarySizeModi, secondaryExplosive);
             secondaryClipAmmo -= secondaryClipUseage + ammoConsumptionModi;
         }
 

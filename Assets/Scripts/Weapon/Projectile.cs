@@ -8,15 +8,19 @@ public class Projectile : MonoBehaviour
     Rigidbody2D rb;
     float lifetime = 0;
     float sizeModifier = 0f;
-    bool explosive = false;
+    int explosive = 0;
     GameObject bulleta;
+    Transform ProjectileTransform;
+    float MaxLifeTime = 2f;
+
     private void Awake()
     {
         rb = this.GetComponent<Rigidbody2D>();
+        ProjectileTransform = transform;
         bulleta = this.gameObject;
     }
 
-    public void Fired(float speed, int damage, float x, bool _explosive)
+    public void Fired(float speed, int damage, float x, int _explosive)
     {
         dmg = damage;
         rb.velocity = transform.up * speed;
@@ -26,30 +30,29 @@ public class Projectile : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (lifetime >= 2f)
-            endObject();
+        if (lifetime >= MaxLifeTime)
+            EndObject();
 
         lifetime += Time.fixedDeltaTime;
-        this.transform.localScale += new Vector3(lifetime * sizeModifier, lifetime * sizeModifier, lifetime * sizeModifier);
-        print(lifetime);
+        ProjectileTransform.localScale += new Vector3(lifetime * sizeModifier, lifetime * sizeModifier, lifetime * sizeModifier);
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        endObject();
+        EndObject();
     }
 
-    void endObject()
+    void EndObject()
     {
-        print("Running");
-        if (explosive)
+
+        if (explosive > 0)
         {
             int i = 0;
-            while (i < 8)
+            while (i < explosive)
             {
-                Vector3 newRotation = new Vector3(transform.rotation.x, transform.rotation.y, transform.rotation.z + (45 * i));
+                Vector3 newRotation = new Vector3(transform.rotation.x, transform.rotation.y, transform.rotation.z + ((360 / explosive) * i));
                 GameObject bullet = GameObject.Instantiate(bulleta, transform.position, Quaternion.Euler(newRotation));
-                bullet.GetComponent<Projectile>().Fired(2 * 1, dmg * 1, 0.01f, false);
+                bullet.GetComponent<Projectile>().Fired(2 * 1, dmg * 1, 0.01f, 0);
                 i++;
             } 
         }
