@@ -369,6 +369,8 @@ MonoBehaviour:
   primaryFireSpeed: 5
   secondaryFireDamage: 5
   secondaryFireSpeed: 1
+  primarySizeModi: 0
+  seccondarySizeModi: 0
   Shotgun: 0
   TwinGuns: 0
   primaryExplosive: 0
@@ -379,6 +381,10 @@ MonoBehaviour:
   primaryReloadSoundId: Reload
   secondaryBulletSoundId: 
   secondaryReloadSoundId: 
+  primaryReloadDelay: 1
+  bulletsPerPrimaryReload: -1
+  secondaryReloadDelay: 2
+  bulletsPerSecondaryReload: -1
 --- !u!1 &1385626995830847383
 GameObject:
   m_ObjectHideFlags: 0

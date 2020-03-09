@@ -65,6 +65,12 @@ public class PlayerController : Player
         return controlledObject.GetComponentInChildren<IDamageable>();
     }
 
+    // Public access to invoke the OnWeaponChanged event.
+    public void WeaponChanged()
+    {
+        OnWeaponChanged?.Invoke(currentWeapon);
+    }
+
     void HandleHealthChange(IDamageable entity)
     {
         if (entity.Health <= 0)
@@ -113,7 +119,11 @@ public class PlayerController : Player
 
         try
         {
+            if (currentWeapon != null)
+                currentWeapon.IsPlayer = false;
+            
             currentWeapon = controlledObject.GetComponentInChildren<Weapon>();
+            currentWeapon.IsPlayer = true;
             OnWeaponChanged?.Invoke(currentWeapon);
 
             OnTakeover?.Invoke();
@@ -134,7 +144,7 @@ public class PlayerController : Player
             if (currentWeapon)
             {
                 // Attempt to fire the weapon, if the weapon does fire, increase bullets shot.
-                if (currentWeapon.PrimaryFire(true))
+                if (currentWeapon.PrimaryFire())
                     stats.BulletsShot++;
 
                 OnWeaponChanged?.Invoke(currentWeapon);
@@ -145,7 +155,7 @@ public class PlayerController : Player
         {
             if (currentWeapon)
             {
-                currentWeapon.SecondaryFire(true);
+                currentWeapon.SecondaryFire();
                 OnWeaponChanged?.Invoke(currentWeapon);
             }
         }
@@ -154,7 +164,7 @@ public class PlayerController : Player
         {
             if (currentWeapon)
             {
-                currentWeapon.ReloadAll(true);
+                currentWeapon.ReloadAll();
                 OnWeaponChanged?.Invoke(currentWeapon);
             }
         }

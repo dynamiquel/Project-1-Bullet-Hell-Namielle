@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -41,6 +42,17 @@ public class Weapon : MonoBehaviour
     public float primaryFireRate = -1; // -1 = currently no delay, but should be semi-auto.
     public float secondaryFireRate = -1;
 
+    private bool _isPlayer = false;
+    public bool IsPlayer
+    {
+        get => _isPlayer;
+        set
+        {
+            _isPlayer = value;
+            SetModifiers();
+        }
+    }
+
     [SerializeField] string primaryBulletSoundId;
     [SerializeField] string primaryReloadSoundId;
     [SerializeField] string secondaryBulletSoundId;
@@ -52,7 +64,15 @@ public class Weapon : MonoBehaviour
     Coroutine primaryFireDelay;
     Coroutine secondaryFireDelay;
 
-    public Weapon(WeaponData weaponData)
+    private bool primaryReloading = false;
+    private bool secondaryReloading = false;
+    [SerializeField] private bool autoReload = false;
+    [SerializeField] private float primaryReloadDelay = 1f;
+    [SerializeField] private int bulletsPerPrimaryReload = -1; // -1 = same as mag size.
+    [SerializeField] private float secondaryReloadDelay = 3f;
+    [SerializeField] private int bulletsPerSecondaryReload = -1; // -1 = same as mag size.
+    
+    /*public Weapon(WeaponData weaponData)
     {
         primaryClipMaxAmmo = weaponData.PrimaryMaxAmmo;
         primaryClipUseage = weaponData.PrimaryClipUsage;
@@ -69,21 +89,8 @@ public class Weapon : MonoBehaviour
         secondaryFireSpeed = weaponData.SecondaryFireVelocity;
         //secondaryExplosive = weaponData.SecondaryExplosive;
         secondaryFireRate = weaponData.SecondaryFireRate;
-    }
-
-
-    public void SetModifiers()
-    {
-        if (transform.parent.GetComponent<CharacterMotor>().isControlled == true)
-        {
-            //Add player Perks
-        }
-        else
-        {
-            //Remove Player Perks
-        }
-    }
-
+    }*/
+    
     private void Awake()
     {
         //Search item database for clip ammo for each weapon and set it here and there useages and there stats
@@ -93,40 +100,41 @@ public class Weapon : MonoBehaviour
 
         foreach(var a in transforms)
         {
-            if (a.name == "Barrel M")
+            switch (a.name)
             {
-                Barrel = a;
-                primaryFireAudioSource = Barrel.GetComponent<AudioSource>();
+                case "Barrel M":
+                    Barrel = a;
+                    primaryFireAudioSource = Barrel.GetComponent<AudioSource>();
+                    break;
+                case "Barrel T1":
+                    TBarrel = a;
+                    break;
+                case "Model":
+                    primaryReloadAudioSource = a.GetComponent<AudioSource>();
+                    break;
             }
-            else if (a.name == "Barrel T1")
-                TBarrel = a;
-            else if (a.name == "Model")
-                primaryReloadAudioSource = a.GetComponent<AudioSource>();
         }
     }
 
-    // Wasn't sure if updating time was more efficient than coroutine.
-    IEnumerator StartPrimaryFireDelay()
+    private void Start()
     {
-        if (primaryFireRate >= 0)
-        {
-            yield return new WaitForSeconds(60 / primaryFireRate);
-            primaryFireDelay = null;
-        }
+        // Automatically fully loads weapons.
+        primaryClipAmmo = primaryClipMaxAmmo;
+        secondaryClipAmmo = secondaryClipMaxAmmo;
     }
 
-    IEnumerator StartSecondaryFireDelay()
+    private void Update()
     {
-        if (primaryFireRate >= 0)
-        {
-            yield return new WaitForSeconds(60 / secondaryFireRate);
-            secondaryFireDelay = null;
-        }
+        if (autoReload)
+            if (primaryClipAmmo <= 0)
+                FirstReload();
+            if (secondaryClipAmmo <= 0)
+                SecondReload();
     }
-
-    public bool PrimaryFire(bool isPlayer = false, int attackModi = 1, int ammoConsumptionModi = 0, float bulletSpeedModi = 1)
+    
+    public bool PrimaryFire(int attackModi = 1, int ammoConsumptionModi = 0, float bulletSpeedModi = 1)
     {
-        if (primaryFireDelay != null)
+        if (primaryFireDelay != null || primaryReloading)
             return false;
 
         if (primaryClipAmmo >= primaryClipUseage + ammoConsumptionModi)
@@ -135,8 +143,6 @@ public class Weapon : MonoBehaviour
             Transform parentTrans = null;
             if (LevelController.Instance)
                 parentTrans = LevelController.Instance.DecalsTransform;
-
-            
 
             if (Shotgun > 0)
             {
@@ -187,9 +193,9 @@ public class Weapon : MonoBehaviour
         return false;
     }
 
-    public void SecondaryFire(bool isPlayer = false, int attackModi = 1, int ammoConsumptionModi = 0, float bulletSpeedModi = 1)
+    public void SecondaryFire(int attackModi = 1, int ammoConsumptionModi = 0, float bulletSpeedModi = 1)
     {
-        if (secondaryFireDelay != null)
+        if (secondaryFireDelay != null || secondaryReloading)
             return;
 
         if (secondaryClipAmmo >= secondaryClipUseage + ammoConsumptionModi)
@@ -206,20 +212,102 @@ public class Weapon : MonoBehaviour
         secondaryFireDelay = StartCoroutine(StartSecondaryFireDelay());
     }
 
-    public void PrimaryReload(bool isPlayer = false, float reloadSpeedModi = 1)
+    public void FirstReload(float reloadSpeedModi = 1)
     {
-        primaryClipAmmo = primaryClipMaxAmmo;
-        primaryReloadAudioSource.PlayOneShot(AudioDatabase.GetClip(primaryReloadSoundId));
+        float processedReloadDelay = primaryReloadDelay * reloadSpeedModi;
+        StartCoroutine(PrimaryReload(processedReloadDelay, bulletsPerPrimaryReload));
     }
 
-    public void SecondaryReload(bool isPlayer = false, float reloadSpeedModi = 1)
+    public void SecondReload(float reloadSpeedModi = 1)
     {
-        secondaryClipAmmo = secondaryClipMaxAmmo;
+        float processedReloadDelay = secondaryReloadDelay * reloadSpeedModi;
+        StartCoroutine(SecondaryReload(processedReloadDelay, bulletsPerSecondaryReload));
     }
 
-    public void ReloadAll(bool isPlayer = false, float reloadSpeedModi = 1)
+    public void ReloadAll(float reloadSpeedModi = 1)
     {
-        PrimaryReload(isPlayer, reloadSpeedModi);
-        SecondaryReload(isPlayer, reloadSpeedModi);
+        FirstReload(reloadSpeedModi);
+        SecondReload(reloadSpeedModi);
+    }
+    
+    void SetModifiers()
+    {
+        if (IsPlayer)
+        {
+            // Do player-only stuff
+        }
+        else
+        {
+            // Do enemy-only stuff
+        }
+    }
+
+    // Wasn't sure if updating time was more efficient than coroutine.
+    IEnumerator StartPrimaryFireDelay()
+    {
+        if (primaryFireRate >= 0)
+        {
+            yield return new WaitForSeconds(60 / primaryFireRate);
+            primaryFireDelay = null;
+        }
+    }
+
+    IEnumerator StartSecondaryFireDelay()
+    {
+        if (primaryFireRate >= 0)
+        {
+            yield return new WaitForSeconds(60 / secondaryFireRate);
+            secondaryFireDelay = null;
+        }
+    }
+
+    IEnumerator PrimaryReload(float reloadDelay, int bulletsToReload)
+    {
+        if (primaryReloading)
+            yield break;
+        
+        primaryReloading = true;
+        yield return new WaitForSeconds(reloadDelay);
+
+        if (bulletsToReload == -1)
+            bulletsToReload = primaryClipMaxAmmo;
+        
+        if ((primaryClipAmmo += bulletsToReload) > primaryClipMaxAmmo)
+            primaryClipAmmo = primaryClipMaxAmmo;
+
+        if (IsPlayer)
+        {
+            print("Reloaded");
+            LevelController.Instance.PlayerController.WeaponChanged();
+        }
+        else
+        {
+            print("No player");
+        }
+
+        primaryReloading = false;
+    }
+    
+    IEnumerator SecondaryReload(float reloadDelay, int bulletsToReload)
+    {
+        if (secondaryReloading)
+            yield break;
+        
+        secondaryReloading = true;
+        yield return new WaitForSeconds(reloadDelay);
+        
+        if (bulletsToReload == -1)
+            bulletsToReload = secondaryClipMaxAmmo;
+        
+        if ((secondaryClipAmmo += bulletsToReload) > secondaryClipMaxAmmo)
+            secondaryClipAmmo = secondaryClipMaxAmmo;
+
+        if (IsPlayer)
+        {
+            print("Reloaded");
+            LevelController.Instance.PlayerController.WeaponChanged();
+        }
+        
+        secondaryReloading = false;
     }
 }
