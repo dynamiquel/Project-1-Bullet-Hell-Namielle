@@ -115,7 +115,13 @@ public class Weapon : MonoBehaviour
 
     private void Update()
     {
-        if (autoReload)
+        // Caches whether the player has auto reload perk.
+        if (!autoReload && IsPlayer)
+        {
+            if (LevelController.Instance.PlayerController.PerkController.CanUse("autoReload"))
+                autoReload = true;
+        }
+        else
             if (primaryClipAmmo <= 0)
                 FirstReload();
             if (secondaryClipAmmo <= 0)
@@ -127,13 +133,21 @@ public class Weapon : MonoBehaviour
     Coroutine primaryFireDelay;
     Coroutine secondaryFireDelay;
     
-    public bool PrimaryFire(int attackModi = 1, int ammoConsumptionModi = 0, float bulletSpeedModi = 1)
+    public bool PrimaryFire(float attackModi = 1, int ammoConsumptionModi = 0, float bulletSpeedModi = 1)
     {
         if (primaryFireDelay != null || primaryReloading)
             return false;
 
         if (primaryClipAmmo >= primaryClipUseage + ammoConsumptionModi)
         {
+            if (IsPlayer)
+            {
+                if (LevelController.Instance.PlayerController.PerkController.CanUse("quickShots"))
+                    bulletSpeedModi *= 2f;
+                if (LevelController.Instance.PlayerController.PerkController.CanUse("highCalibre"))
+                    attackModi *= 1.5f;
+            }
+
             // Moves all projectiles to its own group.
             Transform parentTrans = null;
             if (LevelController.Instance)
@@ -147,11 +161,11 @@ public class Weapon : MonoBehaviour
                 {
                     Vector3 newRotation = new Vector3(transform.parent.rotation.x, transform.parent.rotation.y, transform.parent.rotation.eulerAngles.z + ((45f / Shotgun) * (float)i) + -12);
                     GameObject bullet = GameObject.Instantiate(primaryBulletPrefab, Barrel.position, Quaternion.Euler(newRotation), parentTrans);
-                    bullet.GetComponent<Projectile>().Fired(primaryFireSpeed * bulletSpeedModi, primaryFireDamage * attackModi, primarySizeModi, primaryExplosive);
+                    bullet.GetComponent<Projectile>().Fired(primaryFireSpeed * bulletSpeedModi, Mathf.RoundToInt(primaryFireDamage * attackModi), primarySizeModi, primaryExplosive);
                     if (TwinGuns == true)
                     {
                         GameObject bullet1 = GameObject.Instantiate(primaryBulletPrefab, TBarrel.position, Quaternion.Euler(newRotation), parentTrans);
-                        bullet1.GetComponent<Projectile>().Fired(primaryFireSpeed * bulletSpeedModi, primaryFireDamage * attackModi, primarySizeModi, primaryExplosive);
+                        bullet1.GetComponent<Projectile>().Fired(primaryFireSpeed * bulletSpeedModi, Mathf.RoundToInt(primaryFireDamage * attackModi), primarySizeModi, primaryExplosive);
                     }
                     i++;
                 }
@@ -166,13 +180,13 @@ public class Weapon : MonoBehaviour
                 }
 
                 GameObject bullet4 = GameObject.Instantiate(primaryBulletPrefab, TBarrel.position, transform.parent.rotation, parentTrans);
-                bullet4.GetComponent<Projectile>().Fired(primaryFireSpeed * bulletSpeedModi, primaryFireDamage * attackModi, primarySizeModi, primaryExplosive);
+                bullet4.GetComponent<Projectile>().Fired(primaryFireSpeed * bulletSpeedModi, Mathf.RoundToInt(primaryFireDamage * attackModi), primarySizeModi, primaryExplosive);
             }
 
             if (TwinGuns == false && Shotgun == 0)
             {
                 GameObject bullet = GameObject.Instantiate(primaryBulletPrefab, Barrel.position, transform.parent.rotation, parentTrans);
-                bullet.GetComponent<Projectile>().Fired(primaryFireSpeed * bulletSpeedModi, primaryFireDamage * attackModi, primarySizeModi, primaryExplosive);
+                bullet.GetComponent<Projectile>().Fired(primaryFireSpeed * bulletSpeedModi, Mathf.RoundToInt(primaryFireDamage * attackModi), primarySizeModi, primaryExplosive);
             }
             SkipToFirstBullet:
             
@@ -188,18 +202,26 @@ public class Weapon : MonoBehaviour
         return false;
     }
 
-    public void SecondaryFire(int attackModi = 1, int ammoConsumptionModi = 0, float bulletSpeedModi = 1)
+    public void SecondaryFire(float attackModi = 1, int ammoConsumptionModi = 0, float bulletSpeedModi = 1)
     {
         if (secondaryFireDelay != null || secondaryReloading)
             return;
 
         if (secondaryClipAmmo >= secondaryClipUseage + ammoConsumptionModi)
         {
+            if (IsPlayer)
+            {
+                if (LevelController.Instance.PlayerController.PerkController.CanUse("quickShots"))
+                    bulletSpeedModi *= 2f;
+                if (LevelController.Instance.PlayerController.PerkController.CanUse("highCalibre"))
+                    attackModi *= 1.5f;
+            }
+            
             // Moves all projectiles to its own group.
             Transform parentTrans = LevelController.Instance.DecalsTransform;
 
             GameObject bullet = GameObject.Instantiate(secondaryBulletPrefab, Barrel.position, transform.parent.rotation, parentTrans);
-            bullet.GetComponent<Projectile>().Fired(secondaryFireSpeed * bulletSpeedModi, secondaryFireDamage * attackModi, seccondarySizeModi, secondaryExplosive);
+            bullet.GetComponent<Projectile>().Fired(secondaryFireSpeed * bulletSpeedModi, Mathf.RoundToInt(primaryFireDamage * attackModi), seccondarySizeModi, secondaryExplosive);
             secondaryClipAmmo -= secondaryClipUseage + ammoConsumptionModi;
         }
 
@@ -250,6 +272,9 @@ public class Weapon : MonoBehaviour
 
     public void ReloadAll(float reloadSpeedModi = 1)
     {
+        if (IsPlayer && LevelController.Instance.PlayerController.PerkController.CanUse("slightOfHand"))
+            reloadSpeedModi = 0.6f;
+        
         FirstReload(reloadSpeedModi);
         SecondReload(reloadSpeedModi);
     }
