@@ -6,7 +6,7 @@ using UnityEngine;
 public class CharacterMotor : MonoBehaviour
 {
     public Rigidbody2D rb;
-    bool isControlled = false;
+    public bool isControlled = false;
 
     public void TakenOver()
     {

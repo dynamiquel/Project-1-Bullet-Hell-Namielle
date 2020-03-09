@@ -145,7 +145,6 @@ public class Weapon : MonoBehaviour
                 while (i < Shotgun)
                 {
                     Vector3 newRotation = new Vector3(transform.parent.rotation.x, transform.parent.rotation.y, transform.parent.rotation.eulerAngles.z + ((45f / Shotgun) * (float)i) + -12);
-                    Debug.Log(transform.parent.rotation.eulerAngles.z + ((45f / 3f) * (float)i));
                     GameObject bullet = GameObject.Instantiate(primaryBulletPrefab, Barrel.position, Quaternion.Euler(newRotation), parentTrans);
                     bullet.GetComponent<Projectile>().Fired(primaryFireSpeed * bulletSpeedModi, primaryFireDamage * attackModi, primarySizeModi, primaryExplosive);
                     if (TwinGuns == true)
