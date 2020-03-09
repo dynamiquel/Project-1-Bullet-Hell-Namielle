@@ -124,8 +124,6 @@ public class Weapon : MonoBehaviour
         else
             if (primaryClipAmmo <= 0)
                 FirstReload();
-            if (secondaryClipAmmo <= 0)
-                SecondReload();
     }
     #endregion
 
@@ -213,8 +211,6 @@ public class Weapon : MonoBehaviour
             {
                 if (LevelController.Instance.PlayerController.PerkController.CanUse("quickShots"))
                     bulletSpeedModi *= 2f;
-                if (LevelController.Instance.PlayerController.PerkController.CanUse("highCalibre"))
-                    attackModi *= 1.5f;
             }
             
             // Moves all projectiles to its own group.

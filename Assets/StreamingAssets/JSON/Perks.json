@@ -10,30 +10,30 @@
   },
   "slightOfHand": {
     "name": "Slight of Hand",
-    "description": "Increase reload speed by 40%"
+    "description": "Increase reload speed by 40%."
   },
   "autoReload": {
     "name": "Auto Reload",
-    "description": "Automatically reloads your primary weapon"
+    "description": "Automatically reloads your primary weapon."
   },
   "quickShots": {
     "name": "Quick Shots",
-    "description": "Increases the velocity of the projectiles shot from your primary weapon"
+    "description": "Increases the velocity of the projectiles shot from your weapons."
   },
   "virus": {
     "name": "Virus",
-    "description": "When you leave an enemy, they die after 3 seconds"
+    "description": "When you leave an enemy, they die after 3 seconds."
   },
   "jugg": {
     "name": "Juggernaut",
-    "description": "Increases your maximum health by 50%"
+    "description": "Increases your maximum health by 50%."
   },
   "fastCharge": {
     "name": "Fast Charge",
-    "description": "Decreases your jump cooldown by 75%",
+    "description": "Decreases your jump cooldown by 75%."
   },
   "highCalibre": {
-    "name": "High Calibre Rounds",
-    "description":  "Your primary weapon deals 50% more damage"
+    "name": "High Calibre",
+    "description":  "Your primary weapon deals 50% more damage."
   }
 }
