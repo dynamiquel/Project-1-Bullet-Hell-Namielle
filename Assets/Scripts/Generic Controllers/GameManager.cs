@@ -74,7 +74,12 @@ public class GameManager : MonoBehaviour
         {
             GameState = GameState.InGame;
             MusicController?.PlayClip("Main Menu", AddState.Queue, 0.05f, true, 0.04f, 0.07f);
-            discordManager?.SetActivity("In Game", sceneName.Split('_')[1]);
+            
+            // If we can get the name of the level, use it. Else, just use it's ID.
+            if (ItemDatabase.Instance != null)
+                discordManager?.SetActivity("In Game", ItemDatabase.Instance.LevelDatas[sceneName].Name);
+            else
+                discordManager?.SetActivity("In Game", sceneName.Split('_')[1]);
         }
         else
             switch (sceneName)

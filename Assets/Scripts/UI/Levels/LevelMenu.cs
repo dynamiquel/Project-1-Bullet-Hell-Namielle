@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class LevelMenu : Menu
 {
@@ -8,14 +9,33 @@ public class LevelMenu : Menu
     [SerializeField] Transform levelGrid;
     List<LevelSlot> levelSlots = new List<LevelSlot>();
 
-    private void Start()
+    protected override void Start()
     {
+        base.Start();
         StartCoroutine(CreateLevelSlots());
+    }
+    
+    public override void UserInputButtonClicked(int x)
+    {
+        print("Click 2");
+        switch (x)
+        {
+            case 1:
+                MainMenuController.Instance.LoadMenu(0);
+                break;
+        }
     }
 
     public void PlayLevel(LevelSlot levelSlot)
     {
         GameManager.Instance.LoadScene(levelSlot.levelDataId);
+    }
+
+    protected override void UserInput()
+    {
+        base.UserInput();
+        if (Input.GetButtonDown("Cancel"))
+            MainMenuController.Instance.LoadMenu(0);
     }
 
     IEnumerator CreateLevelSlots()

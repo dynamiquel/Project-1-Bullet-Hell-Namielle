@@ -43,12 +43,14 @@ public class MainMenuController : MonoBehaviour
     void OpenMainMenu()
     {
         optionsMenu.SetActive(false);
+        levelMenu.SetActive(false);
         mainMenu.SetActive(true);
     }
 
     void OpenOptionsMenu()
     {
         mainMenu.SetActive(false);
+        levelMenu.SetActive(false);
         optionsMenu.SetActive(true);
     }
 
