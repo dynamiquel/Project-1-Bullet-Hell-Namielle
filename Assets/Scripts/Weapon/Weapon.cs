@@ -61,17 +61,6 @@ public class Weapon : MonoBehaviour
     AudioSource primaryFireAudioSource;
     AudioSource primaryReloadAudioSource;
 
-    Coroutine primaryFireDelay;
-    Coroutine secondaryFireDelay;
-
-    private bool primaryReloading = false;
-    private bool secondaryReloading = false;
-    [SerializeField] private bool autoReload = false;
-    [SerializeField] private float primaryReloadDelay = 1f;
-    [SerializeField] private int bulletsPerPrimaryReload = -1; // -1 = same as mag size.
-    [SerializeField] private float secondaryReloadDelay = 3f;
-    [SerializeField] private int bulletsPerSecondaryReload = -1; // -1 = same as mag size.
-    
     /*public Weapon(WeaponData weaponData)
     {
         primaryClipMaxAmmo = weaponData.PrimaryMaxAmmo;
@@ -90,7 +79,8 @@ public class Weapon : MonoBehaviour
         //secondaryExplosive = weaponData.SecondaryExplosive;
         secondaryFireRate = weaponData.SecondaryFireRate;
     }*/
-    
+
+    #region Unity
     private void Awake()
     {
         //Search item database for clip ammo for each weapon and set it here and there useages and there stats
@@ -131,6 +121,11 @@ public class Weapon : MonoBehaviour
             if (secondaryClipAmmo <= 0)
                 SecondReload();
     }
+    #endregion
+
+    #region Firing
+    Coroutine primaryFireDelay;
+    Coroutine secondaryFireDelay;
     
     public bool PrimaryFire(int attackModi = 1, int ammoConsumptionModi = 0, float bulletSpeedModi = 1)
     {
@@ -211,37 +206,7 @@ public class Weapon : MonoBehaviour
         primaryFireAudioSource.PlayOneShot(AudioDatabase.GetClip(secondaryBulletSoundId));
         secondaryFireDelay = StartCoroutine(StartSecondaryFireDelay());
     }
-
-    public void FirstReload(float reloadSpeedModi = 1)
-    {
-        float processedReloadDelay = primaryReloadDelay * reloadSpeedModi;
-        StartCoroutine(PrimaryReload(processedReloadDelay, bulletsPerPrimaryReload));
-    }
-
-    public void SecondReload(float reloadSpeedModi = 1)
-    {
-        float processedReloadDelay = secondaryReloadDelay * reloadSpeedModi;
-        StartCoroutine(SecondaryReload(processedReloadDelay, bulletsPerSecondaryReload));
-    }
-
-    public void ReloadAll(float reloadSpeedModi = 1)
-    {
-        FirstReload(reloadSpeedModi);
-        SecondReload(reloadSpeedModi);
-    }
     
-    void SetModifiers()
-    {
-        if (IsPlayer)
-        {
-            // Do player-only stuff
-        }
-        else
-        {
-            // Do enemy-only stuff
-        }
-    }
-
     // Wasn't sure if updating time was more efficient than coroutine.
     IEnumerator StartPrimaryFireDelay()
     {
@@ -260,7 +225,35 @@ public class Weapon : MonoBehaviour
             secondaryFireDelay = null;
         }
     }
+    #endregion
 
+    #region Reloading
+    private bool primaryReloading = false;
+    private bool secondaryReloading = false;
+    [SerializeField] private bool autoReload = false;
+    [SerializeField] private float primaryReloadDelay = 1f;
+    [SerializeField] private int bulletsPerPrimaryReload = -1; // -1 = same as mag size.
+    [SerializeField] private float secondaryReloadDelay = 3f;
+    [SerializeField] private int bulletsPerSecondaryReload = -1; // -1 = same as mag size.
+    
+    public void FirstReload(float reloadSpeedModi = 1)
+    {
+        float processedReloadDelay = primaryReloadDelay * reloadSpeedModi;
+        StartCoroutine(PrimaryReload(processedReloadDelay, bulletsPerPrimaryReload));
+    }
+
+    public void SecondReload(float reloadSpeedModi = 1)
+    {
+        float processedReloadDelay = secondaryReloadDelay * reloadSpeedModi;
+        StartCoroutine(SecondaryReload(processedReloadDelay, bulletsPerSecondaryReload));
+    }
+
+    public void ReloadAll(float reloadSpeedModi = 1)
+    {
+        FirstReload(reloadSpeedModi);
+        SecondReload(reloadSpeedModi);
+    }
+    
     IEnumerator PrimaryReload(float reloadDelay, int bulletsToReload)
     {
         if (primaryReloading)
@@ -309,5 +302,18 @@ public class Weapon : MonoBehaviour
         }
         
         secondaryReloading = false;
+    }
+    #endregion
+    
+    void SetModifiers()
+    {
+        if (IsPlayer)
+        {
+            // Do player-only stuff
+        }
+        else
+        {
+            // Do enemy-only stuff
+        }
     }
 }
