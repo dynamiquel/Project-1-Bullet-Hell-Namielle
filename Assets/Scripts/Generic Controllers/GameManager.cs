@@ -15,6 +15,8 @@ public class GameManager : MonoBehaviour
     public MusicController MusicController { get => _musicController; private set => _musicController = value; }
     [SerializeField] DiscordManager discordManager;
 
+    private bool sceneLoading = false;
+
     private void Awake()
     {
         if (Instance != null && Instance != this)
@@ -38,13 +40,19 @@ public class GameManager : MonoBehaviour
     // Just a less redundant way to show the loading screen, unload the current scene and load a new scene.
     public void LoadScene(string sceneName)
     {
+        if (sceneLoading)
+            return;
+
+        sceneLoading = true;
+        
         try
         {
-            string currentSceneName = SceneManager.GetActiveScene().name;
-
             SceneManager.LoadSceneAsync("Loading Screen", LoadSceneMode.Additive);
-            // Unloads the current scene first to save memory.
-            SceneManager.UnloadSceneAsync(currentSceneName);
+            
+            // Unloads the current scene first to save memory. Unity says not to use for some reason.
+            //string currentSceneName = SceneManager.GetActiveScene().name;
+            //SceneManager.UnloadSceneAsync(currentSceneName);
+            
             StartCoroutine(LoadSceneAsync(sceneName));
         }
         catch (Exception e)
@@ -55,6 +63,8 @@ public class GameManager : MonoBehaviour
 
     IEnumerator LoadSceneAsync(string sceneName)
     {
+        //yield return new WaitForSeconds(0.07f);
+        
         AsyncOperation operation = SceneManager.LoadSceneAsync(sceneName);
 
         while (!operation.isDone)
@@ -62,6 +72,8 @@ public class GameManager : MonoBehaviour
             LoadingScreenController.Instance?.SetProgress(Mathf.Clamp01(operation.progress / .9f));
             yield return null;
         }
+
+        sceneLoading = false;
     }
 
     void OnSceneChanged()
