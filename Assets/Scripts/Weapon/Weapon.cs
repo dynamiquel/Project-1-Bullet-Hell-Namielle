@@ -318,7 +318,7 @@ public class Weapon : MonoBehaviour
 
         if (IsPlayer)
         {
-            print("Reloaded");
+            //print("Reloaded");
             LevelController.Instance.PlayerController.WeaponChanged();
         }
         

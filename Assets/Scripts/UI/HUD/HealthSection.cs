@@ -21,7 +21,8 @@ public class HealthSection : HUDComponent
 
     void HandlePlayerHealthChanged(IDamageable entity)
     {
-        Debug.Log("Health changed");
+        //Debug.Log("Health changed");
+
         if (playerHealthFillBar != null)
         {
             gameObject.SetActive(true);
