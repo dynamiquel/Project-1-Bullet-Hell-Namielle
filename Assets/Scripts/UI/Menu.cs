@@ -5,6 +5,7 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using UnityEngine.Events;
 using UnityEngine.EventSystems;
 
 public class Menu : MonoBehaviour
@@ -20,9 +21,12 @@ public class Menu : MonoBehaviour
     private void OnEnable()
     {
         if (eventSystem)
-        {
             eventSystem.enabled = true;
-        }
+    }
+
+    protected virtual void Start()
+    {
+        SubscribeToUserInputButtons();
     }
 
     private void LateUpdate()
@@ -39,9 +43,8 @@ public class Menu : MonoBehaviour
                     fxAudioSource.PlayOneShot(audioClips[audioClip]);
     }
 
-    public void UserInputButtonClicked(int x)
+    public virtual void UserInputButtonClicked(int x)
     {
-
     }
 
     void EnableUserInputButtons(bool state)
@@ -51,7 +54,7 @@ public class Menu : MonoBehaviour
                 item.gameObject.SetActive(state);
     }
 
-    public virtual void UserInput()
+    protected virtual void UserInput()
     {
 
     }
@@ -75,6 +78,16 @@ public class Menu : MonoBehaviour
         foreach (var item in userInputButtons)
         {
             item.EnableController(state);
+        }
+    }
+
+    void SubscribeToUserInputButtons()
+    {
+        for (int i = 0; i < userInputButtons.Count; i++)
+        {
+            userInputButtons[i].id = i + 1;
+            userInputButtons[i].OnClickEvent.AddListener(UserInputButtonClicked);
+            print("Subscribed");
         }
     }
 }

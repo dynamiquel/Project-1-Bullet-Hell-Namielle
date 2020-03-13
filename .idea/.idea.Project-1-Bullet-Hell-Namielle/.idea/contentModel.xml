@@ -7,8 +7,6 @@
       <e p="Assembly-CSharp-firstpass.csproj" t="IncludeRecursive" />
       <e p="Assembly-CSharp.csproj" t="IncludeRecursive" />
       <e p="Assets" t="Include">
-        <e p="DeathMenu.cs" t="Include" />
-        <e p="DeathMenuController.cs" t="Include" />
         <e p="Plugins" t="Include">
           <e p="Discord" t="Include">
             <e p="ActivityManager.cs" t="Include" />
@@ -106,6 +104,8 @@
           </e>
           <e p="UI" t="Include">
             <e p="Billboard.cs" t="Include" />
+            <e p="DeathMenu.cs" t="Include" />
+            <e p="DeathMenuController.cs" t="Include" />
             <e p="Hub Menu" t="Include">
               <e p="HubMenuController.cs" t="Include" />
               <e p="PerkMenu.cs" t="Include" />
@@ -120,6 +120,11 @@
               <e p="ObjectiveSection.cs" t="Include" />
               <e p="ScoreTimeSection.cs" t="Include" />
               <e p="WeaponSection.cs" t="Include" />
+            </e>
+            <e p="Levels" t="Include">
+              <e p="LevelMenu.cs" t="Include" />
+              <e p="LevelSelectData.cs" t="Include" />
+              <e p="LevelSlot.cs" t="Include" />
             </e>
             <e p="Loading Screen" t="Include">
               <e p="LoadingScreenController.cs" t="Include" />

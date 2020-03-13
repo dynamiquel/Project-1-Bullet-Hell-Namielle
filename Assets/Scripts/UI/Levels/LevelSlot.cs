@@ -61,7 +61,6 @@ public class LevelSlot : MonoBehaviour, ISelectHandler, IPointerEnterHandler, IP
     {
         levelData = ItemDatabase.Instance.LevelDatas[levelDataId];
         perkNameText.text = levelData.Name;
-        // if unlocked, set text to unlockedColour
-        // if cant afford, outOfReachColour
+        fillImage.sprite = Resources.Load<Sprite>($"LevelImages/{levelData.ImageLocation}");
     }
 }

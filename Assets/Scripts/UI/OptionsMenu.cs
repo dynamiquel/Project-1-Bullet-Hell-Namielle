@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class OptionsMenu : Menu
 {
-    public override void UserInput()
+    protected override void UserInput()
     {
         if (Input.GetButtonDown("Cancel"))
         {

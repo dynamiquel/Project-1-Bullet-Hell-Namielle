@@ -4,6 +4,7 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
 using System;
+using UnityEngine.Events;
 
 public class UserInput : MonoBehaviour
 {
@@ -24,6 +25,9 @@ public class UserInput : MonoBehaviour
             ButtonChanged();
         }
     }
+    
+    public IntEvent OnClickEvent;
+    public int id = 0;
 
     public void Start()
     {
@@ -34,6 +38,12 @@ public class UserInput : MonoBehaviour
     public void EnableController(bool state)
     {
         image.enabled = state;
+    }
+
+    public void OnClick()
+    {
+        print("Click 1");
+        OnClickEvent.Invoke(id);
     }
 
     void ButtonChanged()
@@ -60,4 +70,9 @@ public enum XboxButton
     RS,
     Menu,
     View
+}
+
+[System.Serializable]
+public class IntEvent : UnityEvent<int>
+{
 }
