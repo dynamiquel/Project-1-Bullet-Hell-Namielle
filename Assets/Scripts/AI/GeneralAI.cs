@@ -74,8 +74,8 @@ public class GeneralAI : MonoBehaviour
 
     IEnumerator ShootWeapon()
     {
-        //weapon.ReloadAll();
         weapon.PrimaryFire();
+        weapon.ReloadAll();
         yield return new WaitForSeconds(shootSpeed);
     }
 }
