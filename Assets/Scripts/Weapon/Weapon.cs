@@ -14,10 +14,8 @@ public class Weapon : MonoBehaviour
     Transform Barrel;
     Transform TBarrel;
 
-    [HideInInspector]
     public int primaryClipAmmo;
     public int primaryClipMaxAmmo;
-    [HideInInspector]
     public int secondaryClipAmmo;
     public int secondaryClipMaxAmmo;
 

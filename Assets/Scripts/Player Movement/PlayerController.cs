@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(PerkController))]
+[RequireComponent(typeof(JumpController))]
 public class PlayerController : Player
 {
     public event Action<Weapon> OnWeaponChanged;
@@ -16,6 +17,8 @@ public class PlayerController : Player
     CharacterMotor currentCharacterMotor;
     public PerkController PerkController { get; private set; }
     Vector2 mousePos;
+
+    [SerializeField] JumpController jumpController;
 
     #region Walk Sounds
     [SerializeField] AudioSource feetAudioSource;
@@ -35,6 +38,7 @@ public class PlayerController : Player
             LevelController.Instance.PlayerController = this;
 
         PerkController = GetComponent<PerkController>();
+        jumpController = GetComponent<JumpController>();
     }
 
     public override void Start()
@@ -132,6 +136,8 @@ public class PlayerController : Player
         {
             Debug.LogWarning("No weapon found on controlled object.");
         }
+
+        jumpController.SetCurrentControlledEnemy(controlledObject);
     }
 
     void ControlManager()
