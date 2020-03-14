@@ -66,7 +66,7 @@ public class PlayerController : Player
 
     public IDamageable GetControlledIDamagable()
     {
-        return controlledObject.GetComponentInChildren<IDamageable>();
+        return controlledObject.GetComponent<IDamageable>();
     }
 
     // Public access to invoke the OnWeaponChanged event.
@@ -81,7 +81,7 @@ public class PlayerController : Player
         {
             Debug.Log("You died. We haven't done anything past this point ;)");
             // Unsubscribe so runtime errors don't happen.
-            GetControlledIDamagable().OnHealthChanged -= HandleHealthChange;
+            entity.OnHealthChanged -= HandleHealthChange;
             OnPlayerDeath?.Invoke(this);
         }
 
@@ -93,7 +93,7 @@ public class PlayerController : Player
         // So many try-catches ;)
         try
         {
-            lastControlled.GetComponentInChildren<IDamageable>().OnHealthChanged -= OnHealthChange;
+            lastControlled.GetComponent<IDamageable>().OnHealthChanged -= HandleHealthChange;
         }
         catch (Exception e)
         {
@@ -103,6 +103,7 @@ public class PlayerController : Player
         try
         {
             GetControlledIDamagable().OnHealthChanged += HandleHealthChange;
+            OnHealthChange?.Invoke(GetControlledIDamagable());
         }
         catch (NullReferenceException e)
         {
@@ -200,7 +201,11 @@ public class PlayerController : Player
         }
         if (Input.GetButton("CharJump"))
         {
-            throw new System.NotImplementedException();
+            if (jumpController.Jump(out var newEnemy))
+            {
+                controlledObject = newEnemy;
+                HandleNewControlledObject();
+            }
         }
     }
 
