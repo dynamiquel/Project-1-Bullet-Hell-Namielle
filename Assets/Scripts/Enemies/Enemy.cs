@@ -39,7 +39,7 @@ public class Enemy : MonoBehaviour, IDamageable, IScorable
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        Debug.Log($"Collided with '{collision.gameObject.name}'");
+        //Debug.Log($"Collided with '{collision.gameObject.name}'");
 
         // Perhaps there's a more efficient way.
         if (collision.gameObject.layer == bulletLayerMask)

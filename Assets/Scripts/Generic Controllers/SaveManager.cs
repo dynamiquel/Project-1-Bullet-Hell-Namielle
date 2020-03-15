@@ -69,7 +69,7 @@ public class SaveManager : MonoBehaviour
             finally
             {
                 fs.Close();
-                Debug.Log("File loaded");
+                Debug.Log("Save file loaded");
             }
         }
         else

@@ -14,10 +14,8 @@ public class Weapon : MonoBehaviour
     Transform Barrel;
     Transform TBarrel;
 
-    [HideInInspector]
     public int primaryClipAmmo;
     public int primaryClipMaxAmmo;
-    [HideInInspector]
     public int secondaryClipAmmo;
     public int secondaryClipMaxAmmo;
 
@@ -318,7 +316,7 @@ public class Weapon : MonoBehaviour
 
         if (IsPlayer)
         {
-            print("Reloaded");
+            //print("Reloaded");
             LevelController.Instance.PlayerController.WeaponChanged();
         }
         

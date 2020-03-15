@@ -94,6 +94,7 @@
           </e>
           <e p="Player Movement" t="Include">
             <e p="CharacterMotor.cs" t="Include" />
+            <e p="JumpController.cs" t="Include" />
             <e p="PerkController.cs" t="Include" />
             <e p="Player.cs" t="Include" />
             <e p="PlayerController.cs" t="Include" />

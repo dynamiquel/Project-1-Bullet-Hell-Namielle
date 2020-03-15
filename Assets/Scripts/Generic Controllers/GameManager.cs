@@ -79,7 +79,7 @@ public class GameManager : MonoBehaviour
     void OnSceneChanged()
     {
         string sceneName = SceneManager.GetActiveScene().name;
-        Debug.Log(sceneName);
+        Debug.Log($"Current scene name: {sceneName}");
 
         // If the user is in a playable level.
         if (sceneName.StartsWith("LVL_"))

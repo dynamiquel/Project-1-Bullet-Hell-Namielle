@@ -310,6 +310,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerTransform: {fileID: 7872275400817283122}
+  rgbShiftTime: 0.5
 --- !u!81 &5620574652313330684
 AudioListener:
   m_ObjectHideFlags: 0
@@ -346,6 +347,7 @@ GameObject:
   - component: {fileID: 7872275400817283122}
   - component: {fileID: 314747463998010895}
   - component: {fileID: 3721392945067544172}
+  - component: {fileID: 1509487265866509781}
   m_Layer: 0
   m_Name: Controller
   m_TagString: Untagged
@@ -417,6 +419,7 @@ MonoBehaviour:
     AbilitiesUsed: 0
     EnemiesHijacked: 0
     PlayTime: 0
+  jumpController: {fileID: 1509487265866509781}
   feetAudioSource: {fileID: 2368523670448768002}
   walkSoundRate: 1
   walkAudioClipsId:
@@ -424,3 +427,16 @@ MonoBehaviour:
   - Walk 2
   - Walk 3
   - Walk 4
+--- !u!114 &1509487265866509781
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8920813188795176596}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b62e8cf5ca468434c983967248c1a809, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  jumpCooldown: 2

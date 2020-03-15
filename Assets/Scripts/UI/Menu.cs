@@ -87,7 +87,6 @@ public class Menu : MonoBehaviour
         {
             userInputButtons[i].id = i + 1;
             userInputButtons[i].OnClickEvent.AddListener(UserInputButtonClicked);
-            print("Subscribed");
         }
     }
 }

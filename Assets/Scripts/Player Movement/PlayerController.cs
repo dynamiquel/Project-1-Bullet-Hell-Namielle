@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(PerkController))]
+[RequireComponent(typeof(JumpController))]
 public class PlayerController : Player
 {
     public event Action<Weapon> OnWeaponChanged;
@@ -16,6 +17,8 @@ public class PlayerController : Player
     CharacterMotor currentCharacterMotor;
     public PerkController PerkController { get; private set; }
     Vector2 mousePos;
+
+    [SerializeField] JumpController jumpController;
 
     #region Walk Sounds
     [SerializeField] AudioSource feetAudioSource;
@@ -35,6 +38,7 @@ public class PlayerController : Player
             LevelController.Instance.PlayerController = this;
 
         PerkController = GetComponent<PerkController>();
+        jumpController = GetComponent<JumpController>();
     }
 
     public override void Start()
@@ -62,7 +66,7 @@ public class PlayerController : Player
 
     public IDamageable GetControlledIDamagable()
     {
-        return controlledObject.GetComponentInChildren<IDamageable>();
+        return controlledObject.GetComponent<IDamageable>();
     }
 
     // Public access to invoke the OnWeaponChanged event.
@@ -77,7 +81,7 @@ public class PlayerController : Player
         {
             Debug.Log("You died. We haven't done anything past this point ;)");
             // Unsubscribe so runtime errors don't happen.
-            GetControlledIDamagable().OnHealthChanged -= HandleHealthChange;
+            entity.OnHealthChanged -= HandleHealthChange;
             OnPlayerDeath?.Invoke(this);
         }
 
@@ -89,7 +93,7 @@ public class PlayerController : Player
         // So many try-catches ;)
         try
         {
-            lastControlled.GetComponentInChildren<IDamageable>().OnHealthChanged -= OnHealthChange;
+            lastControlled.GetComponent<IDamageable>().OnHealthChanged -= HandleHealthChange;
         }
         catch (Exception e)
         {
@@ -99,6 +103,7 @@ public class PlayerController : Player
         try
         {
             GetControlledIDamagable().OnHealthChanged += HandleHealthChange;
+            OnHealthChange?.Invoke(GetControlledIDamagable());
         }
         catch (NullReferenceException e)
         {
@@ -132,6 +137,8 @@ public class PlayerController : Player
         {
             Debug.LogWarning("No weapon found on controlled object.");
         }
+
+        jumpController.SetCurrentControlledEnemy(controlledObject);
     }
 
     void ControlManager()
@@ -194,7 +201,11 @@ public class PlayerController : Player
         }
         if (Input.GetButton("CharJump"))
         {
-            throw new System.NotImplementedException();
+            if (jumpController.Jump(out var newEnemy))
+            {
+                controlledObject = newEnemy;
+                HandleNewControlledObject();
+            }
         }
     }
 

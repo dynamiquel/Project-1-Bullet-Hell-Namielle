@@ -110,11 +110,16 @@ public class ItemDatabase : MonoBehaviour
 
         var perksData = Newtonsoft.Json.JsonConvert.DeserializeObject<Dictionary<string, PerkData>>(json);
 
+        var sb = new System.Text.StringBuilder("PerkDatas loaded:\n");
+
         foreach (var perkData in perksData)
         {
             PerkDatas[perkData.Key] = perkData.Value;
-            Debug.Log(perkData.Key);
+
+            sb.AppendLine(perkData.Key);
         }
+
+        Debug.Log(sb.ToString());
     }
 
     IEnumerator ReadLevelsJson()
@@ -126,11 +131,16 @@ public class ItemDatabase : MonoBehaviour
 
         var levelsData = Newtonsoft.Json.JsonConvert.DeserializeObject<Dictionary<string, LevelSelectData>>(json);
 
+        var sb = new System.Text.StringBuilder("LevelDatas loaded:\n");
+
         foreach (var levelData in levelsData)
         {
             LevelDatas[levelData.Key] = levelData.Value;
-            Debug.Log(levelData.Key);
+
+            sb.AppendLine(levelData.Key);
         }
+
+        Debug.Log(sb.ToString());
     }
 
     // Creates a weapon with the given weapon data.
