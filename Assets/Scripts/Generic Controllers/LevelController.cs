@@ -4,13 +4,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+// Ask Liam for help.
 public class LevelController : MonoBehaviour
 {
     public static LevelController Instance { get; private set; }
     public string levelId = "placeholder";
 
-    [SerializeField]
-    Enemy _currentBoss;
+    [SerializeField] Enemy _currentBoss;
     public Enemy CurrentBoss
     {
         get => _currentBoss;
@@ -52,7 +52,7 @@ public class LevelController : MonoBehaviour
             Instance = this;
         }
 
-        // Loads the UI as a seperate scene.
+        // Loads the UI as a separate scene.
         if (!SceneManager.GetSceneByName("UI").isLoaded)
             SceneManager.LoadSceneAsync("UI", LoadSceneMode.Additive);
     }

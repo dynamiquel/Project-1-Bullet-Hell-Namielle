@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+// Ask Liam for help.
 // Automatically disables the given game objects until it is triggered by the player.
 [RequireComponent(typeof(BoxCollider2D))]
 public class RoomTrigger : MonoBehaviour

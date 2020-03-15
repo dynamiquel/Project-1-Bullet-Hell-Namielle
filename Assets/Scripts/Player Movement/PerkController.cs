@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+// Ask Liam for help.
 public class PerkController : MonoBehaviour
 {
     public Dictionary<string, Perk> ActivePerks { get; private set; } = new Dictionary<string, Perk>();

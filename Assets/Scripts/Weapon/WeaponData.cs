@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+// Hasn't been implemented.
 public class WeaponData
 {
     public string PrefabId { get; set; }

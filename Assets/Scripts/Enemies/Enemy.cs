@@ -3,7 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-// Only inherit from this class. Do not actually this class as a game object.
+// Ask Liam for help.
+// Only inherit from this class. Do not actually use this class as a game object.
 [RequireComponent(typeof(Rigidbody2D))]
 [RequireComponent(typeof(BoxCollider2D))]
 [RequireComponent(typeof(AudioSource))]
@@ -11,16 +12,16 @@ public class Enemy : MonoBehaviour, IDamageable, IScorable
 {
     public string id = "default_enemy";
 
-    [SerializeField] string bulletLayerName = "Bullets";
+    [SerializeField] protected string bulletLayerName = "Bullets";
     LayerMask bulletLayerMask;
 
-    [SerializeField] int _maxHealth = 100;
+    [SerializeField] protected int _maxHealth = 100;
     public int MaxHealth { get => _maxHealth; set => _maxHealth = value; }
     public int Health { get; set; }
 
-    [SerializeField] int _exp = 1;
+    [SerializeField] protected int _exp = 1;
     public int Exp { get => _exp; set => _exp = value; }
-    [SerializeField] int _score = 10;
+    [SerializeField] protected int _score = 10;
     public int Score { get => _score; set => _score = value; }
 
     public event Action<IDamageable> OnHealthChanged;
@@ -37,7 +38,7 @@ public class Enemy : MonoBehaviour, IDamageable, IScorable
         mainAudioSource = GetComponent<AudioSource>();
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    protected void OnCollisionEnter2D(Collision2D collision)
     {
         //Debug.Log($"Collided with '{collision.gameObject.name}'");
 
@@ -64,7 +65,7 @@ public class Enemy : MonoBehaviour, IDamageable, IScorable
         DamageableEntityManager.Instance.DamageEntity(this, damage);
     }
 
-    void OnDestroy()
+    protected void OnDestroy()
     {
         if (LevelController.Instance.CurrentBoss == this)
             LevelController.Instance.CurrentBoss = null;

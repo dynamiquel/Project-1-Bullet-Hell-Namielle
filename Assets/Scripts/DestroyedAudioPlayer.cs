@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+// Ask Liam for help.
 // Created and controlled by DestroyAudio.
 [RequireComponent(typeof(AudioSource))]
 public class DestroyedAudioPlayer : MonoBehaviour

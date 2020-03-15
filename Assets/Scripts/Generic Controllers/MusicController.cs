@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+// Ask Liam for help.
 [RequireComponent(typeof(AudioSource))]
 public class MusicController : MonoBehaviour
 {

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+// Ask Liam for help.
 // Sets a new objective when triggered by the player.
 [RequireComponent(typeof(BoxCollider2D))]
 public class ObjectiveTrigger : MonoBehaviour

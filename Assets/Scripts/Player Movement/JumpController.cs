@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+// Ask Liam for help.
 public class JumpController : MonoBehaviour
 {
     public bool CanJump { get => currJumpCooldown <= 0f; }
@@ -54,7 +55,7 @@ public class JumpController : MonoBehaviour
 
         if (rayCastHit.collider != null)
         {
-            Debug.DrawRay(raycastTransform.position, controlledEnemyTransform.TransformDirection(Vector2.up) * jumpDistance, Color.yellow, 1f);
+            Debug.DrawRay(raycastTransform.position, controlledEnemyTransform.TransformDirection(Vector2.up) * jumpDistance, Color.yellow);
             
             CharacterMotor characterMotor = rayCastHit.collider.GetComponent<CharacterMotor>();
 

@@ -52,6 +52,7 @@
         <e p="Scripts" t="Include">
           <e p="Abilities" t="Include">
             <e p="Ability.cs" t="Include" />
+            <e p="TestAbility.cs" t="Include" />
           </e>
           <e p="AI" t="Include">
             <e p="AIDetection.cs" t="Include" />
@@ -93,6 +94,7 @@
             <e p="PlayerStats.cs" t="Include" />
           </e>
           <e p="Player Movement" t="Include">
+            <e p="AbilityController.cs" t="Include" />
             <e p="CharacterMotor.cs" t="Include" />
             <e p="JumpController.cs" t="Include" />
             <e p="PerkController.cs" t="Include" />

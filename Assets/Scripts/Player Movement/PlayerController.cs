@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+// Ask Bradley or Liam for help.
 [RequireComponent(typeof(PerkController))]
 [RequireComponent(typeof(JumpController))]
 public class PlayerController : Player
@@ -16,6 +17,7 @@ public class PlayerController : Player
     Weapon currentWeapon;
     CharacterMotor currentCharacterMotor;
     public PerkController PerkController { get; private set; }
+    public AbilityController AbilityController { get; private set; }
     Vector2 mousePos;
 
     [SerializeField] JumpController jumpController;
@@ -38,6 +40,7 @@ public class PlayerController : Player
             LevelController.Instance.PlayerController = this;
 
         PerkController = GetComponent<PerkController>();
+        AbilityController = GetComponent<AbilityController>();
         jumpController = GetComponent<JumpController>();
     }
 
@@ -176,27 +179,29 @@ public class PlayerController : Player
             }
         }
 
-        if (Input.GetButton("Ability1"))
+        if (Input.GetButtonDown("Ability1"))
         {
             try
             {
-                ItemDatabase.Instance.Abilities[stats.PersistentPlayerData.ActiveAbilities[0]].Use();
+                stats.PersistentPlayerData.ActiveAbilities[0] = "test";
+                AbilityController.AddAbility("test");
+                AbilityController.UseAbility(stats.PersistentPlayerData.ActiveAbilities[0]);
             }
             catch (Exception e)
             {
-                Debug.LogWarning("Ability not found");
+                Debug.LogWarning("Ability 1 not found");
             }
         }
 
-        if (Input.GetButton("Ability2"))
+        if (Input.GetButtonDown("Ability2"))
         {
             try
             {
-                ItemDatabase.Instance.Abilities[stats.PersistentPlayerData.ActiveAbilities[1]].Use();
+                AbilityController.UseAbility(stats.PersistentPlayerData.ActiveAbilities[1]);
             }
             catch (Exception e)
             {
-                Debug.LogWarning("Ability not found");
+                Debug.LogWarning("Ability 2 not found");
             }
         }
         if (Input.GetButton("CharJump"))

@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+// Ask Liam for help. Don't even try to look at this code. It's way too messy.
 [System.Serializable]
 public class PersistentPlayerData
 {

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
+// Ask Liam for help.
 public class ItemDatabase : MonoBehaviour
 {
     public static ItemDatabase Instance { get; private set; }
@@ -22,24 +23,20 @@ public class ItemDatabase : MonoBehaviour
 
         Init();
     }
-
+    
     //public Dictionary<string, Weapon> Weapons { get; private set; } = new Dictionary<string, Weapon>();
     public Dictionary<string, WeaponData> WeaponDatas { get; private set; } = new Dictionary<string, WeaponData>();
-    public Dictionary<string, Ability> Abilities { get; private set; } = new Dictionary<string, Ability>();
+    public Dictionary<string, GameObject> Abilities { get; private set; } = new Dictionary<string, GameObject>();
     public Dictionary<string, PerkData> PerkDatas { get; private set; } = new Dictionary<string, PerkData>();
     public Dictionary<string, Enemy> Enemies { get; private set; } = new Dictionary<string, Enemy>();
     public Dictionary<string, LevelSelectData> LevelDatas { get; private set; } = new Dictionary<string, LevelSelectData>();
 
 
     // Easy way to allow game objects to be added through the inspector.
-    [SerializeField]
-    List<Weapon> _weapons;
-    [SerializeField]
-    List<Ability> _abilities;
-    [SerializeField]
-    List<Perk> _perks;
-    [SerializeField]
-    List<Enemy> _enemies;
+    [SerializeField] List<Weapon> _weapons;
+    [SerializeField] List<GameObject> _abilities;
+    [SerializeField] List<Perk> _perks;
+    [SerializeField] List<Enemy> _enemies;
 
     private void Init()
     {
@@ -64,7 +61,10 @@ public class ItemDatabase : MonoBehaviour
 
         foreach (var ability in _abilities)
         {
-            Abilities[ability.Id] = ability;
+            Ability abil = ability.GetComponent<Ability>();
+            
+            if (abil != null)
+                Abilities[abil.Id] = ability;
         }
 
         _abilities = null;

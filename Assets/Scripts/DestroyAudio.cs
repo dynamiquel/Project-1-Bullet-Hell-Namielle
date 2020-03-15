@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+// Ask Liam for help.
 // Place this script on any object you wish to play audio when it is destroyed.
 public class DestroyAudio : MonoBehaviour
 {

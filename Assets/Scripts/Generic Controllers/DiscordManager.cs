@@ -4,6 +4,7 @@ using UnityEngine;
 using Discord;
 using System;
 
+// Ask Liam for help.
 public class DiscordManager : MonoBehaviour
 {
     [SerializeField] long clientId = 679471264213106737;

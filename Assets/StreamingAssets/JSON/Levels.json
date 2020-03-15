@@ -8,11 +8,16 @@
   "LVL_Liam": {
     "name": "Liam's Level",
     "description": "Some big empty level.",
-	"difficulty": "Easy"
+	  "difficulty": "Easy"
   },
   "LVL_Josh": {
     "name": "Josh's Level",
     "description": "Some level.",
-	"difficulty": "Normal"
+	  "difficulty": "Normal"
+  },
+  "LVL_Daniel": {
+    "name": "Daniel's Level",
+    "description": "Another level.",
+    "difficulty": "Normal"
   }
 }

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+// Ask Liam for help.
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; private set; }

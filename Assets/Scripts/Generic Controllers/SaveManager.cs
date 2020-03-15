@@ -5,6 +5,7 @@ using UnityEngine;
 using System.IO;
 using System.Runtime.Serialization;
 
+// Ask Liam for help.
 public class SaveManager : MonoBehaviour
 {
     public static SaveManager Instance { get; private set; }
@@ -25,7 +26,6 @@ public class SaveManager : MonoBehaviour
         }
 
         saveFilePath = Path.Combine(Application.persistentDataPath, saveFilePath);
-
     }
 
     public void Save(PersistentPlayerData persistentPlayerData)

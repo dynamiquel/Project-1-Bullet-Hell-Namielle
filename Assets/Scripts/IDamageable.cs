@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+// Ask Liam for help.
 public interface IDamageable
 {
     int MaxHealth { get; set; }

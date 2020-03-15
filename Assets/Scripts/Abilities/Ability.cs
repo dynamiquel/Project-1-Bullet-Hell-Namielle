@@ -1,31 +1,44 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Assertions.Comparers;
 
-// Just a general idea
+// Ask Liam for help.
 public class Ability : MonoBehaviour
 {
     public virtual string Id { get; set; }
-    public virtual string name { get; set; }
-    public virtual decimal coolDown { get; set; }
-    decimal coolDownTimer;
+    public virtual string Name { get; set; }
+    public virtual float Cooldown { get; set; }
+    protected float cooldownTimer = 0;
+    protected bool CanUse
+    {
+        get => cooldownTimer <= float.Epsilon;
+    }
 
+    private void Awake()
+    {
+        gameObject.name = Id;
+    }
+
+    // Use the ability.
     public virtual void Use()
     {
-        if (coolDownTimer > 0)
+        if (cooldownTimer > 0)
             return;
 
         SetCooldown();
+        print($"Used ability: {Name}");
     }
 
-    void SetCooldown()
+    protected void SetCooldown()
     {
-        coolDownTimer = coolDown;
+        cooldownTimer = Cooldown;
     }
 
-    private void Update()
+    protected virtual void Update()
     {
-        if (coolDownTimer > 0)
-            coolDownTimer -= (decimal)Time.deltaTime;
+        if (cooldownTimer > 0)
+            cooldownTimer -= Time.deltaTime;
     }
 }
