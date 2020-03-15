@@ -22,7 +22,7 @@ public class GeneralAI : MonoBehaviour
     [Range(1.0f, 10.0f)]
     public float erratic;
 
-    public PlayerController _pc;
+    PlayerController _pc;
     GameObject player;
 
     public Weapon weapon;
@@ -32,6 +32,10 @@ public class GeneralAI : MonoBehaviour
     void Awake()
     {
         originalPosition = transform.position;
+    }
+
+    void Start(){
+        _pc = LevelController.Instance.PlayerController;
     }
 
     // Update is called once per frame

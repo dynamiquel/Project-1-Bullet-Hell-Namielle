@@ -9,7 +9,11 @@ public class AIDetection : MonoBehaviour
     public GameObject player;
 
     public bool moveTowards;
-    public PlayerController pc;
+    PlayerController pc;
+
+    void Start(){
+        pc = LevelController.Instance.PlayerController;
+    }
 
     // When taking over the enemy, make sure to change tag of enemy to player
     void OnTriggerEnter2D(Collider2D coll){
