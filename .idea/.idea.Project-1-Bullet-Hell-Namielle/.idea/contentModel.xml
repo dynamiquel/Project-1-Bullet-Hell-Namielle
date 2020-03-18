@@ -81,7 +81,6 @@
           </e>
           <e p="IDamageable.cs" t="Include" />
           <e p="IScorable.cs" t="Include" />
-          <e p="LiamTester.cs" t="Include" />
           <e p="Objective.cs" t="Include" />
           <e p="Perks" t="Include">
             <e p="Perk.cs" t="Include" />

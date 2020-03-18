@@ -22,7 +22,7 @@ public class LevelController : MonoBehaviour
     }
     public event Action<Enemy> OnBossChanged;
 
-    Objective _objective = new Objective(ObjectiveState.New, "Kill");
+    Objective _objective = new Objective(ObjectiveState.New, "Kill All Hostiles!");
     public Objective Objective
     {
         get => _objective;

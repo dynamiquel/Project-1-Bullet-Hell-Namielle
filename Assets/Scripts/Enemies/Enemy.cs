@@ -12,6 +12,8 @@ public class Enemy : MonoBehaviour, IDamageable, IScorable
 {
     public string id = "default_enemy";
 
+    [SerializeField] private string weaponId = "pistol9";
+
     [SerializeField] protected string bulletLayerName = "Bullets";
     LayerMask bulletLayerMask;
 
@@ -36,6 +38,11 @@ public class Enemy : MonoBehaviour, IDamageable, IScorable
         DamageableEntityManager.Instance.AddEntity(this);
         bulletLayerMask = LayerMask.NameToLayer(bulletLayerName);
         mainAudioSource = GetComponent<AudioSource>();
+        
+        if (!ItemDatabase.Instance.Weapons.ContainsKey(weaponId))
+            weaponId = "pistol9";
+        
+        Instantiate(ItemDatabase.Instance.Weapons[weaponId], gameObject.transform);
     }
 
     protected void OnCollisionEnter2D(Collision2D collision)

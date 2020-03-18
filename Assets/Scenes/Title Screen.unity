@@ -735,7 +735,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b66b397656a6f994b9d95e8553aca17f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _weapons: []
+  _weapons:
+  - {fileID: 930831416717374437, guid: 772dd9a1bd2f30946a01ebe890cf76cf, type: 3}
+  - {fileID: 930831416717374437, guid: a9e3b89e3b831fe4eace29c319c3a8d0, type: 3}
+  - {fileID: 930831416717374437, guid: 099779a7806708b46b93b75e38ea00e1, type: 3}
+  - {fileID: 930831416717374437, guid: 2c732403b5769194392c669cf53ed244, type: 3}
+  - {fileID: 930831416717374437, guid: 40a81788649dfd344a468c2c66ab23b7, type: 3}
+  - {fileID: 930831416717374437, guid: 8918ad9be0e64964bba47b889358053e, type: 3}
+  - {fileID: 930831416717374437, guid: 86a00dfe5c9f21d438d2be6e52b023fe, type: 3}
+  - {fileID: 930831416717374437, guid: 799c474cffdc89145943c7a532dd5c99, type: 3}
   _abilities:
   - {fileID: 5444045245924407339, guid: d3f82218d3330804aae82a85278c4eed, type: 3}
   _enemies: []

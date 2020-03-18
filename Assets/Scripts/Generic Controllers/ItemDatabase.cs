@@ -24,7 +24,7 @@ public class ItemDatabase : MonoBehaviour
         Init();
     }
     
-    //public Dictionary<string, Weapon> Weapons { get; private set; } = new Dictionary<string, Weapon>();
+    public Dictionary<string, GameObject> Weapons { get; private set; } = new Dictionary<string, GameObject>();
     public Dictionary<string, WeaponData> WeaponDatas { get; private set; } = new Dictionary<string, WeaponData>();
     public Dictionary<string, GameObject> Abilities { get; private set; } = new Dictionary<string, GameObject>();
     public Dictionary<string, PerkData> PerkDatas { get; private set; } = new Dictionary<string, PerkData>();
@@ -33,7 +33,7 @@ public class ItemDatabase : MonoBehaviour
 
 
     // Easy way to allow game objects to be added through the inspector.
-    [SerializeField] List<Weapon> _weapons;
+    [SerializeField] List<GameObject> _weapons;
     [SerializeField] List<GameObject> _abilities;
     [SerializeField] List<Perk> _perks;
     [SerializeField] List<Enemy> _enemies;
@@ -52,10 +52,13 @@ public class ItemDatabase : MonoBehaviour
     // Adds all the inspector weapons to the weapons dictionary and then empties the list.
     void AddInspectorItems()
     {
-        /*foreach (var weapon in _weapons)
+        foreach (var weapon in _weapons)
         {
-            Weapons[weapon.id] = weapon;
-        }*/
+            var wep = weapon.GetComponent<Weapon>();
+            
+            if (wep != null)
+                Weapons[wep.id] = weapon;
+        }
 
         _weapons = null;
 

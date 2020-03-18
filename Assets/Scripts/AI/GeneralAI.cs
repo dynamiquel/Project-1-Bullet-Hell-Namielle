@@ -36,6 +36,7 @@ public class GeneralAI : MonoBehaviour
 
     void Start(){
         _pc = LevelController.Instance.PlayerController;
+        weapon = GetComponentInChildren<Weapon>();
     }
 
     // Update is called once per frame
@@ -78,8 +79,14 @@ public class GeneralAI : MonoBehaviour
 
     IEnumerator ShootWeapon()
     {
+        if (weapon == null)
+            yield break;
+        
         weapon.PrimaryFire();
-        weapon.ReloadAll();
+        
+        if (weapon.primaryClipAmmo <= 0)
+            weapon.ReloadAll();
+        
         yield return new WaitForSeconds(shootSpeed);
     }
 }

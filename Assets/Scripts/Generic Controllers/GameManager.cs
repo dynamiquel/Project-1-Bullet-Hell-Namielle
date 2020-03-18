@@ -74,6 +74,7 @@ public class GameManager : MonoBehaviour
             yield return null;
         }
 
+        yield return new WaitForFixedUpdate();
         sceneLoading = false;
     }
 
