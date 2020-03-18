@@ -97,6 +97,7 @@ public class PlayerController : Player
         try
         {
             lastControlled.GetComponent<IDamageable>().OnHealthChanged -= HandleHealthChange;
+            lastControlled.GetComponent<CharacterMotor>().TakenOver();
         }
         catch (Exception e)
         {
@@ -133,6 +134,13 @@ public class PlayerController : Player
             currentWeapon = controlledObject.GetComponentInChildren<Weapon>();
             currentWeapon.IsPlayer = true;
             OnWeaponChanged?.Invoke(currentWeapon);
+
+            if (!currentCharacterMotor.previouslyControlled && PerkController.CanUse("jugg"))
+            {
+                var enemyComp = currentCharacterMotor.GetComponent<Enemy>();
+                enemyComp.Health = enemyComp.MaxHealth;
+                OnHealthChange?.Invoke(GetControlledIDamagable());
+            }
 
             OnTakeover?.Invoke();
         }

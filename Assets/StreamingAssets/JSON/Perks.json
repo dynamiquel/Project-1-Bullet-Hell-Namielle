@@ -26,7 +26,7 @@
   },
   "jugg": {
     "name": "Juggernaut",
-    "description": "Increases your maximum health by 50%."
+    "description": "Everytime you take over a new enemy, your health resets to full."
   },
   "fastCharge": {
     "name": "Fast Charge",
