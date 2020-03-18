@@ -66,7 +66,7 @@ public class JumpController : MonoBehaviour
             
             if (characterMotor != null)
             {
-                print("Ready to jump");
+                //print("Ready to jump");
                 potentialEnemy = characterMotor.gameObject;
             }
             else

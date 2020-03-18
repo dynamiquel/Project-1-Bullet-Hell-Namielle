@@ -43,13 +43,10 @@ public class DamageableEntityManager : MonoBehaviour
             Debug.Log("Player died");
             OnPlayerDeath?.Invoke((Player)entity);
         }
-            
 
         RemoveEntity(entity);
-
         entity.OnDeath();
-
-        print($"Enemies remaining: {DamageableEntities.Count}");
+        //print($"Enemies remaining: {DamageableEntities.Count}");
     }
 
     public void AddEntity(IDamageable entity)

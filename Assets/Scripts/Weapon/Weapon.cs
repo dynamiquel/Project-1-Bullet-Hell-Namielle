@@ -294,7 +294,7 @@ public class Weapon : MonoBehaviour
         }
         else
         {
-            print("No player");
+            //print("No player");
         }
 
         primaryReloading = false;
