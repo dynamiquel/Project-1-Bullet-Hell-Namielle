@@ -57,7 +57,7 @@ public class DamageableEntityManager : MonoBehaviour
         if (!DamageableEntities.Contains(entity))
             DamageableEntities.Add(entity);
 
-        print($"Enemies remaining: {DamageableEntities.Count}");
+        //print($"Enemies remaining: {DamageableEntities.Count}");
     }
 
     public void RemoveEntity(IDamageable entity)

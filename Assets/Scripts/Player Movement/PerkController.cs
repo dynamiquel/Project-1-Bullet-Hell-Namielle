@@ -19,7 +19,7 @@ public class PerkController : MonoBehaviour
         {
             Perk newPerk = new Perk(ItemDatabase.Instance.PerkDatas[id]);
             ActivePerks[id] = newPerk;
-            Debug.Log($"Perk {id} successfully created. {ActivePerks[id].PerkData.Description}");
+            //Debug.Log($"Perk {id} successfully created. {ActivePerks[id].PerkData.Description}");
         }
         else
             Debug.LogError($"Item Database does not contain a PerkData with the ID: {id}");
