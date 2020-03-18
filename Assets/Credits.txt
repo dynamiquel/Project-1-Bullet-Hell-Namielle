@@ -1,0 +1,11 @@
+Game created by:
+    Liam HALL
+    Bradley ASHLEY
+    Daniel BICKERDIKE
+    Joshua HARRISON
+    William WALLER
+
+Third party:
+    Unity (Unity, 2020) – Proprietary – Used as the base engine for the game.
+    Newtonsoft Json.NET (Newtonsoft, 2020) – MIT – Used to allow the game to easily interact with JSON files.
+    sf3-sfx-menu-select.wav (broumbroum, 2008) – Attribution 3.0 Unported (CC BY 3.0) - Used for the menu sounds.
