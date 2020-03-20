@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ContentModelStore">
-    <e p="C:\Users\teamt\.Rider2019.3\system\extResources" t="IncludeRecursive" />
-    <e p="C:\Users\teamt\.Rider2019.3\system\resharper-host\local\Transient\ReSharperHost\v193\SolutionCaches\_Project-1-Bullet-Hell-Namielle.1999158697.00" t="ExcludeRecursive" />
-    <e p="S:\teamt\Development\Games\Project-1-Namielle\Project-1-Bullet-Hell-Namielle" t="IncludeRecursive">
+    <e p="C:\Users\Liamk\.Rider2019.3\system\extResources" t="IncludeRecursive" />
+    <e p="C:\Users\Liamk\.Rider2019.3\system\resharper-host\local\Transient\ReSharperHost\v193\SolutionCaches\_Project-1-Bullet-Hell-Namielle.-1837624910.00" t="ExcludeRecursive" />
+    <e p="S:\Users\Liamk\Development\Games\Project-1-Namielle\Project-1-Bullet-Hell-Namielle" t="IncludeRecursive">
       <e p="Assembly-CSharp-firstpass.csproj" t="IncludeRecursive" />
       <e p="Assembly-CSharp.csproj" t="IncludeRecursive" />
       <e p="Assets" t="Include">
+        <e p="Credits.txt" t="Include" />
         <e p="Plugins" t="Include">
           <e p="Discord" t="Include">
             <e p="ActivityManager.cs" t="Include" />
@@ -52,6 +53,8 @@
         <e p="Scripts" t="Include">
           <e p="Abilities" t="Include">
             <e p="Ability.cs" t="Include" />
+            <e p="InvincibilityAbility.cs" t="Include" />
+            <e p="NullAbility.cs" t="Include" />
             <e p="TestAbility.cs" t="Include" />
           </e>
           <e p="AI" t="Include">

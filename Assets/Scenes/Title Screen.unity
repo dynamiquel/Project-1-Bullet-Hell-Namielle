@@ -746,6 +746,7 @@ MonoBehaviour:
   - {fileID: 930831416717374437, guid: 799c474cffdc89145943c7a532dd5c99, type: 3}
   _abilities:
   - {fileID: 5444045245924407339, guid: d3f82218d3330804aae82a85278c4eed, type: 3}
+  - {fileID: 5444045245924407339, guid: 7bb1b7a7a27af3543a0d81a22cb930e3, type: 3}
   _enemies: []
 --- !u!114 &1371752617
 MonoBehaviour:

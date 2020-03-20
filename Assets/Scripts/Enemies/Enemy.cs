@@ -72,6 +72,11 @@ public class Enemy : MonoBehaviour, IDamageable, IScorable
         DamageableEntityManager.Instance.DamageEntity(this, damage);
     }
 
+    public void InvokeHealthChange()
+    {
+        OnHealthChanged?.Invoke(this);
+    }
+
     protected void OnDestroy()
     {
         if (LevelController.Instance.CurrentBoss == this)

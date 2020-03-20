@@ -22,13 +22,15 @@ public class Ability : MonoBehaviour
     }
 
     // Use the ability.
-    public virtual void Use()
+    public virtual bool Use()
     {
         if (cooldownTimer > 0)
-            return;
+            return false;
 
         SetCooldown();
         print($"Used ability: {Name}");
+        
+        return true;
     }
 
     protected void SetCooldown()

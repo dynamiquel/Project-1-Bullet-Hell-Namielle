@@ -73,8 +73,6 @@ public class GeneralAI : MonoBehaviour
     {
         LookAt_Z(fieldDetection.player.transform.position, true);
         StartCoroutine(ShootWeapon());
-
-
     }
 
     IEnumerator ShootWeapon()
@@ -89,4 +87,10 @@ public class GeneralAI : MonoBehaviour
         
         yield return new WaitForSeconds(shootSpeed);
     }
+    
+    // To get ability controller, do .GetComponent<AbilityController>();
+    // To add abilities normally, go the inspector and add some abilityIds to the abilitiesIds list.
+    // To add abilities at runtime, do abilityController.AddAbility(abilityId, index);
+    // To use an ability, do abilityController.Use(index);
+    // Keep in mind that the player can only use index 0 and 1, so any abilities at other indexes are AI-exclusive.
 }

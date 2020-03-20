@@ -40,7 +40,6 @@ public class PlayerController : Player
             LevelController.Instance.PlayerController = this;
 
         PerkController = GetComponent<PerkController>();
-        AbilityController = GetComponent<AbilityController>();
         jumpController = GetComponent<JumpController>();
     }
 
@@ -117,11 +116,12 @@ public class PlayerController : Player
         try
         {
             currentCharacterMotor = controlledObject.GetComponent<CharacterMotor>();
+            AbilityController = controlledObject.GetComponent<AbilityController>();
             currentCharacterMotor.TakenOver();
         }
         catch (Exception e)
         {
-            Debug.LogWarning("No character motor found on controlled object.");
+            Debug.LogWarning("No character motor or ability controller found on controlled object.");
         }
 
         lastControlled = controlledObject;
@@ -191,9 +191,10 @@ public class PlayerController : Player
         {
             try
             {
-                stats.PersistentPlayerData.ActiveAbilities[0] = "test";
-                AbilityController.AddAbility("test");
-                AbilityController.UseAbility(stats.PersistentPlayerData.ActiveAbilities[0]);
+                if (!AbilityController)
+                    return;
+                
+                AbilityController.UseAbility(0);
             }
             catch (Exception e)
             {
@@ -205,7 +206,7 @@ public class PlayerController : Player
         {
             try
             {
-                AbilityController.UseAbility(stats.PersistentPlayerData.ActiveAbilities[1]);
+                AbilityController.UseAbility(1);
             }
             catch (Exception e)
             {
