@@ -48,12 +48,6 @@ public class GameManager : MonoBehaviour
         
         try
         {
-            SceneManager.LoadSceneAsync("Loading Screen", LoadSceneMode.Additive);
-            
-            // Unloads the current scene first to save memory. Unity says not to use for some reason.
-            //string currentSceneName = SceneManager.GetActiveScene().name;
-            //SceneManager.UnloadSceneAsync(currentSceneName);
-            
             StartCoroutine(LoadSceneAsync(sceneName));
         }
         catch (Exception e)
@@ -66,16 +60,25 @@ public class GameManager : MonoBehaviour
     {
         //yield return new WaitForSeconds(0.07f);
         
-        AsyncOperation operation = SceneManager.LoadSceneAsync(sceneName);
+        var loadingScreenOperation = SceneManager.LoadSceneAsync("Loading Screen", LoadSceneMode.Additive);
+
+        yield return new WaitUntil(() => loadingScreenOperation.isDone);
+        
+        var operation = SceneManager.LoadSceneAsync(sceneName);
+        operation.allowSceneActivation = false;
 
         while (!operation.isDone)
         {
             LoadingScreenController.Instance?.SetProgress(Mathf.Clamp01(operation.progress / .9f));
+
+            if (operation.progress >= 0.9f)
+            {
+                operation.allowSceneActivation = true;
+                sceneLoading = false;
+            }
+
             yield return null;
         }
-
-        yield return new WaitForFixedUpdate();
-        sceneLoading = false;
     }
 
     void OnSceneChanged()
