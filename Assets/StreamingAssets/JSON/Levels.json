@@ -1,10 +1,4 @@
 {
-  "LVL_Main": {
-    "name": "Test Arena",
-    "description": "Default level.",
-    "difficulty": "Impossible",
-    "imageLocation": "default"
-  },
   "LVL_Liam": {
     "name": "Liam's Level",
     "description": "Some big empty level.",
