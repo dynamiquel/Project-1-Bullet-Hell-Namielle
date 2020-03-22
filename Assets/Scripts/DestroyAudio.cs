@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -12,7 +13,7 @@ public class DestroyAudio : MonoBehaviour
     [SerializeField] [Range(0, 1)]
     float volume = 1f;
     [SerializeField] float lifeTime = 3f;
-
+    
     bool quitting = false;
 
     private void OnDestroy()
@@ -23,11 +24,21 @@ public class DestroyAudio : MonoBehaviour
 
     private void OnLevelWasLoaded(int level)
     {
+        //Debug.LogWarning("WTF LEvel");
         quitting = true;
+        // Just in case it was the loading screen that loaded.
+        StartCoroutine(ResetQuitting());
     }
 
     private void OnApplicationQuit()
     {
+        //Debug.LogWarning("WTF Quit");
         quitting = true;
+    }
+
+    IEnumerator ResetQuitting()
+    {
+        yield return new WaitForSeconds(1f);
+        quitting = false;
     }
 }

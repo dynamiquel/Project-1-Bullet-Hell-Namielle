@@ -256,7 +256,7 @@ MonoBehaviour:
   primaryFireRate: 150
   secondaryFireRate: 20
   primaryBulletSoundId: Machine Gun
-  primaryReloadSoundId: Reload
+  primaryReloadSoundId: Reload 2
   secondaryBulletSoundId: 
   secondaryReloadSoundId: 
   autoReload: 0

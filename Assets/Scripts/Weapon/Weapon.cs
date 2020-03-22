@@ -275,10 +275,14 @@ public class Weapon : MonoBehaviour
     
     IEnumerator PrimaryReload(float reloadDelay, int bulletsToReload)
     {
-        if (primaryReloading)
+        // If already reloading or ammo is full.
+        if (primaryReloading || primaryClipAmmo == primaryClipMaxAmmo)
             yield break;
         
         primaryReloading = true;
+        
+        primaryFireAudioSource.PlayOneShot(AudioDatabase.GetClip(primaryReloadSoundId));
+        
         yield return new WaitForSeconds(reloadDelay);
 
         if (bulletsToReload == -1)

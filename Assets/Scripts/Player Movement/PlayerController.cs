@@ -218,6 +218,7 @@ public class PlayerController : Player
             if (jumpController.Jump(out var newEnemy))
             {
                 controlledObject = newEnemy;
+                GetComponent<AudioSource>().PlayOneShot(AudioDatabase.GetClip("Body Swap"));
                 HandleNewControlledObject();
             }
         }
@@ -309,5 +310,7 @@ public class PlayerController : Player
     {
         Debug.Log(string.Format("Player is now level: {0}", newLevel));
         stats.PersistentPlayerData.PerkPoints++;
+        // Play level up sound
+        GetComponent<AudioSource>().PlayOneShot(AudioDatabase.GetClip("Pickup"));
     }
 }
