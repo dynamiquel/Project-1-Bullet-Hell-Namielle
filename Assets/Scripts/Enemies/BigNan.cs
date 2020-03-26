@@ -11,8 +11,8 @@ public class BigNan : Enemy
 
     public override void OnDeath()
     {
-        Debug.Log("Can't kill me, beach!");
-        LevelController.Instance.Objective = new Objective(ObjectiveState.Updated, "Well, you tried!");
+        Destroy(gameObject);
+        LevelController.Instance.Objective = new Objective(ObjectiveState.Completed	, "You have killed the boss!");
         LevelController.Instance.EndLevel();
     }
 }
